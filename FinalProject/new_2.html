@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+  <head>    
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Testing Pie Chart</title>
+   <!--<script type="text/javascript" src="d3/d3.v2.js"></script>-->
+    <script src="http://d3js.org/d3.v2.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<!-- Note: I made good use of the sample code provided by the D3JS community and extended it to fit my needs to create this simple dashboard -->
+    <style type="text/css" src="gauge.css">
+    <style type="text/css">    
+
+#pieChart {    
+	position:absolute;
+	top:10px;
+	left:10px;
+	width:400px;
+	height: 400px; 
+}
+
+
+
+#PointerChart {    
+	position:absolute;
+	top:10px;
+	left:410px;
+	height: 250px;
+}
+
+#Plant_RiskScore_Text_Chart {    
+	position:absolute;
+	top:500px;
+	left:10px;
+	height: 50px;
+}
+
+#barChart {
+	position:absolute;
+	top:50px;
+	left:450px;
+	height: 400px;
+}
+
+.slice {
+   font-size: 12pt;
+   font-family: Verdana;
+   fill: white; //svg specific - instead of color
+   font-weight: bold;	
+  		} 
+
+/*for line chart*/
+.axis path, .axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges; //The shape-rendering property is an SVG attribute, used here to make sure our axis and its tick mark lines are pixel-perfect. 
+}
+
+.line {
+  fill: none;
+  /*stroke: steelblue;*/
+  stroke-width: 3px;
+}
+
+.dot {
+  /*fill: white;*/
+  /*stroke: steelblue;*/
+  stroke-width: 1.5px;
+  }
+				
+
+.axis text {
+    font-family: Verdana;
+    font-size: 11px;
+}
+
+.title {
+	 font-family: Verdana;
+    font-size: 15px;	
+		
+}
+
+.xAxis {
+    font-family: verdana;
+    font-size: 11px;
+    fill: black;
+}  
+
+.yAxis {
+    font-family: verdana;
+    font-size: 11px;
+    fill: white;
+}
+
+  
+table {
+	border-collapse:collapse;
+	border: 0px;	
+	font-family: Verdana;	
+	color: #5C5558;
+	font-size: 12px;
+	text-align: right;			
+}
+
+td {
+	padding-left: 10px;		
+}
+
+#lineChartTitle1 {
+	font-family: Verdana;
+	font-size  : 14px;
+	fill       : lightgrey;
+	font-weight: bold;
+	text-anchor: middle;
+}
+
+#lineChartTitle2 {
+	font-family: Verdana;
+	font-size  : 72px;
+	fill       : grey;
+	text-anchor: middle;
+	font-weight: bold;
+	/*font-style: italic;*/
+}
+
+	.chart-gauge
+			{
+			  width: 800px;
+			  margin: 100px   
+			 } 
+			.chart-first
+			{
+				fill: #9FBD35;
+			}
+			.chart-second
+			{
+				fill: #F2BA3A;
+			}
+            .chart-third
+            {
+                fill: #FB3033;
+            }
+		
+			.needle, .needle-center
+			{
+				fill: #000001;
+			}
+            .text {
+                color: "#112864";
+                font-size: 260px;
+            }
+            
+
+			svg {
+			  font: 100px sans-serif;
+			}
+				 
+    </style>
+  </head>
+  <body>
+  
+    <div id="pieChart"></div>
+    <div id="barChart"></div>  
+    <div class="chart-gauge"></div>
+	<div id="Plant_RiskScore_Text_Chart"></div>
+    <script type="text/javascript">
+    
+/*
+################ FORMATS ##################
+-------------------------------------------
+*/
+
+
+var 	formatAsPercentage = d3.format("%"),
+		formatAsPercentage1Dec = d3.format(".1%"),
+		formatAsInteger = d3.format(","),
+		fsec = d3.time.format("%S s"),
+		fmin = d3.time.format("%M m"),
+		fhou = d3.time.format("%H h"),
+		fwee = d3.time.format("%a"),
+		fdat = d3.time.format("%d d"),
+		fmon = d3.time.format("%b")
+		;
+
+/*
+############# PIE CHART ###################
+-------------------------------------------
+*/
+
+
+
+function dsPieChart(){
+
+	var dataset = [
+			{category: "Sam", measure: 0.30},
+	      {category: "Peter", measure: 0.25},
+	      {category: "John", measure: 0.15},
+	      {category: "Rick", measure: 0.05},
+	      {category: "Lenny", measure: 0.18},
+	      {category: "Paul", measure:0.04},
+	      {category: "Steve", measure: 0.03}
+	      ]
+	      ;
+
+	var 	width = 400,
+		   height = 400,
+		   outerRadius = Math.min(width, height) / 2,
+		   innerRadius = outerRadius * .999,   
+		   // for animation
+		   innerRadiusFinal = outerRadius * .5,
+		   innerRadiusFinal3 = outerRadius* .45,
+		   color = d3.scale.category20()    //builtin range of colors
+		   ;
+	    
+	var vis = d3.select("#pieChart")
+	     .append("svg:svg")              //create the SVG element inside the <body>
+	     .data([dataset])                   //associate our data with the document
+	         .attr("width", width)           //set the width and height of our visualization (these will be attributes of the <svg> tag
+	         .attr("height", height)
+	     		.append("svg:g")                //make a group to hold our pie chart
+	         .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")")    //move the center of the pie chart from 0, 0 to radius, radius
+				;
+				
+   var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
+        	.outerRadius(outerRadius).innerRadius(innerRadius);
+   
+   // for animation
+   var arcFinal = d3.svg.arc().innerRadius(innerRadiusFinal).outerRadius(outerRadius);
+	var arcFinal3 = d3.svg.arc().innerRadius(innerRadiusFinal3).outerRadius(outerRadius);
+
+   var pie = d3.layout.pie()           //this will create arc data for us given a list of values
+        .value(function(d) { return d.measure; });    //we must tell it out to access the value of each element in our data array
+
+   var arcs = vis.selectAll("g.slice")     //this selects all <g> elements with class slice (there aren't any yet)
+        .data(pie)                          //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties) 
+        .enter()                            //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
+            .append("svg:g")                //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
+               .attr("class", "slice")    //allow us to style things in the slices (like text)
+               .on("mouseover", mouseover)
+    				.on("mouseout", mouseout)
+    				.on("click", up)
+    				;
+    				
+        arcs.append("svg:path")
+               .attr("fill", function(d, i) { return color(i); } ) //set the color for each slice to be chosen from the color function defined above
+               .attr("d", arc)     //this creates the actual SVG path using the associated data (pie) with the arc drawing function
+					.append("svg:title") //mouseover title showing the figures
+				   .text(function(d) { return d.data.category + ": " + formatAsPercentage(d.data.measure); });			
+
+        d3.selectAll("g.slice").selectAll("path").transition()
+			    .duration(750)
+			    .delay(10)
+			    .attr("d", arcFinal )
+			    ;
+	
+	  // Add a label to the larger arcs, translated to the arc centroid and rotated.
+	  // source: http://bl.ocks.org/1305337#index.html
+	  arcs.filter(function(d) { return d.endAngle - d.startAngle > .2; })
+	  		.append("svg:text")
+	      .attr("dy", ".35em")
+	      .attr("text-anchor", "middle")
+	      .attr("transform", function(d) { return "translate(" + arcFinal.centroid(d) + ")rotate(" + angle(d) + ")"; })
+	      //.text(function(d) { return formatAsPercentage(d.value); })
+	      .text(function(d) { return d.data.category; })
+	      ;
+	   
+	   // Computes the label angle of an arc, converting from radians to degrees.
+		function angle(d) {
+		    var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+		    return a > 90 ? a - 180 : a;
+		}
+		    
+		
+		// Pie chart title			
+		vis.append("svg:text")
+	     	.attr("dy", ".35em")
+	      .attr("text-anchor", "middle")
+	      .text("Revenue Share 2017")
+	      .attr("class","title")
+	      ;		    
+
+
+		
+	function mouseover() {
+	  d3.select(this).select("path").transition()
+	      .duration(750)
+	        		//.attr("stroke","red")
+	        		//.attr("stroke-width", 1.5)
+	        		.attr("d", arcFinal3)
+	        		;
+	}
+	
+	function mouseout() {
+	  d3.select(this).select("path").transition()
+	      .duration(750)
+	        		//.attr("stroke","blue")
+	        		//.attr("stroke-width", 1.5)
+	        		.attr("d", arcFinal)
+	        		;
+	}
+	
+	function up(d, i) {
+	
+				/* update bar chart when user selects piece of the pie chart */
+				//updateBarChart(dataset[i].category);
+				updateBarChart(d.data.category, color(i));
+				updatePointerChart(d.data.category, color(i));
+				updatePlant_RiskScore(d.data.category, color(i));
+			 
+	}
+}
+
+dsPieChart();
+
+/*
+############# BAR CHART ###################
+-------------------------------------------
+*/
+
+
+
+var datasetBarChart = [
+{ group: "All", category: "Cat. 1", measure: 63850.4963 }, 
+{ group: "All", category: "Cat. 2", measure: 78258.0845 }, 
+{ group: "All", category: "Cat. 3", measure: 60610.2355 }, 
+{ group: "All", category: "Cat. 4", measure: 30493.1686 }, 
+{ group: "All", category: "Cat. 5", measure: 56097.0151 }, 
+{ group: "Sam", category: "Cat. 1", measure: 19441.5648 }, 
+{ group: "Sam", category: "Cat. 2", measure: 25922.0864 }, 
+{ group: "Sam", category: "Cat. 3", measure: 9720.7824 }, 
+{ group: "Sam", category: "Cat. 4", measure: 6480.5216 }, 
+{ group: "Sam", category: "Cat. 5", measure: 19441.5648 }, 
+{ group: "Peter", category: "Cat. 1", measure: 22913.2728 }, 
+{ group: "Peter", category: "Cat. 2", measure: 7637.7576 }, 
+{ group: "Peter", category: "Cat. 3", measure: 23549.7526 }, 
+{ group: "Peter", category: "Cat. 4", measure: 1909.4394 }, 
+{ group: "Peter", category: "Cat. 5", measure: 7637.7576 }, 
+{ group: "John", category: "Cat. 1", measure: 1041.5124 }, 
+{ group: "John", category: "Cat. 2", measure: 2430.1956 }, 
+{ group: "John", category: "Cat. 3", measure: 15275.5152 }, 
+{ group: "John", category: "Cat. 4", measure: 4166.0496 }, 
+{ group: "John", category: "Cat. 5", measure: 11803.8072 }, 
+{ group: "Rick", category: "Cat. 1", measure: 7406.3104 }, 
+{ group: "Rick", category: "Cat. 2", measure: 2545.9192 }, 
+{ group: "Rick", category: "Cat. 3", measure: 1620.1304 }, 
+{ group: "Rick", category: "Cat. 4", measure: 8563.5464 }, 
+{ group: "Rick", category: "Cat. 5", measure: 3008.8136 }, 
+{ group: "Lenny", category: "Cat. 1", measure: 7637.7576 }, 
+{ group: "Lenny", category: "Cat. 2", measure: 35411.4216 }, 
+{ group: "Lenny", category: "Cat. 3", measure: 8332.0992 }, 
+{ group: "Lenny", category: "Cat. 4", measure: 6249.0744 }, 
+{ group: "Lenny", category: "Cat. 5", measure: 11803.8072 }, 
+{ group: "Paul", category: "Cat. 1", measure: 3182.399 }, 
+{ group: "Paul", category: "Cat. 2", measure: 867.927 }, 
+{ group: "Paul", category: "Cat. 3", measure: 1808.18125 }, 
+{ group: "Paul", category: "Cat. 4", measure: 795.59975 }, 
+{ group: "Paul", category: "Cat. 5", measure: 578.618 }, 
+{ group: "Steve", category: "Cat. 1", measure: 2227.6793 }, 
+{ group: "Steve", category: "Cat. 2", measure: 3442.7771 }, 
+{ group: "Steve", category: "Cat. 3", measure: 303.77445 }, 
+{ group: "Steve", category: "Cat. 4", measure: 2328.93745 }, 
+{ group: "Steve", category: "Cat. 5", measure: 1822.6467 }, 
+]
+;
+
+// set initial group value
+var group = "All";
+
+function datasetBarChosen(group) {
+	var ds = [];
+	for (x in datasetBarChart) {
+		 if(datasetBarChart[x].group==group){
+		 	ds.push(datasetBarChart[x]);
+		 } 
+		}
+	return ds;
+}
+
+
+function dsBarChartBasics() {
+
+		var margin = {top: 30, right: 5, bottom: 20, left: 50},
+		width = 500 - margin.left - margin.right,
+	   height = 250 - margin.top - margin.bottom,
+		colorBar = d3.scale.category20(),
+		barPadding = 1
+		;
+		
+		return {
+			margin : margin, 
+			width : width, 
+			height : height, 
+			colorBar : colorBar, 
+			barPadding : barPadding
+		}			
+		;
+}
+
+function dsBarChart() {
+
+	var firstDatasetBarChart = datasetBarChosen(group);         	
+	
+	var basics = dsBarChartBasics();
+	
+	var margin = basics.margin,
+		width = basics.width,
+	   height = basics.height,
+		colorBar = basics.colorBar,
+		barPadding = basics.barPadding
+		;
+					
+	var 	xScale = d3.scale.linear()
+						.domain([0, firstDatasetBarChart.length])
+						.range([0, width])
+						;
+						
+	// Create linear y scale 
+	// Purpose: No matter what the data is, the bar should fit into the svg area; bars should not
+	// get higher than the svg height. Hence incoming data needs to be scaled to fit into the svg area.  
+	var yScale = d3.scale.linear()
+			// use the max funtion to derive end point of the domain (max value of the dataset)
+			// do not use the min value of the dataset as min of the domain as otherwise you will not see the first bar
+		   .domain([0, d3.max(firstDatasetBarChart, function(d) { return d.measure; })])
+		   // As coordinates are always defined from the top left corner, the y position of the bar
+		   // is the svg height minus the data value. So you basically draw the bar starting from the top. 
+		   // To have the y position calculated by the range function
+		   .range([height, 0])
+		   ;
+	
+	//Create SVG element
+	
+	var svg = d3.select("#barChart")
+			.append("svg")
+		    .attr("width", width + margin.left + margin.right)
+		    .attr("height", height + margin.top + margin.bottom)
+		    .attr("id","barChartPlot")
+		    ;
+	
+	var plot = svg
+		    .append("g")
+		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+		    ;
+	            
+	plot.selectAll("rect")
+		   .data(firstDatasetBarChart)
+		   .enter()
+		   .append("rect")
+			.attr("x", function(d, i) {
+			    return xScale(i);
+			})
+		   .attr("width", width / firstDatasetBarChart.length - barPadding)   
+			.attr("y", function(d) {
+			    return yScale(d.measure);
+			})  
+			.attr("height", function(d) {
+			    return height-yScale(d.measure);
+			})
+			.attr("fill", "lightgrey")
+			;
+	
+		
+	// Add y labels to plot	
+	
+	plot.selectAll("text")
+	.data(firstDatasetBarChart)
+	.enter()
+	.append("text")
+	.text(function(d) {
+			return formatAsInteger(d3.round(d.measure));
+	})
+	.attr("text-anchor", "middle")
+	// Set x position to the left edge of each bar plus half the bar width
+	.attr("x", function(d, i) {
+			return (i * (width / firstDatasetBarChart.length)) + ((width / firstDatasetBarChart.length - barPadding) / 2);
+	})
+	.attr("y", function(d) {
+			return yScale(d.measure) + 14;
+	})
+	.attr("class", "yAxis")
+	/* moved to CSS			   
+	.attr("font-family", "sans-serif")
+	.attr("font-size", "11px")
+	.attr("fill", "white")
+	*/
+	;
+	
+	// Add x labels to chart	
+	
+	var xLabels = svg
+		    .append("g")
+		    .attr("transform", "translate(" + margin.left + "," + (margin.top + height)  + ")")
+		    ;
+	
+	xLabels.selectAll("text.xAxis")
+		  .data(firstDatasetBarChart)
+		  .enter()
+		  .append("text")
+		  .text(function(d) { return d.category;})
+		  .attr("text-anchor", "middle")
+			// Set x position to the left edge of each bar plus half the bar width
+						   .attr("x", function(d, i) {
+						   		return (i * (width / firstDatasetBarChart.length)) + ((width / firstDatasetBarChart.length - barPadding) / 2);
+						   })
+		  .attr("y", 15)
+		  .attr("class", "xAxis")
+		  //.attr("style", "font-size: 12; font-family: Helvetica, sans-serif")
+		  ;			
+	 
+	// Title
+	
+	svg.append("text")
+		.attr("x", (width + margin.left + margin.right)/2)
+		.attr("y", 15)
+		.attr("class","title")				
+		.attr("text-anchor", "middle")
+		.text("Overall Risk Breakdown 2017")
+		;
+}
+
+dsBarChart();
+
+
+
+ /* ** UPDATE CHART ** */
+ 
+/* updates bar chart on request */
+
+function updateBarChart(group, colorChosen) {
+	
+		var currentDatasetBarChart = datasetBarChosen(group);
+		
+		var basics = dsBarChartBasics();
+	
+		var margin = basics.margin,
+			width = basics.width,
+		   height = basics.height,
+			colorBar = basics.colorBar,
+			barPadding = basics.barPadding
+			;
+		
+		var 	xScale = d3.scale.linear()
+			.domain([0, currentDatasetBarChart.length])
+			.range([0, width])
+			;
+		
+			
+		var yScale = d3.scale.linear()
+	      .domain([0, d3.max(currentDatasetBarChart, function(d) { return d.measure; })])
+	      .range([height,0])
+	      ;
+	      
+	   var svg = d3.select("#barChart svg");
+	      
+	   var plot = d3.select("#barChartPlot")
+	   	.datum(currentDatasetBarChart)
+		   ;
+	
+	  		/* Note that here we only have to select the elements - no more appending! */
+	  	plot.selectAll("rect")
+	      .data(currentDatasetBarChart)
+	      .transition()
+			.duration(750)
+			.attr("x", function(d, i) {
+			    return xScale(i);
+			})
+		   .attr("width", width / currentDatasetBarChart.length - barPadding)   
+			.attr("y", function(d) {
+			    return yScale(d.measure);
+			})  
+			.attr("height", function(d) {
+			    return height-yScale(d.measure);
+			})
+			.attr("fill", colorChosen)
+			;
+		
+		plot.selectAll("text.yAxis") // target the text element(s) which has a yAxis class defined
+			.data(currentDatasetBarChart)
+			.transition()
+			.duration(750)
+		   .attr("text-anchor", "middle")
+		   .attr("x", function(d, i) {
+		   		return (i * (width / currentDatasetBarChart.length)) + ((width / currentDatasetBarChart.length - barPadding) / 2);
+		   })
+		   .attr("y", function(d) {
+		   		return yScale(d.measure) + 14;
+		   })
+		   .text(function(d) {
+				return formatAsInteger(d3.round(d.measure));
+		   })
+		   .attr("class", "yAxis")					 
+		;
+		name = group
+		var firstDatasetPointerChart = datasetPointerChartChosen(name);   
+
+		svg.selectAll("text.title") // target the text element(s) which has a title class defined
+		//svg.selectAll("text")	
+			.attr("x", (width + margin.left + margin.right)/2)
+			.attr("y", 15)						
+			.attr("text-anchor", "middle")
+			.text(group + "'s Risk Breakdown and Score " + firstDatasetPointerChart[0].risk_score)
+			.attr("font-size", 42)
+			;
+}
+
+
+/*
+############# Pointer CHART ################## .attr("class","title")	
+-------------------------------------------
+*/
+
+var datasetPointerChart = [
+{ name: "All", risk_score: 63},
+{ name: "Sam", risk_score: 93}, 
+{ name: "Peter", risk_score: 23}, 
+{ name: "Rick", risk_score: 23}, 
+{ name: "John", risk_score: 53}, 
+{ name: "Lenny", risk_score: 43}, 
+{ name: "Paul", risk_score: 88}, 
+{ name: "Steve", risk_score: 43}
+]
+;
+
+
+function datasetPointerChartChosen(name) {
+	var ds = [];
+	for (x = 0; x < datasetPointerChart.length; x++) {
+		 if(datasetPointerChart[x].name==name){
+		 	ds.push(datasetPointerChart[x]);
+		 } 
+		}
+	return ds;
+}
+//var test = datasetPointerChartChosen(name)
+//document.write(datasetPointerChart[2].risk_score)
+//document.write(test[0].name)
+
+function dsPointerChartBasics() {
+
+	var margin = {top: 20, right: 10, bottom: 0, left: 50},
+	    width = 500 - margin.left - margin.right,
+	    height = 150 - margin.top - margin.bottom
+	    ;
+		
+		return {
+			margin : margin, 
+			width : width, 
+			height : height
+		}			
+		;
+}
+
+
+function dsPointerChart() {
+
+    // set initial category value
+    var name = "All";
+
+	var firstDatasetPointerChart = datasetPointerChartChosen(name);    
+	
+	var basics = dsPointerChartBasics();
+	
+	var margin = basics.margin,
+		width = basics.width,
+	   height = basics.height;
+	   
+	var name = firstDatasetPointerChart[0].name;
+	
+    var value = firstDatasetPointerChart[0].risk_score; 
+
+    var gaugeMaxValue = 100; 
+
+    // données à calculer 
+    var percentValue = value / gaugeMaxValue; 
+
+////////////////////////
+
+    var needleClient;
+
+	var barWidth, chart, chartInset, degToRad, repaintGauge,
+    height, margin, numSections, padRad, percToDeg, percToRad, 
+    percent, radius, sectionIndx, svg, totalPercent, width;
+
+    
+    
+  percent = percentValue;
+
+  numSections = 1;
+  sectionPerc = 1 / numSections / 2;
+  padRad = 0.025;
+  chartInset = 10;
+    
+  // Orientation of gauge:
+  totalPercent = .75;
+
+  el = d3.select('.chart-gauge');
+  
+  margin = {
+    top: 20,
+    right: 20,
+    bottom: 30,
+    left: 20
+  };
+ 
+  width = el[0][0].offsetWidth - margin.left - margin.right;
+  //document.write(width)
+  height = width;
+  radius = Math.min(width, height) / 2;
+  barWidth = 40 * width / 300;
+  
+
+  
+  //Utility methods 
+  
+  percToDeg = function(perc) {
+    return perc * 360;
+  };
+
+  percToRad = function(perc) {
+    return degToRad(percToDeg(perc));
+  };
+
+  degToRad = function(deg) {
+    return deg * Math.PI / 180;
+  };
+
+  // Create SVG element
+  svg = el.append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom);
+
+  // Add layer for the panel
+  chart = svg.append('g').attr('transform', "translate(" + ((width + margin.left) / 2) + ", " + ((height + margin.top) / 2) + ")");
+
+
+  chart.append('path').attr('class', "arc chart-first");
+  chart.append('path').attr('class', "arc chart-second");
+  chart.append('path').attr('class', "arc chart-third");
+    
+
+  arc3 = d3.svg.arc().outerRadius(radius - chartInset).innerRadius(radius - chartInset - barWidth)
+  arc2 = d3.svg.arc().outerRadius(radius - chartInset).innerRadius(radius - chartInset - barWidth)
+  arc1 = d3.svg.arc().outerRadius(radius - chartInset).innerRadius(radius - chartInset - barWidth)
+
+  repaintGauge = function () 
+  {
+    perc = 0.5;
+    var next_start = totalPercent;
+    arcStartRad = percToRad(next_start);
+    arcEndRad = arcStartRad + percToRad(perc / 3);
+    next_start += perc / 3;
+
+
+    arc1.startAngle(arcStartRad).endAngle(arcEndRad);
+
+    arcStartRad = percToRad(next_start);
+    arcEndRad = arcStartRad + percToRad(perc / 3);
+    next_start += perc / 3;
+
+    arc2.startAngle(arcStartRad + padRad).endAngle(arcEndRad);
+
+    arcStartRad = percToRad(next_start);
+    arcEndRad = arcStartRad + percToRad(perc / 3);
+      
+    arc3.startAngle(arcStartRad + padRad).endAngle(arcEndRad);
+
+    chart.select(".chart-first").attr('d', arc1);
+    chart.select(".chart-second").attr('d', arc2);
+    chart.select(".chart-third").attr('d', arc3);
+
+      
+  }
+/////////
+
+    var dataset = [{metric:name, value: value}]
+
+    var texts = svg.selectAll("text")
+                .data(dataset)
+                .enter();
+    // Lower caption words 
+	/*
+    texts.append("text")
+         .text(function(){
+              return dataset[0].metric;
+         })
+         .attr('id', "Name")
+         .attr('transform', "translate(" + ((width + margin.left) / 4) + ", " + ((height + margin.top) / 1.5) + ")")
+         .attr("font-size",25)
+         .style("fill", "#000000");
+    */  
+
+   var trX = 180 - 210 * Math.cos(percToRad(percent / 2)); 
+   var trY = 195 - 210 * Math.sin(percToRad(percent / 2));
+// (180, 195) are the coordinates of the center of the gauge.
+
+displayValue = function() {
+                texts.append("text")
+                    .text(function(){
+                        return dataset[0].value;
+                    })
+                    .attr('id', "Value")
+                    .attr('transform', "translate(" + trX + ", " + trY+ ")")
+                    .attr("font-size",0)
+                    .style("fill", '#000000');
+            }
+      
+  
+  
+    texts.append("text")
+        .text(function(){
+            return 0;
+        })
+        .attr('id', 'scale0')
+        .attr('transform', "translate(" + ((width + margin.left) / 100 ) + ", " + ((height + margin.top) / 2) + ")")
+        .attr("font-size", 25)
+        .style("fill", "#000000");
+		
+		
+	texts.append("text")
+        .text(function(){
+            return gaugeMaxValue/4;
+        })
+        .attr('id', 'scale0')
+        .attr('transform', "translate(" + ((width + margin.left) / 9 ) + ", " + ((height + margin.top) / 7) + ")")
+        .attr("font-size", 25)
+        .style("fill", "#000000");
+                    
+    texts.append("text")
+        .text(function(){
+            return gaugeMaxValue/2;
+        })
+        .attr('id', 'scale10')
+        .attr('transform', "translate(" + ((width + margin.left) / 2.15 ) + ", " + ((height + margin.top) / 32) + ")")
+        .attr("font-size", 25)
+        .style("fill", "#000000");
+		
+	texts.append("text")
+        .text(function(){
+            return gaugeMaxValue*0.75;
+        })
+        .attr('id', 'scale0')
+        .attr('transform', "translate(" + ((width + margin.left) / 1.22 ) + ", " + ((height + margin.top) / 7) + ")")
+        .attr("font-size", 25)
+        .style("fill", "#000000");
+                    
+                    
+    texts.append("text")
+        .text(function(){
+            return gaugeMaxValue;
+        })
+        .attr('id', 'scale20')
+        .attr('transform', "translate(" + ((width + margin.left) / 1.02 ) + ", " + ((height + margin.top) / 2) + ")")
+        .attr("font-size", 25)
+        .style("fill", "#000000");
+    
+  var Needle = (function() {
+
+    //Helper function that returns the `d` value for moving the needle
+    var recalcPointerPos = function(perc) {
+      var centerX, centerY, leftX, leftY, rightX, rightY, thetaRad, topX, topY;
+      thetaRad = percToRad(perc / 2);
+      centerX = 0;
+      centerY = 0;
+      topX = centerX - this.len * Math.cos(thetaRad);
+      topY = centerY - this.len * Math.sin(thetaRad);
+      leftX = centerX - this.radius * Math.cos(thetaRad - Math.PI / 2);
+      leftY = centerY - this.radius * Math.sin(thetaRad - Math.PI / 2);
+      rightX = centerX - this.radius * Math.cos(thetaRad + Math.PI / 2);
+      rightY = centerY - this.radius * Math.sin(thetaRad + Math.PI / 2);
+     
+        
+        return "M " + leftX + " " + leftY + " L " + topX + " " + topY + " L " + rightX + " " + rightY;
+        
+        
+        
+        
+    };
+
+    function Needle(el) {
+      this.el = el;
+      this.len = width / 2.5;
+      this.radius = this.len / 8;
+    }
+
+    Needle.prototype.render = function() {
+      this.el.append('circle').attr('class', 'needle-center').attr('cx', 0).attr('cy', 0).attr('r', this.radius);
+        
+        
+        
+        
+      return this.el.append('path').attr('class', 'needle').attr('id', 'client-needle').attr('d', recalcPointerPos.call(this, 0));
+        
+       
+    };
+
+    Needle.prototype.moveTo = function(perc) {
+      var self,
+          oldValue = this.perc || 0;
+
+      this.perc = perc;
+      self = this;
+
+      // Reset pointer position
+      this.el.transition().delay(100).ease('quad').duration(200).select('.needle').tween('reset-progress', function() {
+        return function(percentOfPercent) {
+          var progress = (1 - percentOfPercent) * oldValue;
+          
+            
+                
+            
+          repaintGauge(progress);
+          return d3.select(this).attr('d', recalcPointerPos.call(self, progress));
+        };
+      });
+
+      this.el.transition().delay(300).ease('bounce').duration(1500).select('.needle').tween('progress', function() {
+        return function(percentOfPercent) {
+          var progress = percentOfPercent * perc;
+          
+          repaintGauge(progress);
+          return d3.select(this).attr('d', recalcPointerPos.call(self, progress));
+        };
+      });
+
+    };
+    
+      
+    return Needle;
+
+  })();
+    
+ 
+    
+  needle = new Needle(chart);
+  needle.render();
+  needle.moveTo(percent);
+
+  setTimeout(displayValue, 1350);
+  //d3.select(".chart-gauge").select("svg").remove();
+}
+
+dsPointerChart();
+
+</script>
+
+<script type="text/javascript">
+ /* ** UPDATE CHART ** */
+ 
+/* updates Pointer chart on request */
+function updatePointerChart(name, colorChosen) {
+
+	var currentDatasetPointerChart = datasetPointerChartChosen(name);   
+
+    var name = currentDatasetPointerChart[0].name;
+	//document.write(name)
+
+    var value = currentDatasetPointerChart[0].risk_score;
+
+    var gaugeMaxValue = 100; 
+
+    // données à calculer 
+    var percentValue = value / gaugeMaxValue; 
+	needle.moveTo(percentValue);
+	
+    //document.write(name)	
+	//var x = document.createElement("div");  // Creates a new <div> node
+    //x.textContent = name;         // Sets the text content
+    //document.body.appendChild(x);           // Adds to the document
+	
+    svg = d3.select('.chart-gauge').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom);
+
+	
+	var dataset = [{metric:name, value: value}]
+
+    var texts = svg.selectAll("text")
+                .data(dataset)
+                .enter();
+     
+    texts.append("text")
+         .text(function(){
+              return dataset[0].metric;
+         })
+         .attr('id', "Name")
+         .attr('transform', "translate(" + ((width + margin.left) / 4) + ", " + ((height + margin.top) / 1.5) + ")")
+         .attr("font-size",25)
+         .style("fill", "#000000");
+	
+	}
+</script>
+
+<script type="text/javascript">  
+/* UPDATE Plant and Risk Score */
+function updatePlant_RiskScore(name, colorChosen) {
+// Plant_RiskScore_Text_Chart
+
+    var firstDatasetPointerChart = datasetPointerChartChosen(name);    
+	
+	   
+	var name = firstDatasetPointerChart[0].name;
+	
+    var value = firstDatasetPointerChart[0].risk_score; 
+	
+ //Circle Data Set
+ var circleData = [
+   { "cx": 20, "cy": 20, "radius": 20, "color" : "green" },
+   { "cx": 70, "cy": 70, "radius": 20, "color" : "purple" }];
+ 
+ //Create the SVG Viewport
+ var svgContainer = d3.select("body").append("svg")
+                                      .attr("width",200)
+                                      .attr("height",200);
+
+//Add circles to the svgContainer
+var circles = svgContainer.selectAll("circle")
+                           .data(circleData)
+                           .enter()
+                           .append("circle");
+
+//Add the circle attributes
+var circleAttributes = circles
+                       .attr("cx", function (d) { return d.cx; })
+                       .attr("cy", function (d) { return d.cy; })
+                       .attr("r", function (d) { return d.radius; })
+                       .style("fill", function (d) { return d.color; });
+
+//Add the SVG Text Element to the svgContainer
+var text = svgContainer.selectAll(name)
+                        .data(circleData)
+                        .enter()
+                        .append(name);
+
+//Add SVG Text Element Attributes
+var textLabels = text
+                 .attr("x", function(d) { return d.cx; })
+                 .attr("y", function(d) { return d.cy; })
+                 .text( function (d) { return "( " + d.cx + ", " + d.cy +" )"; })
+                 .attr("font-family", "sans-serif")
+                 .attr("font-size", "20px")
+                 .attr("fill", "red");
+
+   
+}
+</script>
+
+  </body>
+</html>
