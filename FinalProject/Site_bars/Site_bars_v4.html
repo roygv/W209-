@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <!-- Title -->
+    <title>Battery Storage Monitoring</title>
+    
+    <!-- Style and library import -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style_v4.css">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+        
+        <!-- Body -->
+        <body>
+            
+            <!-- Side bar -->
+            <div class="sidebar bar-block card-2 animate-right" style="display:none;right:0;" id="rightMenu">
+                
+                <!-- Close button for side bar -->
+                <button onclick="closeMenu()" class="bar-item button large teal">&times; Notifications</button>
+                
+                <!-- Live switch and information button -->
+                Data:
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="liveswitch" onclick='liveswitchClick();' checked>
+                        <label class="onoffswitch-label" for="liveswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                </div>
+                
+                
+                <!-- Notifications -->
+                <a href="#" class="bar-item notification">Notification 1</a>
+                <h5>This is a regular text</h5>
+                <a href="#" class="bar-item notification">Notification 2</a>
+                <a href="#" class="bar-item notification">Notification 3</a>
+                
+                <!-- Question mark -->
+                
+            
+            </div>
+            
+            <!-- Top bar -->
+            <div class="teal container">
+                <span id="date"></span>
+                <svg id="context" width="960" height="100"></svg>
+                <button class="button teal xlarge right" onclick="openMenu()">&#9776;</button>
+                
+            </div>
+            
+            <!-- Main content -->
+            <div class="container">
+                <p>This is were the core things would go</p>
+                <svg id="focus" width="960" height="500"></svg>
+                
+            </div>
+
+            <script type="text/javascript" src="script_v4.js"></script>
+            
+            <!-- Script import -->
+            
+            
+            
+        </body>
+</html>
+
