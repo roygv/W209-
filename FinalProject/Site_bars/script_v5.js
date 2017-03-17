@@ -123,23 +123,32 @@ function type_timeseries(d) {
 
 ///////  Notification Center ///////
 
-function render_notification(d) {
-    document.getElementById("notificationCenter").innerHTML =
-        "<a href=\"#\" class=\"bar-item notification\">Notification </a>"
-        + "<p>" + d.description + "</p>"
-        + "<p>" + d.description + "</p>"
+var node = null;
+document.getElementById('node').innerHTML = node;
+
+function render_notification(v, d) {
+    return v + "<p onclick='notifClick(this);' id='"+ d.nodeID +"' class='bar-item notification'>Notification "+ d.alertID +"</p>"
 }
 
 d3.csv("alert_data.csv", type_alert, function(error, data) {
        if (error) throw error;
        
-       console.log(data[0])
+       var n = data.length;
+       var notif_text = "";
        
-       render_notification(data[0])
+       for (var i = 0; i < data.length; i++) {
+       var notif_text = render_notification(notif_text, data[i]);
+       }
        
+       document.getElementById('notificationCenter').innerHTML = notif_text;
        
        
 });
+
+function notifClick(d){
+    var node = d.id;
+    document.getElementById('node').innerHTML = node;
+}
 
 function type_alert(d) {
     d.date = parseDate(d.date);
