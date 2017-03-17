@@ -182,7 +182,7 @@ a {
 
 .sidebar {
   height: 100%;
-  width: 200px;
+  width: 300px;
   background-color: #fff;
   position: fixed!important;
   z-index: 1;
@@ -522,7 +522,7 @@ a {
 
 /* Colors */
 
-.teal{
+.topbar{
   color: #fff!important;
   background-color: #009688!important;
 }
@@ -556,6 +556,12 @@ a {
 }
 
 
+.inline {
+    display: inline-block;
+    vertical-align: middle;
+    margin:10px;
+}
+
 /************************** On/Off switch **************************/
 
 
@@ -582,7 +588,7 @@ a {
 .onoffswitch-inner:before {
     content: "LIVE";
     padding-left: 10px;
-    background-color: #34A7C1; color: #FFFFFF;
+    background-color: orange; color: #FFFFFF;
 }
 .onoffswitch-inner:after {
     content: "PAST";
@@ -606,20 +612,16 @@ a {
 }
 
 
-/************************** Zoom and Brush **************************/
+/************************** Zoom and Brush formatting **************************/
 
 .area {
-    fill: steelblue;
-    clip-path: url(#clip);
-}
-
-.area2 {
     fill: white;
     clip-path: url(#clip);
 }
 
-.zoom {
-    cursor: move;
-    fill: none;
-    pointer-events: all;
+.axis text{
+    fill: white;
+}
+.axis line, .axis path{
+    stroke: silver;
 }
