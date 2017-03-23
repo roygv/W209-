@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+    <meta charset="utf-8">
+
+    <!-- Title -->
+    <title>Battery Storage Monitoring</title>
+    
+    <!-- Style and library import -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style_v6.css">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+	<!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+
+        
+        <!-- Body -->
+        <body>
+            
+            <!-- Side bar -->
+            <div class="sidebar bar-block card-2 animate-right" style="display:none;right:0;" id="rightMenu">
+                
+                <!-- Close button for side bar -->
+                <button onclick="closeMenu()" class="bar-item button large teal">&times; Notifications</button>
+                
+                
+                <!-- Notifications -->
+                
+                <div id = "notificationCenter"></div>
+                
+                <!-- Question mark -->
+                
+                
+            </div>
+            
+            <!-- Top bar -->
+            <div class="topbar container">
+                
+                <!-- Switch button -->
+                <div class="inline onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="liveswitch" onclick='liveswitchClick();' checked>
+                        <label class="onoffswitch-label" for="liveswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                </div>
+                
+                <!-- Context graph -->
+                <svg class="inline" id="context" width="960" height="75" style="display:inline"></svg>
+                
+                <!-- Notification button -->
+                <button class="inline button topbar xlarge right" onclick="openMenu()">&#9776;</button>
+                
+            </div>
+            
+            <!-- Main content -->
+            <div class="container">
+                <p>This is what your graphs should be using (and potentially modifying in the case of the node, for Shih)</p>
+                <p>Node: <span id="node"></span>
+                <p>Start date: <span id="start_date"></span></p>
+                <p>End date: <span id="end_date"></span></p>
+                
+            </div>
+
+			
+			<script type="text/javascript" src="expand_collapse_v2.js"></script>
+            
+			<script type="text/javascript" src="script_v5.js"></script>  
+			
+			            
+            <!-- Script import -->
+            
+            
+            
+        </body>
+</html>
+
