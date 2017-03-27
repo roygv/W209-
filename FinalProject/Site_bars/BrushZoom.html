@@ -7,7 +7,7 @@
         clip-path: url(#clip);
     }
 
-    .zoom {
+    .telemetryGraph {
         cursor: move;
         fill: none;
         pointer-events: all;
@@ -15,7 +15,7 @@
 
 </style>
 <svg width="960" height="500"></svg>
-<script src="d3.v4.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="AgI.js"></script>
 <script>
 
@@ -78,7 +78,6 @@
         .attr("class", "context")
         .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-
     getData('LMP',parseDate('2016-08-01T00:00:00Z'),parseDate('2017-03-01T00:00:00Z'),function(error, json) {
         if (error) throw error;
         data = json.results[0].series[0].values;
@@ -103,44 +102,13 @@
             .call(brush.move, x.range());
 
         svg.append("rect")
-            .attr("class", "zoom")
+            .attr("class", "telemetryGraph")
             .attr("width", width)
             .attr("height", height)
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
             .call(zoom);
     });
-/*
-     d3.csv("sp500.csv", type, function(error, data) {
-        if (error) throw error;
 
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.price; })]);
-        x2.domain(x.domain());
-        y2.domain(y.domain());
-
-        context.append("path")
-            .datum(data)
-            .attr("class", "area")
-            .attr("d", area2);
-
-        context.append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + height2 + ")")
-            .call(xAxis2);
-
-        context.append("g")
-            .attr("class", "brush")
-            .call(brush)
-            .call(brush.move, x.range());
-
-        svg.append("rect")
-            .attr("class", "zoom")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-            .call(zoom);
-    });
-*/
     getData('LMP',parseDate('2016-08-01T00:00:00Z'),parseDate('2017-03-01T00:00:00Z'),function(error, json) {
         if (error) throw error;
 
@@ -161,27 +129,6 @@
 
     });
 
-    /*
-     d3.csv("sp500.csv", type, function(error, data) {
-             if (error) throw error;
-
-             focus.append("path")
-             .datum(data)
-             .attr("class", "area")
-             .attr("d", area);
-
-             focus.append("g")
-             .attr("class", "axis axis--x")
-             .attr("transform", "translate(0," + height + ")")
-             .call(xAxis);
-
-             focus.append("g")
-             .attr("class", "axis axis--y")
-             .call(yAxis);
-
-             });
-    */
-
     function updateFocus(point, from, until) {
         getData(point, from, until, function(error, json) {
             if (error) throw error;
@@ -199,7 +146,7 @@
         updateFocus('LMP', x.domain()[0], x.domain()[1]);
         focus.select(".area").attr("d", area);
         focus.select(".axis--x").call(xAxis);
-        svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
+        svg.select(".telemetryGraph").call(zoom.transform, d3.zoomIdentity
             .scale(width / (s[1] - s[0]))
             .translate(-s[0], 0));
     }
@@ -213,11 +160,5 @@
         focus.select(".axis--x").call(xAxis);
         context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
     }
-/*
-    function type(d) {
-        d.date = parseDate(d.date);
-        d.price = +d.price;
-        return d;
-    }
-*/
+
 </script>

@@ -619,6 +619,7 @@ a {
     clip-path: url(#clip);
 }
 
+
 .axis text{
     fill: white;
 }
@@ -626,6 +627,27 @@ a {
     stroke: silver;
 }
 
+#telemetryGraph {
+  cursor: move;
+  fill: black;
+  pointer-events: all;
+}
+
+/* for graph module */
+#telemetryGraph .axis text{
+  fill: black;
+}
+
+.zoomArea {
+  fill: #4d576b;
+  clip-path: url(#clip);
+}
+
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
 
 /************************** Notification buttons **************************/
 
@@ -651,3 +673,53 @@ a {
     background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
     text-decoration: none;
 }
+/* ------------------------------------------- tables ---------------------------*/
+#telemetryArray svg{
+  /*background: #d9d9d9;*/
+  margin-left: 40px;
+  padding: 0px;
+  font-family: Univers, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+#telemetryArray .button{
+  padding-top: 0;
+}
+
+.button rect {
+  stroke: #999faa; /* navy 40% */
+  stroke-width: 2px;
+}
+
+.button rect.pressed {
+  fill: #000f2b; /* navy 100% */
+}
+
+.button #gradient-start {
+  stop-color: #999faa; /* navy 40% */
+  stop-opacity: 1;
+}
+
+.button #gradient-stop {
+  stop-color: #4d576b; /* navy 70% */
+  stop-opacity: 1;
+}
+
+.button #gradient-start.active, .button #gradient-start.pressed {
+  stop-color: #4d576b; /* navy 70% */
+}
+
+.button #gradient-stop.active, .button #gradient-stop.pressed {
+  stop-color: #000f2b; /* navy 100% */
+}
+
+.button text {
+  font-size: 12px;
+  fill: #eee;
+  pointer-events: none;
+  text-anchor: middle;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
