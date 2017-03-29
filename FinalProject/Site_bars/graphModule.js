@@ -1,8 +1,7 @@
 var AgIGraph = (function () {
 
-    var myData, myOverviewData, mySeries, myFrom, myUntil, brush, zoom, area, area2, focus,context;
+    var myData, myOverviewData, mySeries, myFrom, myUntil, brush, zoom, area, area2, focus,context, x;
 
-    // A private counter variable
     var formatDate = d3.timeFormat("%Y-%m-%dT%H:%M:%SZ");
     var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
 
@@ -14,8 +13,10 @@ var AgIGraph = (function () {
         height2 = +svg.attr("height") - margin2.top - margin2.bottom;
 
 
-    var x = d3.scaleTime().range([0, width]),
-        x2 = d3.scaleTime().range([0, width]),
+//    x = function() {d3.scaleTime().range([0, width])};
+
+    var x = d3.scaleTime().range([0, width]);
+    var x2 = d3.scaleTime().range([0, width]),
         y = d3.scaleLinear().range([height, 0]),
         y2 = d3.scaleLinear().range([height2, 0]);
 
@@ -239,8 +240,7 @@ var AgIGraph = (function () {
     };
 
 })();
-
-AgIData.init("http://169.53.133.132:8086/query?db=w251&q=","roy","Kaftor");
+now=new Date()
 //AgIData.init("http://test1.gvirtsman.com:8086/query?db=w251&q=","roy","Kaftor");
-AgIGraph.init('2 LMP',AgIData.parseDate('2016-08-01T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'));
+AgIGraph.init('A Gross GN MW',AgIData.parseDate('2016-08-01T00:00:00Z'),now);
 

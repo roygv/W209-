@@ -38,7 +38,8 @@ context.append("svg")
 .attr("class", "context")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var parseDate = d3.timeParse("%b %Y");
+//var parseDate = d3.timeParse("%b %Y");
+var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
 
 var x = d3.scaleTime().range([0, width]),
 y = d3.scaleLinear().range([height, 0]);
@@ -51,10 +52,12 @@ var brush = d3.brushX()
 .on("brush end", brushed);
 
 var area = d3.area()
-.curve(d3.curveMonotoneX)
-.x(function(d) { return x(d.date); })
-.y0(height)
-.y1(function(d) { return y(d.events); });
+            .curve(d3.curveMonotoneX)
+            .x(function(d) { return x(parseDate(d[0])); })
+            //.x(function(d) { return x(d.date); })
+            .y0(height)
+            .y1(function(d) { return y(+d[1]); });
+            //.y1(function(d) { return y(d.events); });
 
 context.append("defs").append("clipPath")
 .attr("id", "clip")
@@ -63,46 +66,54 @@ context.append("defs").append("clipPath")
 .attr("height", height);
 
 function top_graph(l){
-    d3.csv("alert_timeseries.csv", type_timeseries, function(error, data) {
-//     AgIData.getData(series,from,until,updateOverview);
+    AgIData.getData('A Gross GN MW',AgIData.parseDate('2016-08-01T00:00:00Z'),current_date,function(error, json) {
+//    d3.csv("alert_timeseries.csv", type_timeseries, function(error, data) {
            if (error) throw error;
-           
-           x.domain(d3.extent(data, function(d) { return d.date; }));
-           y.domain([0, d3.max(data, function(d) { return d.events; })]);
+            if (json.results[0].series) {
+                data = json.results[0].series[0].values;
+                x.domain(d3.extent(data, function (d) {
+                    return parseDate(d[0]);
+                }));
+                y.domain([0, d3.max(data, function (d) {
+                    return +d[1];
+                })]);
+                //        x.domain(d3.extent(data, function(d) { return d.date; }));
+                //        y.domain([0, d3.max(data, function(d) { return d.events; })]);
 
-           var x_init = (l) ? x.range()[1]-50 : 0;
-        
-           // Clean of past graphs
-           
-           d3.selectAll(".area").remove();
-           d3.selectAll(".axis").remove();
-           d3.selectAll(".brush").remove();
-           
-           // New ones
-           
-           context.append("path")
-           .datum(data)
-           .attr("class", "area")
-           .attr("transform", "translate(0," + margin.top + ")")
-           .attr("d", area);
-           
-           context.append("g")
-           .attr("class", "axis")
-           .attr("transform", "translate(0," + (height+margin.top) + ")")
-           .call(xAxis);
-           
-           context.append("text")
-           .attr("class", "axis")
-           .attr("transform", "translate(1," + (height-2) + ")")
-           .attr("font-size", "12px")
-           .attr("fill", "silver")
-           .text("Nb events");
-           
-           context.append("g")
-           .attr("class", "brush")
-           .call(brush)
-           .attr("transform", "translate(0," + margin.top + ")")
-           .call(brush.move, [x_init, x.range()[1]]);
+                var x_init = (l) ? x.range()[1] - 50 : 0;
+
+                // Clean of past graphs
+
+                d3.select(".topbar").selectAll(".area").remove();
+                d3.select(".topbar").selectAll(".axis").remove();
+                d3.select(".topbar").selectAll(".brush").remove();
+
+                // New ones
+
+                context.append("path")
+                    .datum(data)
+                    .attr("class", "area")
+                    .attr("transform", "translate(0," + margin.top + ")")
+                    .attr("d", area);
+
+                context.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(0," + (height + margin.top) + ")")
+                    .call(xAxis);
+
+                context.append("text")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(1," + (height - 2) + ")")
+                    .attr("font-size", "12px")
+                    .attr("fill", "silver")
+                    .text("Nb events");
+
+                context.append("g")
+                    .attr("class", "brush")
+                    .call(brush)
+                    .attr("transform", "translate(0," + margin.top + ")")
+                    .call(brush.move, [x_init, x.range()[1]]);
+            }
            });
 };
 

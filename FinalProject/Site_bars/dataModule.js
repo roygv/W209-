@@ -64,3 +64,5 @@ var AgIData = (function () {
     };
 
 })();
+
+AgIData.init("http://169.53.133.132:8086/query?db=w251&q=","roy","Kaftor");
