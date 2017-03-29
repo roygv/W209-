@@ -1,6 +1,6 @@
 var AgIGraph = (function () {
 
-    var myData, mySeries, myFrom, myUntil, brush, zoom, area, area2, focus,context;
+    var myData, myOverviewData, mySeries, myFrom, myUntil, brush, zoom, area, area2, focus,context;
 
     // A private counter variable
     var formatDate = d3.timeFormat("%Y-%m-%dT%H:%M:%SZ");
@@ -39,12 +39,15 @@ var AgIGraph = (function () {
     }
 
     function updateFocus(point, from, until) {
+        myFrom = from;
+        myUntil = until;
         AgIData.getData(point, from, until, function(error, json) {
             if (error) throw error;
             if (json.results[0].series) {
                 myData = json.results[0].series[0].values;
                 focus.select("path")
                     .datum(myData);
+                updateYaxis();
             }
         });
     }
@@ -112,6 +115,13 @@ var AgIGraph = (function () {
             .attr("width", width)
             .attr("height", height);
 
+        svg.select("defs")
+            .append("linearGradient")
+            .attr("id","mainGradient").attr("x1","0%").attr("y1","100%").attr("x2","0%").attr("y2","0%")
+            .append("stop").attr("class","stop-bottom").attr("offset","5%")
+        svg.select("defs linearGradient")
+            .append("stop").attr("class","stop-top").attr("offset","95%")
+
         focus = svg.append("g")
             .attr("class", "focus")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -131,18 +141,16 @@ var AgIGraph = (function () {
     function updateOverview(error, json) {
         if (error) throw error;
         if (json.results[0].series) {
-            myData = json.results[0].series[0].values;
-            x.domain(d3.extent(myData, function (d) {
+            myOverviewData = json.results[0].series[0].values;
+            x2.domain(d3.extent(myOverviewData, function (d) {
                 return parseDate(d[0]);
             }));
-            y.domain([0, d3.max(myData, function (d) {
+            y2.domain([0, d3.max(myOverviewData, function (d) {
                 return +d[1] || 0;
             })]);
-            x2.domain(x.domain());
-            y2.domain(y.domain());
 
             context.append("path")
-                .datum(myData)
+                .datum(myOverviewData)
                 .attr("class", "zoomArea")
                 .attr("d", area2);
 
@@ -155,6 +163,8 @@ var AgIGraph = (function () {
                 .attr("class", "brush")
                 .call(brush)
                 .call(brush.move, x.range());
+
+            updateDetails(error, json);
         }
     }
 
@@ -164,7 +174,13 @@ var AgIGraph = (function () {
         if (json.results[0].series) {
 
             myData = json.results[0].series[0].values;
-//            focus.select(".focus").remove();
+            x.domain(d3.extent(myData, function (d) {
+                return parseDate(d[0]);
+            }));
+            y.domain([0, d3.max(myData, function (d) {
+                return +d[1] || 0;
+            })]);
+
             focus.append("path")
                 .datum(myData)
                 .attr("class", "zoomArea")
@@ -175,10 +191,11 @@ var AgIGraph = (function () {
                 .attr("transform", "translate(0," + height + ")")
                 .call(xAxis);
 
-            updateYaxis();
             focus.append("g")
                 .attr("class", "axis axis--y")
                 .call(yAxis);
+
+            updateYaxis();
 
         }
     }
@@ -190,18 +207,20 @@ var AgIGraph = (function () {
             myUntil = until;
             startClean();
             AgIData.getData(series,from,until,updateOverview);
-            AgIData.getData(series,from,until,updateDetails);
         }, //init
 
         updateInterval: function(from, until) {
+            myFrom = from;
+            myUntil = until;
             x.domain(from, until);
             if (mySeries !== NaN)
                 AgIData.getData(mySeries,from,until,function(){
                 focus.select(".zoomArea").attr("d", area);
                 focus.select(".axis--x").call(xAxis);
-//                svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
-//                    .scale(width / (s[1] - s[0]))
-//                    .translate(-s[0], 0));
+                var s = x2.range();
+                svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
+                   .scale(width / (s[1] - s[0]))
+                   .translate(-s[0], 0));
                     }
                 );
         }, //updateInterval
@@ -210,12 +229,18 @@ var AgIGraph = (function () {
             mySeries=series;
             startClean();
             AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),AgIData.parseDate('2017-03-01T00:00:00Z'),updateOverview);
-            AgIData.getData(series,myFrom,myUntil,updateDetails);
+            x.domain([myFrom, myUntil]);
+            updateFocus(mySeries, myFrom, myUntil);
+            focus.select(".zoomArea").attr("d", area);
+            focus.select(".axis--x").call(xAxis);
+            context.select(".brush").call(brush.move, [myFrom, myUntil]);
+
         } //updateSeries
     };
 
 })();
 
-AgIData.init("https://198.11.193.105:8086/query?db=w251&q=","roy","Kaftor");
+AgIData.init("http://169.53.133.132:8086/query?db=w251&q=","roy","Kaftor");
 //AgIData.init("http://test1.gvirtsman.com:8086/query?db=w251&q=","roy","Kaftor");
 AgIGraph.init('2 LMP',AgIData.parseDate('2016-08-01T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'));
+

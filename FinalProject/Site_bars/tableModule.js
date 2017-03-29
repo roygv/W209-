@@ -1,16 +1,6 @@
 var AgITable = (function () {
     var tableDiv = d3.select("#telemetryArray");
     var data;
-    var initialData = [
-        { "name" : "LMP", "id" : 45 },
-        { "name" : "001", "id" : 50 },
-        { "name" : "002", "id" : 55 },
-        { "name" : "003", "id" : 50 },
-        { "name" : "004", "id" : 45 },
-        { "name" : "bla bla bla", "id" : 50 },
-        { "name" : "Padam Padam", "id" : 50 },
-        { "name" : "Lorem ipsum", "id" : 55 }
-    ];
 
 // function in charge of the array of tables
     function tabulate(data, columns) {
@@ -89,12 +79,21 @@ var AgITable = (function () {
         myPublicVar: "foo",
 
         data: [
-            {label: "LMP", row: 1, col: 1,  series:"LMP"},
-            {label: "LMP 2", row: 1, col: 2, series:"2 LMP"},
-            {label: "Gross GN MW", row: 1, col: 3, series:"A Gross GN MW" },
+            {label: "% share MW", row: 1, col: 1,  series:"% share MW"},
+            {label: "Inverter 1A", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
+            {label: "Inverter 1B", row: 1, col: 3,  series:"- INVERTER 1B Mw"},
+            {label: "Inverter 1C", row: 1, col: 4,  series:"- INVERTER 1C Mw"},
+            {label: "LMP", row: 1, col: 5,  series:"LMP"},
+            {label: "LMP 2", row: 1, col: 6, series:"2 LMP"},
+            {label: "Gross GN MW", row: 1, col: 7, series:"A Gross GN MW" },
             {label: "Gross GN MV", row: 2, col: 1, series:"A Gross GN MV" },
             {label: "Base Point 2", row: 2, col: 2, series:"2 Base Point" },
-            {label: "LD2 RRSC", row: 2, col: 3, series:"2 Net MW" }
+            {label: "White Baker MVA", row: 2, col: 3, series:"- White Baker (Net) MVA" },
+            {label: "White Baker MW", row: 2, col: 4, series:"- White Baker (Net) MW" },
+            {label: "2 Base Point", row: 2, col: 5, series:"2 Base Point" },
+            {label: "2 Net MW", row: 2, col: 6, series:"2 Net MW" },
+            {label: "LAAR, IEM/A", row: 2, col: 7, series:"LAAR, IEM Train A MW" },
+            {label: "LAAR, IEM/B", row: 2, col: 8, series:"LAAR, IEM Train B MW" }
         ],
 
         init: function() {

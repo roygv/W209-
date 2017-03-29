@@ -639,7 +639,13 @@ a {
 }
 
 .zoomArea {
-  fill: #4d576b;
+  /*fill: #4d576b;*/
+  /*fill: none;*/
+  fill: url(#mainGradient);
+  stroke: #4346EB;
+  stroke-linejoin: "round";
+  stroke-linecap: "round";
+  stroke-width: 0.5;
   clip-path: url(#clip);
 }
 
@@ -649,6 +655,15 @@ a {
   pointer-events: all;
 }
 
+.stop-top {
+  stop-color: #4346EB;  /* Hot */
+  stop-opacity:0.7;
+}
+
+.stop-bottom {
+  stop-color: #f1f8ff;  /* Cold */
+  stop-opacity:0.3;
+}
 /************************** Notification buttons **************************/
 
 
@@ -680,6 +695,8 @@ a {
   padding: 0px;
   font-family: Univers, Arial, sans-serif;
   box-sizing: border-box;
+  width: 960px;
+  height: 100px;
 }
 
 #telemetryArray .button{
@@ -697,12 +714,12 @@ a {
 
 .button #gradient-start {
   stop-color: #999faa; /* navy 40% */
-  stop-opacity: 1;
+  stop-opacity: .6;
 }
 
 .button #gradient-stop {
   stop-color: #4d576b; /* navy 70% */
-  stop-opacity: 1;
+  stop-opacity: .6;
 }
 
 .button #gradient-start.active, .button #gradient-start.pressed {
@@ -714,7 +731,7 @@ a {
 }
 
 .button text {
-  font-size: 12px;
+  font-size: 10px;
   fill: #eee;
   pointer-events: none;
   text-anchor: middle;
