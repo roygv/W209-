@@ -65,7 +65,6 @@ context.append("defs").append("clipPath")
 function top_graph(l){
     
     d3.csv("alert_timeseries.csv", type_timeseries, function(error, data) {
-//     AgIData.getData(series,from,until,updateOverview);
            if (error) throw error;
            
            x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -111,7 +110,6 @@ function brushed() {
     var s = d3.event.selection || x.range();
     var start_date = s.map(x.invert, x)[0];
     var end_date = s.map(x.invert, x)[1];
-//    AgIGraph.updateInterval(start_date,end_date);
     document.getElementById('start_date').innerHTML = start_date;
     document.getElementById('end_date').innerHTML = end_date;
 }
