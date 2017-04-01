@@ -63,6 +63,7 @@ context.append("defs").append("clipPath")
 .attr("height", height);
 
 function top_graph(l){
+    
     d3.csv("alert_timeseries.csv", type_timeseries, function(error, data) {
 //     AgIData.getData(series,from,until,updateOverview);
            if (error) throw error;
@@ -70,40 +71,38 @@ function top_graph(l){
            x.domain(d3.extent(data, function(d) { return d.date; }));
            y.domain([0, d3.max(data, function(d) { return d.events; })]);
 
-           var x_init = (l) ? x.range()[1]-50 : 0;
-        
-           // Clean of past graphs
+           var x_init = (l) ? x.range()[1]/2 : x.range()[1]/2;
            
-           d3.selectAll(".area").remove();
-           d3.selectAll(".axis").remove();
-           d3.selectAll(".brush").remove();
+           // Clean of past graphs
+           d3.selectAll(".topgraph").remove();
            
            // New ones
            
            context.append("path")
            .datum(data)
-           .attr("class", "area")
+           .attr("class", "area topgraph")
            .attr("transform", "translate(0," + margin.top + ")")
            .attr("d", area);
            
            context.append("g")
-           .attr("class", "axis")
+           .attr("class", "axis topgraph")
            .attr("transform", "translate(0," + (height+margin.top) + ")")
            .call(xAxis);
            
            context.append("text")
-           .attr("class", "axis")
+           .attr("class", "axis topgraph")
            .attr("transform", "translate(1," + (height-2) + ")")
            .attr("font-size", "12px")
            .attr("fill", "silver")
            .text("Nb events");
            
            context.append("g")
-           .attr("class", "brush")
+           .attr("class", "brush topgraph")
            .call(brush)
            .attr("transform", "translate(0," + margin.top + ")")
            .call(brush.move, [x_init, x.range()[1]]);
            });
+
 };
 
 top_graph(liveon)
@@ -125,11 +124,18 @@ function type_timeseries(d) {
 
 ///////  Notification Center ///////
 
+
 var node = null;
+
 document.getElementById('node').innerHTML = node;
 
 function render_notification(v, d) {
-    return v + "<p onclick='notifClick(this);' id='"+ d.nodeID +"' class='bar-item notification'>Notification "+ d.alertID +"</p>"
+    return v + "<div onclick='notifClick(this);' id='"+ d.nodeID +"' class='delay notibox'><b>"+ (d.date.toTimeString().split(' ')[0]) +"</b> (Notification #"+ d.alertID +") <br />\
+    "+ d.nature + " at node "+ d.nodeID +" <br /> <br /> \
+        <div class='delay cancel'>Dismiss</div> \
+        <div class='delay solved'>Resolved</div> \
+        <div class='delay escalate'>Escalate</div> \
+    </div>"
 }
 
 d3.csv("alert_data.csv", type_alert, function(error, data) {
@@ -142,19 +148,31 @@ d3.csv("alert_data.csv", type_alert, function(error, data) {
        var notif_text = render_notification(notif_text, data[i]);
        }
        
-       document.getElementById('notificationCenter').innerHTML = notif_text;
-       
+       $('#notificationCenter').html(notif_text);
        
 });
+
+function type_alert(d) {
+    d.date = new Date(d.date);
+    d.alertID = +d.alertID;
+    d.nodeID = +d.nodeID;
+    return d;
+}
 
 function notifClick(d){
     var node = d.id;
     document.getElementById('node').innerHTML = node;
 }
 
-function type_alert(d) {
-    d.date = parseDate(d.date);
-    d.alertID = +d.alertID;
-    d.nodeID = +d.nodeID;
-    return d;
-}
+
+$(".toggle, .sidetoggle").click(function () {
+                   $(".sidebar").toggleClass('active');
+                   });
+
+$(document).on("click",".cancel, .solved", function () {
+                   $(this).parent().toggleClass('gone');
+                   });
+
+$(document).on("click",".escalate", function () {
+                   $(this).parent().toggleClass('escalated');
+                   });
