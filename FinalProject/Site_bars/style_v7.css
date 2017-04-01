@@ -730,7 +730,7 @@ a {
   stroke-linejoin: "round";
   stroke-linecap: "round";
   stroke-width: 0.5;
-  clip-path: url(#clip);
+  clip-path: url(#clipGraph);
 }
 
 .zoom {
@@ -751,7 +751,7 @@ a {
 /* ------------------------------------------- tables ---------------------------*/
 #telemetryArray svg{
   /*background: #d9d9d9;*/
-  margin-left: 40px;
+  margin-left: 200px;
   padding: 0px;
   font-family: Univers, Arial, sans-serif;
   box-sizing: border-box;

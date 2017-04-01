@@ -111,7 +111,7 @@ var AgIGraph = (function () {
             });
 
         svg.append("defs").append("clipPath")
-            .attr("id", "clip")
+            .attr("id", "clipGraph")
             .append("rect")
             .attr("width", width)
             .attr("height", height);

@@ -37,16 +37,6 @@ var AgITable = (function () {
     }
 
     function buttonArray(data) {
-        // var width = 960, height = 500;
-        // var data = [
-        //     {label: "LMP", row: 1, col: 1,  series:"LMP"},
-        //     {label: "2 LMP", row: 1, col: 2 },
-        //     {label: "Button 3", row: 1, col: 3 },
-        //     {label: "Button 4", row: 2, col: 1 },
-        //     {label: "Button 5", row: 2, col: 2 },
-        //     {label: "Button 6", row: 2, col: 3 }
-        // ]
-
         var svg = d3.select('#telemetryArray svg')
         width = svg.attr("width")
         height = svg.attr("height")
