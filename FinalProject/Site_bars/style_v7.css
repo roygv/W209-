@@ -613,6 +613,7 @@ a {
 .axis text{
     fill: white;
 }
+
 .axis line, .axis path{
     stroke: silver;
 }
@@ -707,4 +708,106 @@ a {
 
 .gone{
     display:none;
+}
+
+
+/* Roy's stuff starts here:    for graph module */
+#telemetryGraph {
+  cursor: move;
+  fill: black;
+  pointer-events: all;
+}
+
+#telemetryGraph .axis text{
+  fill: black;
+}
+
+.zoomArea {
+  /*fill: #4d576b;*/
+  /*fill: none;*/
+  fill: url(#mainGradient);
+  stroke: #4346EB;
+  stroke-linejoin: "round";
+  stroke-linecap: "round";
+  stroke-width: 0.5;
+  clip-path: url(#clip);
+}
+
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
+.stop-top {
+  stop-color: #4346EB;  /* Hot */
+  stop-opacity:0.7;
+}
+
+.stop-bottom {
+  stop-color: #f1f8ff;  /* Cold */
+  stop-opacity:0.3;
+}
+/* ------------------------------------------- tables ---------------------------*/
+#telemetryArray svg{
+  /*background: #d9d9d9;*/
+  margin-left: 40px;
+  padding: 0px;
+  font-family: Univers, Arial, sans-serif;
+  box-sizing: border-box;
+  width: 960px;
+  height: 100px;
+}
+
+#telemetryArray .button{
+  padding-top: 0;
+}
+
+.button rect {
+  stroke: #999faa; /* navy 40% */
+  stroke-width: 2px;
+}
+
+.button rect.pressed {
+  fill: #000f2b; /* navy 100% */
+}
+
+.button #gradient-start {
+  stop-color: #999faa; /* navy 40% */
+  stop-opacity: .6;
+}
+
+.button #gradient-stop {
+  stop-color: #4d576b; /* navy 70% */
+  stop-opacity: .6;
+}
+
+.button #gradient-start.active, .button #gradient-start.pressed {
+  stop-color: #4d576b; /* navy 70% */
+}
+
+.button #gradient-stop.active, .button #gradient-stop.pressed {
+  stop-color: #000f2b; /* navy 100% */
+}
+
+.button text {
+  font-size: 10px;
+  fill: #eee;
+  pointer-events: none;
+  text-anchor: middle;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.node canvas{
+  cursor: pointer;
+  stroke: #3182bd;
+  stroke-width: 1px;
+}
+
+.link canvas{
+  fill: none;
+  stroke: #9ecae1;
+  stroke-width: 1px;
 }

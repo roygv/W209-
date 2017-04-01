@@ -17,7 +17,6 @@
             
             <!-- Top bar -->
             <div class="topbar container">
-                
                 <!-- Switch button -->
                 <div class="inline onoffswitch">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="liveswitch" onclick='liveswitchClick();' checked>
@@ -32,18 +31,39 @@
                 
                 <!-- Notification button -->
                 <div class="right inline toggle">&#9776;</div>
-                
             </div>
             
             <!-- Main content -->
             <div class="container">
-                <p>This is what your graphs should be using (and potentially modifying in the case of the node, for Shih)</p>
+                <canvas width="960" height="450"></canvas>
                 <p>Node: <span id="node"></span>
-                <p>Start date: <span id="start_date"></span></p>
-                <p>End date: <span id="end_date"></span></p>
+                Start date: <span id="start_date"></span>
+                End date: <span id="end_date"></span>
                 
             </div>
-            
+
+            <div  id="telemetryArray" box-sizing="border-box">
+                <svg width="400" height="100">
+
+                </svg>
+            </div>
+            <div id="telemetryGraph">
+                <svg width="960" height="400">
+                    <defs>
+                        <linearGradient id="mainGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop class="stop-bottom" offset="5%"></stop>
+                            <stop class="stop-top" offset="95%"></stop>
+                        </linearGradient>
+                    </defs>
+                    <g>
+                        <g class="axis axis--x">
+                        </g>
+                        <g class="axis axis--y">
+                        </g>
+
+                    </g>
+                </svg>
+            </div>
             <!-- Sidebar -->
             
             <div class="delay sidebar">
@@ -54,9 +74,13 @@
             </div>
             
             <!-- Script import -->
-
+            <script type="text/javascript" src="dataModule.js"></script>
+            <script type="text/javascript" src="graphModule.js"></script>
+            <script type="text/javascript" src="buttonModule.js"></script>
+            <script type="text/javascript" src="tableModule.js"></script>
+            <script type="text/javascript" src="treeModule.js"></script>
             <script type="text/javascript" src="script_v7.js"></script>
-            
+
         </body>
 </html>
 

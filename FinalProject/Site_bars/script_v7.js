@@ -110,8 +110,9 @@ function brushed() {
     var s = d3.event.selection || x.range();
     var start_date = s.map(x.invert, x)[0];
     var end_date = s.map(x.invert, x)[1];
-    document.getElementById('start_date').innerHTML = start_date;
-    document.getElementById('end_date').innerHTML = end_date;
+    var formatDate = d3.timeFormat("%Y-%m-%dT%H:%M:%SZ");
+    document.getElementById('start_date').innerHTML = formatDate(start_date);
+    document.getElementById('end_date').innerHTML = formatDate(end_date);
 }
 
 function type_timeseries(d) {

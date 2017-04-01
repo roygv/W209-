@@ -6,8 +6,8 @@ var AgIGraph = (function () {
     var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
 
     var svg = d3.select("#telemetryGraph svg"),
-        margin = {top: 20, right: 20, bottom: 110, left: 40},
-        margin2 = {top: 430, right: 20, bottom: 30, left: 40},
+        margin = {top: 0, right: 0, bottom: 300, left: 540},
+        margin2 = {top: 120, right: 0, bottom: 260, left: 540},
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom,
         height2 = +svg.attr("height") - margin2.top - margin2.bottom;
@@ -35,7 +35,7 @@ var AgIGraph = (function () {
 
             focus.select("g.axis--y").data(['g.axis--y'])
                 .enter().append('g').attr('class', 'axis axis--y');
-            focus.select("g.axis--y").call(yAxis);
+            focus.select("g.axis--y").call(yAxis.ticks(8));
         }
     }
 
@@ -59,7 +59,7 @@ var AgIGraph = (function () {
         x.domain(s.map(x2.invert, x2));
         updateFocus(mySeries, x.domain()[0], x.domain()[1]);
         focus.select(".zoomArea").attr("d", area);
-        focus.select(".axis--x").call(xAxis);
+        focus.select(".axis--x").call(xAxis.ticks(5));
         svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
             .scale(width / (s[1] - s[0]))
             .translate(-s[0], 0));
@@ -71,14 +71,14 @@ var AgIGraph = (function () {
         x.domain(t.rescaleX(x2).domain());
         updateFocus(mySeries, x.domain()[0], x.domain()[1]);
         focus.select(".zoomArea").attr("d", area);
-        focus.select(".axis--x").call(xAxis);
+        focus.select(".axis--x").call(xAxis.ticks(5));
         context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
     }
 
     function startClean() {
 
         svg.remove();
-        d3.select("#telemetryGraph").append("svg").attr("width","960").attr("height","500");
+        d3.select("#telemetryGraph").append("svg").attr("width","960").attr("height","400");
         svg = d3.select("#telemetryGraph svg");
         brush = d3.brushX()
             .extent([[0, 0], [width, height2]])
@@ -158,7 +158,7 @@ var AgIGraph = (function () {
             context.append("g")
                 .attr("class", "axis axis--x")
                 .attr("transform", "translate(0," + height2 + ")")
-                .call(xAxis2);
+                .call(xAxis2.tickFormat(d3.timeFormat("%b")));
 
             context.append("g")
                 .attr("class", "brush")
@@ -190,11 +190,11 @@ var AgIGraph = (function () {
             focus.append("g")
                 .attr("class", "axis axis--x")
                 .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
+                .call(xAxis.ticks(5));
 
             focus.append("g")
                 .attr("class", "axis axis--y")
-                .call(yAxis);
+                .call(yAxis.ticks(8));
 
             updateYaxis();
 
@@ -217,7 +217,7 @@ var AgIGraph = (function () {
             if (mySeries !== NaN)
                 AgIData.getData(mySeries,from,until,function(){
                 focus.select(".zoomArea").attr("d", area);
-                focus.select(".axis--x").call(xAxis);
+                focus.select(".axis--x").call(xAxis.ticks(5).tickFormat(d3.timeFormat("%m/%d")));
                 var s = x2.range();
                 svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
                    .scale(width / (s[1] - s[0]))
@@ -229,11 +229,12 @@ var AgIGraph = (function () {
         updateSeries: function(series) {
             mySeries=series;
             startClean();
-            AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),AgIData.parseDate('2017-03-01T00:00:00Z'),updateOverview);
+//            AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),AgIData.parseDate('2017-03-01T00:00:00Z'),updateOverview);
+            AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),myUntil,updateOverview);
             x.domain([myFrom, myUntil]);
             updateFocus(mySeries, myFrom, myUntil);
             focus.select(".zoomArea").attr("d", area);
-            focus.select(".axis--x").call(xAxis);
+            focus.select(".axis--x").call(xAxis.ticks(5).tickFormat(d3.timeFormat("%m/%d")));
             context.select(".brush").call(brush.move, [myFrom, myUntil]);
 
         } //updateSeries
