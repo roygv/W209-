@@ -18,7 +18,7 @@ function liveswitchClick(){
 ///////  Top bar graph ///////
 
 var context = d3.select("#context"),
-margin = {top: 0, right: 20, bottom: 20, left: 25},
+margin = {top: 10, right: 10, bottom: 15, left: 10},
 width = +context.attr("width") - margin.left - margin.right,
 height = +context.attr("height") - margin.top - margin.bottom;
 
@@ -34,7 +34,7 @@ var parseDate = d3.timeParse("%b %Y");
 var x = d3.scaleTime().range([0, width]),
 y = d3.scaleLinear().range([height, 0]);
 
-var xAxis = d3.axisBottom(x),
+var xAxis = d3.axisBottom(x).tickSize(3),
 yAxis = d3.axisLeft(y);
 
 var brush = d3.brushX()
@@ -81,7 +81,7 @@ function top_graph(l){
            
            context.append("text")
            .attr("class", "axis topgraph")
-           .attr("transform", "translate(1," + (height-2) + ")")
+           .attr("transform", "translate(1," + (height+5) + ")")
            .attr("font-size", "12px")
            .attr("fill", "silver")
            .text("Nb events");

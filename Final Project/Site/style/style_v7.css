@@ -550,7 +550,7 @@ a {
 .inline {
     display: inline-block;
     vertical-align: middle;
-    margin:10px;
+    margin:5px;
 }
 
 /************************** On/Off switch **************************/
