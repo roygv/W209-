@@ -64,7 +64,7 @@ context.append("defs").append("clipPath")
 
 function top_graph(l){
     
-    d3.csv("alert_timeseries.csv", type_timeseries, function(error, data) {
+    d3.csv("data/alert_timeseries.csv", type_timeseries, function(error, data) {
            if (error) throw error;
            
            x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -137,7 +137,7 @@ function render_notification(v, d) {
     </div>"
 }
 
-d3.csv("alert_data.csv", type_alert, function(error, data) {
+d3.csv("data/alert_data.csv", type_alert, function(error, data) {
        if (error) throw error;
        
        var n = data.length;
