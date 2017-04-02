@@ -1,6 +1,7 @@
 ///////  Notification Center ///////
 
 var node = null;
+var nbNotifications = 0;
 
 document.getElementById('node').innerHTML = node;
 
@@ -25,6 +26,11 @@ d3.csv("data/alert_data.csv", type_alert, function(error, data) {
        
        $('#notificationCenter').html(notif_text);
        
+       nbNotifications = data.length;
+       $('#nbNotifications').html(nbNotifications);
+       
+       console.log(nbNotifications);
+       
 });
 
 function type_alert(d) {
@@ -35,19 +41,21 @@ function type_alert(d) {
 }
 
 function notifClick(d){
-    var node = d.id;
+    node = d.id;
     document.getElementById('node').innerHTML = node;
 }
 
 
 $(".toggle, .sidetoggle").click(function () {
-                   $(".sidebar").toggleClass('active');
-                   });
+                                $(".sidebar").toggleClass('active');
+                                });
 
 $(document).on("click",".cancel, .solved", function () {
-                   $(this).parent().toggleClass('gone');
-                   });
+               $(this).parent().toggleClass('gone');
+               nbNotifications += -1;
+               $('#nbNotifications').html(nbNotifications);
+               });
 
 $(document).on("click",".escalate", function () {
-                   $(this).parent().toggleClass('escalated');
-                   });
+               $(this).parent().toggleClass('escalated');
+               });
