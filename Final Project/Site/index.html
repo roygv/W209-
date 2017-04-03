@@ -16,13 +16,13 @@
         <body>
             
             <!-- Top bar -->
-            <div class="topbar container">
+            <div class="topbar container" style="text-align: center;">
                 
                 <!-- Logo -->
-                <img id="logo" src="images/cloud-bolt.png" class="inline" style="margin-top:15px; width:40px;height:40px;" />
+                <img id="logo" src="images/cloud-bolt.png" class="left inline" style="margin-top:10px; width:40px;height:40px;" />
                 
                 <!-- Switch button -->
-                <div class="inline onoffswitch">
+                <div class="left inline onoffswitch" style="text-align: left; margin-top:11px;">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="liveswitch" onclick='liveswitchClick();' checked>
                         <label class="onoffswitch-label" for="liveswitch">
                             <span class="onoffswitch-inner"></span>
@@ -30,11 +30,11 @@
                         </label>
                 </div>
                 
-                <!-- Context graph -->
-                <svg class="inline" id="context" width="700" height="50"></svg>
+                <!-- Context graph or date-->
+                <svg class="inline" id="context" width="700" height="50" style="margin: auto; display: inline-block; overflow: hidden;"></svg>
                 
                 <!-- Notification button -->
-                <div class="right inline toggle">&#9776;</div>
+                <div class="right inline toggle" style="margin-top:3px">&#9776;</div>
             </div>
             
             <!-- Sidebar -->

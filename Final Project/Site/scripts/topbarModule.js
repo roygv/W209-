@@ -20,7 +20,7 @@ function liveswitchClick(){
 ///////  Top bar graph ///////
 
 var context = d3.select("#context"),
-margin = {top: 10, right: 10, bottom: 15, left: 10},
+margin = {top: 10, bottom: 15, right: 10, left: 10},
 width = +context.attr("width") - margin.left - margin.right,
 height = +context.attr("height") - margin.top - margin.bottom;
 
@@ -73,17 +73,17 @@ function top_graph(l){
            context.append("path")
            .datum(data)
            .attr("class", "area topgraph")
-           .attr("transform", "translate(0," + margin.top + ")")
+           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
            .attr("d", area);
            
            context.append("g")
            .attr("class", "axis topgraph")
-           .attr("transform", "translate(0," + (height+margin.top) + ")")
+           .attr("transform", "translate(" + margin.left + "," + (height+margin.top) + ")")
            .call(xAxis);
            
            context.append("text")
            .attr("class", "axis topgraph")
-           .attr("transform", "translate(1," + (height+5) + ")")
+           .attr("transform", "translate(" + (margin.left+1) + "," + (height+5) + ")")
            .attr("font-size", "12px")
            .attr("fill", "silver")
            .text("Nb events");
@@ -91,7 +91,7 @@ function top_graph(l){
            context.append("g")
            .attr("class", "brush topgraph")
            .call(brush)
-           .attr("transform", "translate(0," + margin.top + ")")
+           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
            .call(brush.move, [x_init, x.range()[1]]);
            });
 
