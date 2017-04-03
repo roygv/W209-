@@ -11,7 +11,9 @@ var liveon = document.getElementById("liveswitch").checked;
 function liveswitchClick(){
     var liveon = document.getElementById("liveswitch").checked;
     top_graph(liveon)
-    // We would probably need to refresh the rest of the graphs too
+    var image = "images/cloud-no-bolt.png";
+    if (liveon) image = "images/cloud-bolt.png";
+    document.getElementById("logo").src = image;
 }
 
 

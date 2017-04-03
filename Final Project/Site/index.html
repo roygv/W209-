@@ -17,6 +17,10 @@
             
             <!-- Top bar -->
             <div class="topbar container">
+                
+                <!-- Logo -->
+                <img id="logo" src="images/cloud-bolt.png" class="inline" style="margin-top:15px; width:40px;height:40px;" />
+                
                 <!-- Switch button -->
                 <div class="inline onoffswitch">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="liveswitch" onclick='liveswitchClick();' checked>
@@ -27,11 +31,17 @@
                 </div>
                 
                 <!-- Context graph -->
-                <svg class="inline" id="context" width="960" height="50"></svg>
+                <svg class="inline" id="context" width="700" height="50"></svg>
                 
                 <!-- Notification button -->
                 <div class="right inline toggle">&#9776;</div>
             </div>
+            
+            <!-- Sidebar -->
+            <div class="delay sidebar">
+                <div id = "notificationCenter"></div>
+            </div>
+            
             
             <!-- Main content -->
             <div class="container">
@@ -65,14 +75,7 @@
                     </g>
                 </svg>
             </div>
-            <!-- Sidebar -->
             
-            <div class="delay sidebar">
-                
-                <div class="sidetoggle">Notifications</div>
-                <div id = "notificationCenter"></div>
-                
-            </div>
             
             <!-- Script import -->
             <script type="text/javascript" src="scripts/dataModule.js"></script>
