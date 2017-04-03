@@ -520,33 +520,6 @@ a {
 
 /* Added by Guillaume */
 
-.notification {
-    border: none;
-    display: inline-block;
-    outline: 0;
-    padding: 6px 16px;
-    vertical-align: middle;
-    overflow: hidden;
-    text-decoration: none!important;
-    color: #fff;
-    background-color: #000;
-    text-align: center;
-    cursor: pointer;
-    white-space: nowrap;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.notification:hover {
-    color: #000!important;
-    background-color: #ccc!important;
-}
-
-
 .inline {
     display: inline-block;
     vertical-align: middle;
@@ -602,6 +575,16 @@ a {
     right: 0px;
 }
 
+.notifcount {
+    width: 18px;
+    right: 10px;
+    margin-top: 6px;
+    position: absolute;
+    background: orange;
+    border-radius: 10px;
+    font-size: 8pt;
+    z-index: 1;
+}
 
 /************************** Zoom and Brush formatting **************************/
 
@@ -712,6 +695,7 @@ a {
 
 
 /* Roy's stuff starts here:    for graph module */
+
 #telemetryGraph {
   cursor: move;
   fill: black;
