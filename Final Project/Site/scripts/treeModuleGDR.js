@@ -3,8 +3,6 @@ var AgITree = (function () {
                
                function node_structure(d) {
                d.id = +d.id;
-               d.station = +d.station;
-               d.array = +d.array;
                d.core = +d.core;
                d.node = +d.node;
                d.parent = +d.parent;
@@ -17,7 +15,7 @@ var AgITree = (function () {
                function ticked() {
                context.clearRect(0, 0, width, height);
                context.save();
-               context.translate(width / 2, height / 2);
+               context.translate(10, height / 2);
                
                context.beginPath();
                links.forEach(drawLink);
@@ -35,7 +33,7 @@ var AgITree = (function () {
                }
                
                function dragsubject() {
-               return simulation.find(d3.event.x - width / 2, d3.event.y - height / 2);
+               return simulation.find(d3.event.x - 10, d3.event.y - height / 2);
                }
                
                function dragstarted() {
@@ -77,12 +75,12 @@ var AgITree = (function () {
                //var radius = d.type == 'Site' ? 0 : (d.type == 'Array' ? 18 : (d.type == 'Core' ? 12 : (d.type == 'Alert'? 4: 8)));
                //var radius = 2 + ((d.alarm - 1) * 1);
                //var radius = (d.alarm == 1) ? 2 : 4;
-               var radius = 3 + Math.sqrt(d.alarm)*4;
+               var radius = 7 + Math.sqrt(d.alarm)*2;
                context.moveTo(d.x + radius, d.y);
                context.beginPath();
                context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
                //context.fillStyle = (d.alarm == 1)? "#B5050A" :(d.collapsed == 1) ? "#AEAFAD" : "#C8C7C9";
-               context.fillStyle = (d.alarm > 1)? "red" :(d.collapsed == 1) ? "#AEAFAD" : "#FFFFFF";
+               context.fillStyle = (d.alarm > 1)? "orange" :(d.collapsed == 1) ? "#9ecae1" : "#FFFFFF";
                context.fill();
                context.strokeStyle = "#3182bd";
                context.strokeWidth = 2;
@@ -149,13 +147,16 @@ var AgITree = (function () {
                       console.log(modelNodes);
                       nodes = visibleNodes(modelNodes);
                       
+                      var x_depth = 100;
+                      
                       function init(n){
-                      n[1].fx = 0;
-                      n[1].children[0].fx = 100;
-                      n[1].children[1].fx = 100;
-                      n[1].children[2].fx = 100;
-                      n[1].children[3].fx = 100;
-                      n[1].children[4].fx = 100;
+                      n[0].fx = 0;
+                      n[1].fx = x_depth;
+                      n[1].children[0].fx = 2*x_depth;
+                      n[1].children[1].fx = 2*x_depth;
+                      n[1].children[2].fx = 2*x_depth;
+                      n[1].children[3].fx = 2*x_depth;
+                      n[1].children[4].fx = 2*x_depth;
                       return n
                       }
                       
@@ -163,7 +164,7 @@ var AgITree = (function () {
                           simulation = d3.forceSimulation(init(n))
                           .force("charge", d3.forceManyBody())
                           .force("link", d3.forceLink(l).distance(30).strength(0.2))
-                          .force("x", d3.forceX(function(d) {return d.depth*150;}))
+                          .force("x", d3.forceX(function(d) {return d.depth*2*x_depth;}))
                           .force("y", d3.forceY())
                           .force("collide",d3.forceCollide().radius(function(d) {return d.r + 0.2;}).iterations(2))
                           .on("tick", ticked);
@@ -190,16 +191,18 @@ var AgITree = (function () {
                             .on("end", dragended));
                       
                       d3.select(canvas).on("dblclick", function(){
-                                           var m = d3.mouse(this);
                                            
-                                           node = simulation.find(m[0] - width / 2, m[1] - height / 2);
+                                           var m = d3.mouse(this);
+                                           node = simulation.find(m[0] - 10, m[1] - height / 2);
                                            
                                            if (node) {
-                                           console.log(node.core, node.node);
+                                               console.log("dblclick" + node.id);}
                                            if (node.collapsed == 0) {
-                                           parent=node.id;
-                                           node.collapsed = 1;
-                                           hide(node.id)
+                                               parent=node.id;
+                                               if (node.children.length != 0){
+                                                   node.collapsed = 1;
+                                               };
+                                               hide(node.id)
                                            }
                                            
                                            else {
@@ -216,8 +219,19 @@ var AgITree = (function () {
                                            simulation = sim(nodes, links);
                                            
                                            ticked();
+                                           
+                                           });
+                      
+                      d3.select(canvas).on("click", function(){
+                                           
+                                           var m = d3.mouse(this);
+                                           node = simulation.find(m[0] - 10, m[1] - height / 2);
+                                           
+                                           if (node) {
+                                           console.log("click" + node.id);
                                            }
                                            });
+                      
                       
                       });
                
