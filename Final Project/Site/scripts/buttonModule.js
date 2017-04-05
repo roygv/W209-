@@ -2,7 +2,7 @@ d3.button = function() {
 
     var dispatch = d3.dispatch('press', 'release');
 
-    var padding = 10,
+    var padding = 5,
         radius = 2,
         stdDeviation = 5,
         offsetX = 2,
@@ -18,7 +18,7 @@ d3.button = function() {
             var bbox = text.node().getBBox();
             var bheight = bbox.height + 2 * padding;
 //            var bwidth = bbox.width + 2 * padding;
-            var bwidth = bheight * 3;
+            var bwidth = bheight * 6;
             g.attr('transform', 'translate(' + ((d.col-0.5) * (bwidth+2*radius)) + ','
                     + ((bheight+2*radius)*(d.row - 0.5) + padding) + ')');
             var rect = g.insert('rect', 'text')
