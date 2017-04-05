@@ -6,6 +6,7 @@ var AgITree = (function () {
                d.core = +d.core;
                d.node = +d.node;
                d.parent = +d.parent;
+               d.name = d.name;
                d.depth = +d.depth;
                d.hidden = 0;
                d.collapsed = 0;
@@ -131,6 +132,7 @@ var AgITree = (function () {
                //ticked();
                //}
                
+               
                return {
                init: function(){
                d3.csv("data/tree_structureGDR.csv",node_structure,function(error, data){
@@ -232,6 +234,24 @@ var AgITree = (function () {
                                            }
                                            });
                       
+                      
+                      function extract_select2_data(node,leaves,index){
+                      console.log(node);
+                      if (node.children!= 0){
+                      console.log(node.children);
+                      for(var i = 0;i<node.children.length;i++){
+                      index = extract_select2_data(node.children[i],leaves,index)[0];
+                      }
+                      }
+                      leaves.push({id:++index,text:node.name});
+                      return [index,leaves];
+                      }
+                      
+                      select2_data = extract_select2_data(nodes[1],[],0)[1];
+                         $("#search").select2({
+                                              data: select2_data,
+                                              containerCssClass: "search"
+                                              });
                       
                       });
                
