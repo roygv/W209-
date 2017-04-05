@@ -838,10 +838,11 @@ a {
     -moz-transition: .3s ease;
 }
 
-#search:focus {
+#search:focus, #search:not([value=""]){
     outline: none;
-    width: 180px;
+    width: 200px;
 }
+
 
 p.s {
     z-index: 4;

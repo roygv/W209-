@@ -19,10 +19,10 @@
             <div class="topbar container" style="text-align: center;">
                 
                 <!-- Logo -->
-                <img id="logo" class="left inline" style="margin-top:10px; width:35px;height:35px;" />
+                <img id="logo" src="images/cloud-bolt.png" class="left inline" style="margin-top:10px; width:35px;height:35px;" title = "Live mode"/>
                 
                 <!-- Search bar -->
-                <p class="s left" style="margin-left:20px;margin-top:10px;margin-bottom:10px;"><input name="search" id="search" type="search"></p>
+                <p class="s left" style="margin-left:20px;margin-top:10px;margin-bottom:10px;"><input name="search" id="search" type="search" value="" onkeyup="this.setAttribute('value', this.value);"></p>
 
                 
                 <!-- Context graph or date-->
@@ -66,8 +66,6 @@
                 <p>Node: <span id="node"></span>
                 Start date: <span id="start_date"></span>
                 End date: <span id="end_date"></span>
-                
-                <div id="txt"></div>
                 
             </div>
             

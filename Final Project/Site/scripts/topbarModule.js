@@ -2,13 +2,43 @@
 
 function startTime() {
     var today = new Date();
+    var d = today.getDate();
+    var y = today.getYear()+1900;
     var h = today.getHours();
     var m = today.getMinutes();
     var s = today.getSeconds();
+    var month = new Array();
+    month[0] = "Jan";
+    month[1] = "Feb";
+    month[2] = "Mar";
+    month[3] = "Apr";
+    month[4] = "May";
+    month[5] = "Jun";
+    month[6] = "Jul";
+    month[7] = "Aug";
+    month[8] = "Sep";
+    month[9] = "Oct";
+    month[10] = "Nov";
+    month[11] = "Dec";
+    var mo = month[today.getMonth()];
+    var weekday = new Array(7);
+    weekday[0] =  "Sun";
+    weekday[1] = "Mon";
+    weekday[2] = "Tues";
+    weekday[3] = "Wed";
+    weekday[4] = "Thurs";
+    weekday[5] = "Fri";
+    weekday[6] = "Sat";
+    var day = weekday[today.getDay()];
+    
     m = checkTime(m);
     s = checkTime(s);
-    document.getElementById('txt').innerHTML =
-    h + ":" + m + ":" + s;
+    
+    var liveon = document.getElementById("liveswitch").checked;
+    var disp = day+" "+mo+" "+d+" "+y+"  "+ h + ":" + m + ":" + s;
+    
+    if (!liveon) {document.getElementById("datetop").innerHTML = "";}
+    if (liveon){document.getElementById("datetop").innerHTML = disp;}
     var t = setTimeout(startTime, 500);
 }
 function checkTime(i) {
@@ -16,30 +46,31 @@ function checkTime(i) {
     return i;
 }
 
-///////  Refresh what needs to be refreshed depending on live switch ///////
+///////  Initiate ///////
 
-var liveon = document.getElementById("liveswitch").checked;
+title = "Save"
+
+///////  Initiate ///////
 
 function liveswitchClick(){
     var liveon = document.getElementById("liveswitch").checked;
     if (!liveon) {
         top_graph();
-        document.getElementById("datetop").innerHTML = "";
-        image = "images/cloud-no-bolt.png";
+        var image = "images/cloud-no-bolt.png";
+        var t = "Historical mode";
     }
     if (liveon){
         d3.selectAll(".topgraph").remove();
-        document.getElementById("datetop").innerHTML = new Date();
-        image = "images/cloud-bolt.png"
+        var image = "images/cloud-bolt.png";
+        var t = "Live mode";
     }
     document.getElementById("logo").src = image;
+    document.getElementById("logo").title = t;
 }
 
 
 ///////  Top bar graph ///////
 
-document.getElementById("logo").src = "images/cloud-bolt.png";
-document.getElementById("datetop").innerHTML = new Date();
 
 var context = d3.select("#context"),
 margin = {top: 10, bottom: 15, right: 10, left: 10},
