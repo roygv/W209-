@@ -65,4 +65,4 @@ var AgIData = (function () {
 
 })();
 
-AgIData.init("http://169.53.133.132:8086/query?db=w251&q=","roy","Kaftor");
+AgIData.init("http://50.23.122.133:8086/query?db=w251&q=","roy","Kaftor");
