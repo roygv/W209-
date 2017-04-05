@@ -1,8 +1,20 @@
 ///////  Get time to display in the top bar ///////
 
-var current_date = new Date();
-//document.getElementById('date').innerHTML = date;
-
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('txt').innerHTML =
+    h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
 
 ///////  Refresh what needs to be refreshed depending on live switch ///////
 
@@ -10,14 +22,24 @@ var liveon = document.getElementById("liveswitch").checked;
 
 function liveswitchClick(){
     var liveon = document.getElementById("liveswitch").checked;
-    top_graph(liveon)
-    var image = "images/cloud-no-bolt.png";
-    if (liveon) image = "images/cloud-bolt.png";
+    if (!liveon) {
+        top_graph();
+        document.getElementById("datetop").innerHTML = "";
+        image = "images/cloud-no-bolt.png";
+    }
+    if (liveon){
+        d3.selectAll(".topgraph").remove();
+        document.getElementById("datetop").innerHTML = new Date();
+        image = "images/cloud-bolt.png"
+    }
     document.getElementById("logo").src = image;
 }
 
 
 ///////  Top bar graph ///////
+
+document.getElementById("logo").src = "images/cloud-bolt.png";
+document.getElementById("datetop").innerHTML = new Date();
 
 var context = d3.select("#context"),
 margin = {top: 10, bottom: 15, right: 10, left: 10},
@@ -55,7 +77,7 @@ context.append("defs").append("clipPath")
 .attr("width", width)
 .attr("height", height);
 
-function top_graph(l){
+function top_graph(){
     
     d3.csv("data/alert_timeseries.csv", type_timeseries, function(error, data) {
            if (error) throw error;
@@ -63,10 +85,7 @@ function top_graph(l){
            x.domain(d3.extent(data, function(d) { return d.date; }));
            y.domain([0, d3.max(data, function(d) { return d.events; })]);
 
-           var x_init = (l) ? x.range()[1]/2 : x.range()[1]/2;
-           
-           // Clean of past graphs
-           d3.selectAll(".topgraph").remove();
+           var x_init = x.range()[1]/2;
            
            // New ones
            
@@ -96,8 +115,6 @@ function top_graph(l){
            });
 
 };
-
-top_graph(liveon)
 
 function brushed() {
     var s = d3.event.selection || x.range();
