@@ -18,7 +18,7 @@ d3.csv("data/alert_data.csv", type_alert, function(error, data) {
        if (error) throw error;
        
        var n = data.length;
-       var notif_text = "";
+       var notif_text = "<div class='sidetoggle'>Notifications</div>";
        
        for (var i = 0; i < data.length; i++) {
        var notif_text = render_notification(notif_text, data[i]);
@@ -46,7 +46,7 @@ function notifClick(d){
 }
 
 
-$(".toggle, .sidetoggle").click(function () {
+$(document).on("click", ".toggle, .sidetoggle", function () {
                                 $(".sidebar").toggleClass('active');
                                 });
 
