@@ -32,7 +32,7 @@ d3.button = function() {
                 .on('mouseout', deactivate)
                 .on('click', toggle)
 
-            addShadow.call(g.node(), d, i);
+            //addShadow.call(g.node(), d, i);
             addGradient.call(g.node(), d, i);
         });
     }

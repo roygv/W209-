@@ -707,7 +707,7 @@ a {
     height:400px;
 }
 
-/* Roy's stuff starts here:    for graph module */
+/************************** Telemetry Graph **************************/
 
 #telemetryGraph {
   cursor: move;
@@ -723,7 +723,7 @@ a {
   /*fill: #4d576b;*/
   /*fill: none;*/
   fill: url(#mainGradient);
-  stroke: #4346EB;
+  stroke: #34addb;
   stroke-linejoin: "round";
   stroke-linecap: "round";
   stroke-width: 0.5;
@@ -737,12 +737,12 @@ a {
 }
 
 .stop-top {
-  stop-color: #4346EB;  /* Hot */
+  stop-color: #34addb;  /* Hot */
   stop-opacity:0.7;
 }
 
 .stop-bottom {
-  stop-color: #f1f8ff;  /* Cold */
+  stop-color: white;  /* Cold */
   stop-opacity:0.3;
 }
 /* ------------------------------------------- tables ---------------------------*/
@@ -761,35 +761,35 @@ a {
 }
 
 .button rect {
-  stroke: #999faa; /* navy 40% */
-  stroke-width: 2px;
+  stroke: silver; /* navy 40% */
+  stroke-width: 1px;
 }
 
 .button rect.pressed {
-  fill: #000f2b; /* navy 100% */
+  fill: grey; /* navy 100% */
 }
 
 .button #gradient-start {
-  stop-color: #999faa; /* navy 40% */
+  stop-color: silver; /* navy 40% */
   stop-opacity: .6;
 }
 
 .button #gradient-stop {
-  stop-color: #4d576b; /* navy 70% */
+  stop-color: white; /* navy 70% */
   stop-opacity: .6;
 }
 
 .button #gradient-start.active, .button #gradient-start.pressed {
-  stop-color: #4d576b; /* navy 70% */
+  stop-color: grey; /* navy 70% */
 }
 
 .button #gradient-stop.active, .button #gradient-stop.pressed {
-  stop-color: #000f2b; /* navy 100% */
+  stop-color: silver	; /* navy 100% */
 }
 
 .button text {
   font-size: 10px;
-  fill: #eee;
+  fill: black;
   pointer-events: none;
   text-anchor: middle;
   -moz-user-select: none;
@@ -797,6 +797,7 @@ a {
   -ms-user-select: none;
 }
 
+/**
 .node canvas{
   cursor: pointer;
   stroke: #3182bd;
@@ -808,6 +809,7 @@ a {
   stroke: #9ecae1;
   stroke-width: 1px;
 }
+ **/
 
 /************************** Seach bar **************************/
 
