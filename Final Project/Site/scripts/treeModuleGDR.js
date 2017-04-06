@@ -134,7 +134,7 @@ var AgITree = (function () {
                    var dy = mouseY - getYPixel(dot.y);
                    if ((dx * dx + dy * dy) < (dot.r*dot.r)) {
                    tipCanvas.style.left = getXPixel(dot.x) + "px";
-                   tipCanvas.style.top = (getYPixel(dot.y)) + "px";
+                   tipCanvas.style.top = (getYPixel(dot.y)+20) + "px";
                    tipCtx.clearRect(0, 0, tipCanvas.width, tipCanvas.height);
                    tipCtx.fillText(""+dot.name + " (" + dot.alarm + ")", 5, 15);
                    hit = true;
@@ -262,7 +262,7 @@ var AgITree = (function () {
                                            
                                            });
                       
-                      /// Tooltips                      
+                      /// Tooltips
                       
                       $("#tree").mousemove(function(e){handleMouseMove(e);});
                       
