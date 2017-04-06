@@ -4,7 +4,7 @@ var nbNotifications = 0;
 
 function render_notification(v, d) {
     return v + "<div onclick='notifClick(this);' id='"+ d.nodeID +"' class='delay notibox'><b>"+ (d.date.toTimeString().split(' ')[0]) +"</b> (Notification #"+ d.alertID +") <br />\
-    "+ d.nature + " at node "+ d.nodeID +" <br /> <br /> \
+    "+ d.nature + " at "+ d.name +" <br /> <br /> \
         <div class='delay cancel'>Dismiss</div> \
         <div class='delay solved'>Resolved</div> \
         <div class='delay escalate'>Escalate</div> \
