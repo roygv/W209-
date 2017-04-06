@@ -19,10 +19,10 @@ d3.button = function() {
             var bheight = bbox.height + 2 * padding;
 //            var bwidth = bbox.width + 2 * padding;
             var bwidth = bheight * 6;
-            g.attr('transform', 'translate(' + ((d.col-0.5) * (bwidth+2*radius)) + ','
+            g.attr('transform', 'translate(' + ((d.col-1) * (bwidth+2*radius) + padding) + ','
                     + ((bheight+2*radius)*(d.row - 0.5) + padding) + ')');
             var rect = g.insert('rect', 'text')
-                .attr("x", -bwidth/2)
+                .attr("x",-padding)
                 .attr("y", bbox.y - padding)
                 .attr("width", bwidth)
                 .attr("height", bheight)
@@ -32,7 +32,7 @@ d3.button = function() {
                 .on('mouseout', deactivate)
                 .on('click', toggle)
 
-            //addShadow.call(g.node(), d, i);
+            //addShadow.call(g.node(), d, i); Not very pretty
             addGradient.call(g.node(), d, i);
         });
     }

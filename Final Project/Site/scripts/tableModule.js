@@ -67,22 +67,23 @@ var AgITable = (function () {
 
         // A public variable
         myPublicVar: "foo",
-
+                
+                
         arrayData: [
             {label: "Battery SoC:", row: 1, col: 1,  series:"% share MW"},
             {label: "Breaker status:", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
             {label: "Current state:", row: 1, col: 3,  series:"- INVERTER 1B Mw"},
-            {label: "Event state:", row: 1, col: 4,  series:"- INVERTER 1C Mw"},
-            {label: "Heartbeat:", row: 1, col: 5,  series:"LMP"},
-            {label: "Real automated dispatch:", row: 1, col: 6, series:"2 LMP"},
-            {label: "Real charge capability:", row: 1, col: 7, series:"A Gross GN MW" },
-            {label: "Real discharge capability:", row: 2, col: 1, series:"A Gross GN MV" },
-            {label: "Real dispatch:", row: 2, col: 2, series:"2 Base Point" },
-            {label: "Real ISO dispatch:", row: 2, col: 3, series:"- White Baker (Net) MVA" },
-            {label: "Real manual dispatch:", row: 2, col: 4, series:"- White Baker (Net) MW" },
-            {label: "Real nameplate capacity:", row: 2, col: 5, series:"2 Base Point" },
-            {label: "Real power:", row: 2, col: 6, series:"2 Net MW" },
-            {label: "Stored energy:", row: 2, col: 7, series:"LAAR, IEM Train A MW" }
+            {label: "Event state:", row: 2, col: 1,  series:"- INVERTER 1C Mw"},
+            {label: "Heartbeat:", row: 2, col: 2,  series:"LMP"},
+            {label: "Real automated dispatch:", row: 2, col: 3, series:"2 LMP"},
+            {label: "Real charge capability:", row: 3, col: 1, series:"A Gross GN MW" },
+            {label: "Real discharge capability:", row: 3, col: 2, series:"A Gross GN MV" },
+            {label: "Real dispatch:", row: 3, col: 3, series:"2 Base Point" },
+            {label: "Real ISO dispatch:", row: 4, col: 1, series:"- White Baker (Net) MVA" },
+            {label: "Real manual dispatch:", row: 4, col: 2, series:"- White Baker (Net) MW" },
+            {label: "Real nameplate capacity:", row: 4, col: 3, series:"2 Base Point" },
+            {label: "Real power:", row: 5, col: 1, series:"2 Net MW" },
+            {label: "Stored energy:", row: 5, col: 2, series:"LAAR, IEM Train A MW" }
 //            {label: "LAAR, IEM/B", row: 3, col: 1, series:"LAAR, IEM Train B MW" }
         ],
 
@@ -90,44 +91,45 @@ var AgITable = (function () {
             {label: "Battery SoC:", row: 1, col: 1,  series:"% share MW"},
             {label: "Array Meters:", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
             {label: "Real charge capability:", row: 1, col: 3, series:"A Gross GN MW" },
-            {label: "Real discharge capability:", row: 1, col: 4, series:"A Gross GN MV" },
-            {label: "Real dispatch:", row: 1, col: 5, series:"2 Base Point" },
-            {label: "Real ISO dispatch:", row: 1, col: 6, series:"- White Baker (Net) MVA" },
-            {label: "Real manual dispatch:", row: 1, col: 7, series:"- White Baker (Net) MW" },
-            {label: "Real nameplate capacity:", row: 2, col: 1, series:"2 Base Point" },
-            {label: "Real power:", row: 2, col: 2, series:"2 Net MW" },
-            {label: "Stored energy:", row: 2, col: 3, series:"LAAR, IEM Train A MW" }
+            {label: "Real discharge capability:", row: 2, col: 1, series:"A Gross GN MV" },
+            {label: "Real dispatch:", row: 2, col: 2, series:"2 Base Point" },
+            {label: "Real ISO dispatch:", row: 2, col: 3, series:"- White Baker (Net) MVA" },
+            {label: "Real manual dispatch:", row: 3, col: 1, series:"- White Baker (Net) MW" },
+            {label: "Real nameplate capacity:", row: 3, col: 2, series:"2 Base Point" },
+            {label: "Real power:", row: 3, col: 3, series:"2 Net MW" },
+            {label: "Stored energy:", row: 4, col: 1, series:"LAAR, IEM Train A MW" }
         ],
 
         nodeData: [
             {label: "AdvancionModeCommand:", row: 1, col: 1,  series:"% share MW"},
             {label: "AvgCellTemp:", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
             {label: "BMSDCChgCurrent:", row: 1, col: 3,  series:"- INVERTER 1B Mw"},
-            {label: "BMSDCDisCurrent:", row: 1, col: 4,  series:"- INVERTER 1C Mw"},
-            {label: "BMSDCV:", row: 1, col: 5,  series:"LMP"},
-            {label: "Battery SoC:", row: 1, col: 6, series:"2 LMP"},
-            {label: "Charge Capability:", row: 1, col: 7, series:"A Gross GN MW" },
-            {label: "CodeHeartBeat:", row: 2, col: 1, series:"A Gross GN MV" },
-            {label: "Current state:", row: 2, col: 2, series:"2 Base Point" },
-            {label: "Discharge capability:", row: 2, col: 3, series:"- White Baker (Net) MVA" },
-            {label: "Dispatch:", row: 2, col: 4, series:"- White Baker (Net) MW" },
-            {label: "Energy capacity:", row: 2, col: 5, series:"2 Base Point" },
-            {label: "Event state:", row: 2, col: 6, series:"2 Net MW" },
-            {label: "GUID:", row: 2, col: 7, series:"LAAR, IEM Train A MW" },
-            {label: "Heartbeat:", row: 3, col: 1, series:"LAAR, IEM Train A MW" },
-            {label: "HiCellTemp:", row: 3, col: 2, series:"LAAR, IEM Train A MW" },
-            {label: "HiCellV:", row: 3, col: 3, series:"LAAR, IEM Train A MW" },
-            {label: "HiPCVTemp:", row: 3 , col: 4, series:"LAAR, IEM Train A MW" },
-            {label: "InvertedDCBusVoltage:", row: 3, col: 5, series:"LAAR, IEM Train A MW" },
-            {label: "LOTOLock:", row: 3, col: 6, series:"LAAR, IEM Train B MW" },
-            {label: "LoCellTemp:", row: 3, col: 7, series:"LAAR, IEM Train B MW" },
-            {label: "LoCellV:", row: 4, col: 1, series:"LAAR, IEM Train B MW" },
-            {label: "LoPCTemp:", row: 4, col: 2, series:"LAAR, IEM Train B MW" },
-            {label: "Manual Dispatch:", row: 4, col: 3, series:"LAAR, IEM Train B MW" },
-            {label: "Nameplate capacity:", row: 4, col: 4, series:"LAAR, IEM Train B MW" }
+            {label: "BMSDCDisCurrent:", row: 2, col: 1,  series:"- INVERTER 1C Mw"},
+            {label: "BMSDCV:", row: 2, col: 2,  series:"LMP"},
+            {label: "Battery SoC:", row: 2, col: 3, series:"2 LMP"},
+            {label: "Charge Capability:", row: 3, col: 1, series:"A Gross GN MW" },
+            {label: "CodeHeartBeat:", row: 3, col: 2, series:"A Gross GN MV" },
+            {label: "Current state:", row: 3, col: 3, series:"2 Base Point" },
+            {label: "Discharge capability:", row: 4, col: 1, series:"- White Baker (Net) MVA" },
+            {label: "Dispatch:", row: 4, col: 2, series:"- White Baker (Net) MW" },
+            {label: "Energy capacity:", row: 4, col: 3, series:"2 Base Point" },
+            {label: "Event state:", row: 5, col: 1, series:"2 Net MW" },
+            {label: "GUID:", row: 5, col: 2, series:"LAAR, IEM Train A MW" },
+            {label: "Heartbeat:", row: 5, col: 3, series:"LAAR, IEM Train A MW" },
+            {label: "HiCellTemp:", row: 6, col: 1, series:"LAAR, IEM Train A MW" },
+            {label: "HiCellV:", row: 6, col: 2, series:"LAAR, IEM Train A MW" },
+            {label: "HiPCVTemp:", row: 6 , col: 3, series:"LAAR, IEM Train A MW" },
+            {label: "InvertedDCBusVoltage:", row: 7, col: 1, series:"LAAR, IEM Train A MW" },
+            {label: "LOTOLock:", row: 7, col: 2, series:"LAAR, IEM Train B MW" },
+            {label: "LoCellTemp:", row: 7, col: 3, series:"LAAR, IEM Train B MW" },
+            {label: "LoCellV:", row: 8, col: 1, series:"LAAR, IEM Train B MW" },
+            {label: "LoPCTemp:", row: 8, col: 2, series:"LAAR, IEM Train B MW" },
+            {label: "Manual Dispatch:", row: 8, col: 3, series:"LAAR, IEM Train B MW" },
+            {label: "Nameplate capacity:", row: 9, col: 1, series:"LAAR, IEM Train B MW" }
         ],
 
         init: function(nodeType) {
+                d3.selectAll(".button").remove();
 //            tabulate(initialData, ['name']); // 2 column table
                 if ((nodeType == 'Site') || (nodeType == 'Array'))
                     buttonArray(AgITable.arrayData);
@@ -140,4 +142,4 @@ var AgITable = (function () {
     };
 
 })();
-AgITable.init();
+AgITable.init("Site");

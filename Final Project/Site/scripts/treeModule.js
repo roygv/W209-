@@ -133,8 +133,8 @@ var AgITree = (function () {
                    var dx = mouseX - getXPixel(dot.x);
                    var dy = mouseY - getYPixel(dot.y);
                    if ((dx * dx + dy * dy) < (dot.r*dot.r)) {
-                   tipCanvas.style.left = getXPixel(dot.x) + "px";
-                   tipCanvas.style.top = (getYPixel(dot.y)+20) + "px";
+                   tipCanvas.style.left = getXPixel(dot.x+440) + "px";
+                   tipCanvas.style.top = (getYPixel(dot.y)+40) + "px";
                    tipCtx.clearRect(0, 0, tipCanvas.width, tipCanvas.height);
                    var al = (dot.collapsed == 1)? dot.alarm_col : dot.alarm;
                    tipCtx.fillText(dot.name + " (" + al + ")", 5, 15);
@@ -179,13 +179,13 @@ var AgITree = (function () {
                       var x_depth = 100;
                       
                       function init_pos(n){
-                      n[0].fx = 0;
-                      n[1].fx = x_depth;
-                      n[1].children[0].fx = 2*x_depth;
-                      n[1].children[1].fx = 2*x_depth;
-                      n[1].children[2].fx = 2*x_depth;
-                      n[1].children[3].fx = 2*x_depth;
-                      n[1].children[4].fx = 2*x_depth;
+                      n[0].fx = 50;
+                      n[1].fx = n[0].fx+x_depth;
+                      n[1].children[0].fx = n[1].fx+x_depth;
+                      n[1].children[1].fx = n[1].fx+x_depth;
+                      n[1].children[2].fx = n[1].fx+x_depth;
+                      n[1].children[3].fx = n[1].fx+x_depth;
+                      n[1].children[4].fx = n[1].fx+x_depth;
                       return n
                       }
                       
@@ -195,7 +195,7 @@ var AgITree = (function () {
                           .force("link", d3.forceLink(l).distance(30).strength(0.2))
                           .force("x", d3.forceX(function(d) {return d.depth*2*x_depth;}))
                           .force("y", d3.forceY())
-                          .force("collide",d3.forceCollide().radius(function(d) {return d.r + 0.2;}).iterations(2))
+                          .force("collide",d3.forceCollide().radius(function(d) {return d.r + 0.2;}).iterations(1))
                           .on("tick", ticked);
                           return simulation;}
                       

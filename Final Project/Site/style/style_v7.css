@@ -606,7 +606,6 @@ a {
     -webkit-transition:all 0.4s;}
 
 .toggle{
-    font-size:30px;
     display:inline-block;
     text-align: right;
     cursor:pointer;
@@ -641,7 +640,7 @@ a {
 
 .notibox{
     color:white;
-    background-color:silver;
+    background-color:#CACACA;
     width:calc(100% - 30px);
     padding:15px;
     margin:15px;
@@ -748,12 +747,12 @@ a {
 /* ------------------------------------------- tables ---------------------------*/
 #telemetryArray svg{
   /*background: #d9d9d9;*/
-  margin-left: 200px;
+  /*margin-left: 20px;*/
   padding: 0px;
   font-family: Univers, Arial, sans-serif;
-  box-sizing: border-box;
+  /*box-sizing: border-box;
   width: 960px;
-  height: 110px;
+  height: 110px;*/
 }
 
 #telemetryArray .button{
@@ -791,13 +790,14 @@ a {
   font-size: 10px;
   fill: black;
   pointer-events: none;
-  text-anchor: middle;
+  text-anchor: left;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
 }
 
-/**
+/** This is already done in javascript
+ 
 .node canvas{
   cursor: pointer;
   stroke: #3182bd;

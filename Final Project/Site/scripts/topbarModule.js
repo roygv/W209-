@@ -54,7 +54,7 @@ function updateSwitch(){
         var image = "images/cloud-no-bolt.png";
         var t = "Historical mode";
         $('#notificationCenter').html("");
-        $('#histCenter').html("<div style='margin-left:15px; font-size:14px'>Period: <span id='start_date'></span> - <span id='end_date'></span></div><div class='notibox'><b>Section TBD</b></br></br>Statistics on Historical Notification data</br></br>Data on the main panel should also vary with dates</br></br></br></br></br></br></br></br></br></br></br></br></br></div>");
+        $('#histCenter').html("<div style='margin-left:15px; font-size:14px'>Period: <span id='start_date'></span> - <span id='end_date'></span></div><div class='notibox'><b>Summary statistics (TBD)</b></br></br>Statistics on notifications in the selected period</br></br>Data on the main panel should also vary with dates</br></br></br></br></br></br></br></br></br></br></br></br></br></div>");
     }
     if (liveon){
         d3.selectAll(".topgraph").remove();

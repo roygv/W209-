@@ -6,8 +6,8 @@ var AgIGraph = (function () {
     var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
 
     var svg = d3.select("#telemetryGraph svg"),
-        margin = {top: 0, right: 0, bottom: 300, left: 540},
-        margin2 = {top: 120, right: 0, bottom: 260, left: 540},
+        margin = {top: 10, right: 0, bottom: 80, left: 50},
+        margin2 = {top: +svg.attr("height")-margin.bottom+30, right: 0, bottom: 20, left: 50},
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom,
         height2 = +svg.attr("height") - margin2.top - margin2.bottom;
@@ -78,7 +78,7 @@ var AgIGraph = (function () {
     function startClean() {
 
         svg.remove();
-        d3.select("#telemetryGraph").append("svg").attr("width","960").attr("height","400");
+        d3.select("#telemetryGraph").append("svg").attr("width","600").attr("height","250");
         svg = d3.select("#telemetryGraph svg");
         brush = d3.brushX()
             .extent([[0, 0], [width, height2]])

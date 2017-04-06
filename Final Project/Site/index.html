@@ -20,16 +20,16 @@
             <div class="topbar container" style="text-align: center;">
                 
                 <!-- Logo -->
-                <img id="logo" src="images/cloud-bolt.png" class="left inline" style="margin-top:10px; width:35px;height:35px;" title = "Live mode"/>
+                <img id="logo" src="images/cloud-bolt.png" class="left inline" style="margin-top:8px;margin-bottom:3px;width:35px;height:35px;" title = "Live mode"/>
                 
                 <!-- Search bar -->
-                <p class="s" style="margin-top:10px;margin-bottom:10px;"><input name="search" id="search" type="search" value="" onkeyup="this.setAttribute('value', this.value);"></p>
+                <p class="s" style="margin-top:8px;margin-bottom:10px;"><input name="search" id="search" type="search" value="" onkeyup="this.setAttribute('value', this.value);"></p>
                     
                 <!-- Date-->
-                <p id = "datetop" class="right inline" style="margin-top:14px;font-size:16px;position: absolute;right: 70px;"></p>
+                <p id = "datetop" class="right inline" style="margin-top:12px;font-size:16px;position: absolute;right: 60px;"></p>
                 
                 <!-- Notification button -->
-                <div class="right inline toggle" style="margin-top:0px;">&#9776;</div>
+                <div class="right inline toggle" style="margin-top:0px;font-size:28px;">&#9776;</div>
                 <span class="right notifcount" id="nbNotifications"></span>
             </div>
             
@@ -61,37 +61,34 @@
             
             
             <!-- Main content -->
-            <div id="canvaswrapper" style="margin-top:20px;">
-                <canvas id="tree" width="800" height="400"></canvas>
-                <canvas id="treetooltip" width="75" height="20"></canvas>
-            </div>
             
-            <p>Node: <span id="node"></span>
+            
+            <div style="display: table;margin-left:20px;">
+                <div style="display: table-row">
+                    <div style="width: 400px; display: table-cell; padding:0px;" >
+                        Node: <span id="node"></span>
+                    </div>
+                    <div id="canvaswrapper" class="inline" style="margin-top:10px;margin-bottom:10px;table-cell;">
+                        <canvas id="tree" width="600" height="400"></canvas>
+                        <canvas id="treetooltip" width="75" height="20"></canvas>
+                    </div>
+                    
+                </div>
+                <div style="display: table-row">
+                    <div  id="telemetryArray" box-sizing="border-box" style="display: table-cell;">
+                        <svg id="telemetryArray" width="400" height="250" class="inline">
+                        </svg>
+                    </div>
+                    <div id="telemetryGraph" class="inline" style="display: table-cell;">
+                        <svg width="600" height="250" class="inline">
+                        </svg>
+                    </div>
+                </div>
+            </div>
             
             
 
-            <div  id="telemetryArray" box-sizing="border-box">
-                <svg width="400" height="100">
 
-                </svg>
-            </div>
-            <div id="telemetryGraph">
-                <svg width="960" height="400">
-                    <defs>
-                        <linearGradient id="mainGradient" x1="0%" y1="100%" x2="0%" y2="0%">
-                            <stop class="stop-bottom" offset="5%"></stop>
-                            <stop class="stop-top" offset="95%"></stop>
-                        </linearGradient>
-                    </defs>
-                    <g>
-                        <g class="axis axis--x">
-                        </g>
-                        <g class="axis axis--y">
-                        </g>
-
-                    </g>
-                </svg>
-            </div>
             
             
             <!-- Script import -->

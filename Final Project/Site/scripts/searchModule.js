@@ -47,12 +47,15 @@ function updateNode(node){
     }
     d3.csv("data/tree_structure.csv",node_structure,function(error, data){
            var name = "";
+           var type = "";
            data.forEach(function(d){
-                        if (d.id == node){name = d.name;};
+                        if (d.id == node){name = d.name;type = d.type;};
                         });
            $('#search').attr("value",name);
            $('input[name=search]').val(name);
            
+           // Updating table
+           AgITable.init(type);
            });
     
     // Updating the text indicator
