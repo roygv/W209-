@@ -37,8 +37,7 @@ function startTime() {
     var liveon = document.getElementById("liveswitch").checked;
     var disp = day+" "+mo+" "+d+" "+y+"  "+ h + ":" + m + ":" + s;
     
-    if (!liveon) {document.getElementById("datetop").innerHTML = "";}
-    if (liveon){document.getElementById("datetop").innerHTML = disp;}
+    document.getElementById("datetop").innerHTML = disp;
     var t = setTimeout(startTime, 500);
 }
 function checkTime(i) {
@@ -46,11 +45,7 @@ function checkTime(i) {
     return i;
 }
 
-///////  Initiate ///////
-
-title = "Save"
-
-///////  Initiate ///////
+///////  Refresh ///////
 
 function updateSwitch(){
     var liveon = document.getElementById("liveswitch").checked;
@@ -58,18 +53,21 @@ function updateSwitch(){
         top_graph();
         var image = "images/cloud-no-bolt.png";
         var t = "Historical mode";
+        $('#notificationCenter').html("");
+        $('#histCenter').html("<div style='margin-left:15px; font-size:14px'>Period: <span id='start_date'></span> - <span id='end_date'></span></div><div class='notibox'><b>Section TBD</b></br></br>Historical notification statistics</br></br>Data on the main panel should also vary with dates</br></br></br></br></br></br></br></br></br></br></br></br></br></div>");
     }
     if (liveon){
         d3.selectAll(".topgraph").remove();
         var image = "images/cloud-bolt.png";
         var t = "Live mode";
+        notififCenter();
+        $('#histCenter').html("");
     }
     document.getElementById("logo").src = image;
     document.getElementById("logo").title = t;
 }
 
-
-///////  Top bar graph ///////
+/////// bar graph ///////
 
 
 var context = d3.select("#context"),
@@ -133,9 +131,9 @@ function top_graph(){
            
            context.append("text")
            .attr("class", "axis topgraph")
-           .attr("transform", "translate(" + (margin.left+1) + "," + (height+5) + ")")
+           .attr("transform", "translate(" + (margin.left+1) + "," + (height+8) + ")")
            .attr("font-size", "12px")
-           .attr("fill", "silver")
+           .attr("fill", "white")
            .text("Nb events");
            
            context.append("g")
@@ -151,7 +149,7 @@ function brushed() {
     var s = d3.event.selection || x.range();
     var start_date = s.map(x.invert, x)[0];
     var end_date = s.map(x.invert, x)[1];
-    var formatDate = d3.timeFormat("%Y-%m-%dT%H:%M:%SZ");
+    var formatDate = d3.timeFormat("%b %d %Y");
     document.getElementById('start_date').innerHTML = formatDate(start_date);
     document.getElementById('end_date').innerHTML = formatDate(end_date);
 }

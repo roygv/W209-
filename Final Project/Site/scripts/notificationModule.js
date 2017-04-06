@@ -1,9 +1,6 @@
 ///////  Notification Center ///////
 
-var node = null;
 var nbNotifications = 0;
-
-document.getElementById('node').innerHTML = node;
 
 function render_notification(v, d) {
     return v + "<div onclick='notifClick(this);' id='"+ d.nodeID +"' class='delay notibox'><b>"+ (d.date.toTimeString().split(' ')[0]) +"</b> (Notification #"+ d.alertID +") <br />\
@@ -14,7 +11,7 @@ function render_notification(v, d) {
     </div>"
 }
 
-d3.csv("data/alert_data.csv", type_alert, function(error, data) {
+function notififCenter(){d3.csv("data/alert_data.csv", type_alert, function(error, data) {
        if (error) throw error;
        
        var n = data.length;
@@ -29,7 +26,9 @@ d3.csv("data/alert_data.csv", type_alert, function(error, data) {
        nbNotifications = data.length;
        $('#nbNotifications').html(nbNotifications);
        
-});
+                                });};
+
+notififCenter()
 
 function type_alert(d) {
     d.date = new Date(d.date);
@@ -39,8 +38,8 @@ function type_alert(d) {
 }
 
 function notifClick(d){
-    node = d.id;
-    document.getElementById('node').innerHTML = node;
+    console.log("notif"+d.id)
+    updateNode(d.id);
 }
 
 

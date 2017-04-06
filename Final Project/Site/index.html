@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="style/style_v7.css">
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.autocomplete.min.js"></script>
   
         
         <!-- Body -->
@@ -22,12 +23,10 @@
                 <img id="logo" src="images/cloud-bolt.png" class="left inline" style="margin-top:10px; width:35px;height:35px;" title = "Live mode"/>
                 
                 <!-- Search bar -->
-                <p class="s left" style="margin-left:20px;margin-top:10px;margin-bottom:10px;"><input name="search" id="search" type="search" value="" onkeyup="this.setAttribute('value', this.value);"></p>
-
-                
-                <!-- Context graph or date-->
-                <svg class="right inline" id="context" width="500" height="45" style="margin: auto; display: inline-block; overflow: hidden;position: absolute;right: 70px;"></svg>
-                <p id = "datetop" class="right inline" style="margin-top:10px;font-size:20px;position: absolute;right: 70px;"></p>
+                <p class="s" style="margin-top:10px;margin-bottom:10px;"><input name="search" id="search" type="search" value="" onkeyup="this.setAttribute('value', this.value);"></p>
+                    
+                <!-- Date-->
+                <p id = "datetop" class="right inline" style="margin-top:14px;font-size:16px;position: absolute;right: 70px;"></p>
                 
                 <!-- Notification button -->
                 <div class="right inline toggle" style="margin-top:0px;">&#9776;</div>
@@ -54,14 +53,15 @@
                 
                 <!-- Notifications -->
                 <div class='sidetoggle'>Notifications</div>
-                
-                <div></div>
                 <div id = "notificationCenter"></div>
+                <svg id="context" width="270" height="100" style="float: center; margin: 15px;"></svg>
+                <div id = "histCenter"></div>
+                
             </div>
             
             
             <!-- Main content -->
-            <div id="canvaswrapper">
+            <div id="canvaswrapper" style="margin-top:20px;">
                 <canvas id="tree" width="800" height="400"></canvas>
                 <canvas id="treetooltip" width="75" height="20"></canvas>
             </div>
@@ -99,8 +99,9 @@
             <script type="text/javascript" src="scripts/graphModule.js"></script>
             <script type="text/javascript" src="scripts/buttonModule.js"></script>
             <script type="text/javascript" src="scripts/tableModule.js"></script>
-            <script type="text/javascript" src="scripts/treeModuleGDR.js"></script>
+            <script type="text/javascript" src="scripts/treeModule.js"></script>
             <script type="text/javascript" src="scripts/notificationModule.js"></script>
+            <script type="text/javascript" src="scripts/searchModule.js"></script>
             <script type="text/javascript" src="scripts/topbarModule.js"></script>
 
         </body>

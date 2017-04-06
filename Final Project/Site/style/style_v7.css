@@ -20,6 +20,10 @@ body {
   margin: 0;
 }
 
+html, body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
 menu {
   display: block;
 }
@@ -70,10 +74,6 @@ button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[
   outline-offset: -2px;
 }
 
-[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
 ::-webkit-input-placeholder {
   color: inherit;
   opacity: 0.54;
@@ -94,10 +94,6 @@ html,body {
 
 html {
   overflow-x: hidden;
-}
-
-h1,h2,h3,h4,h5,h6 {
-  font-family: "Segoe UI",Arial,sans-serif;
 }
 
 h1 {
@@ -590,12 +586,12 @@ a {
 /************************** Zoom and Brush formatting **************************/
 
 .area {
-    fill: white;
+    fill: #34addb;
     clip-path: url(#clip);
 }
 
 .axis text{
-    fill: white;
+    fill: grey;
 }
 
 .axis line, .axis path{
@@ -815,10 +811,6 @@ a {
 
 /************************** Seach bar **************************/
 
-html, body {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
 
 h1 {
     font-size: 1.5em;
@@ -840,15 +832,14 @@ a {
     -webkit-appearance: none;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     width: 18px;
-    padding: 0 10px;
+    padding: 0 0px;
     height: 18px;
-    font-size: 14px;
+    font-size: 15px;
     color: #666;
     line-height: 18px;
     border: 0;
     border-radius: 50px;
     box-shadow: 0 0 0 1px rgba(0,150,200,.5), inset 0 2px 5px rgba(0,100,150,.3), 0 2px 0 rgba(255,255,255,.6);
-    position: relative;
     z-index: 5;
     -webkit-transition: .3s ease;
     -moz-transition: .3s ease;
@@ -895,3 +886,13 @@ p.s:after {
 p.s:hover:after {
     box-shadow: inset 0 -1px 0 rgba(255,255,255,.6), -2px 2px 2px 1px rgba(100,200,255,.5);
 }
+
+.autocomplete-suggestions {position: relative;width:200px; background: #fff; cursor: default; overflow: auto; }
+.autocomplete-suggestion { position: relative;width:200px; padding: 2px 5px; font-size: 12px; white-space: nowrap; overflow: auto; }
+.autocomplete-selected { width:200px; background: #f0f0f0; }
+.autocomplete-suggestions strong { width:200px; font-weight: normal; text-decoration: underline; }
+
+
+
+
+
