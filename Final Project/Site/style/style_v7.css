@@ -695,6 +695,22 @@ a {
 }
 
 
+/************************** Tree **************************/
+
+#treetooltip{
+    background-color:white;
+    position:absolute;
+    border:1px solid silver;
+    left:-200px;
+    top:100px;
+}
+
+#wrapper {
+    position:relative;
+    width:800px;
+    height:400px;
+}
+
 /* Roy's stuff starts here:    for graph module */
 
 #telemetryGraph {

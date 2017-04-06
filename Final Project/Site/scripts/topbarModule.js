@@ -52,7 +52,7 @@ title = "Save"
 
 ///////  Initiate ///////
 
-function liveswitchClick(){
+function updateSwitch(){
     var liveon = document.getElementById("liveswitch").checked;
     if (!liveon) {
         top_graph();

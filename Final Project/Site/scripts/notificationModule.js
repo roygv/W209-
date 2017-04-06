@@ -29,8 +29,6 @@ d3.csv("data/alert_data.csv", type_alert, function(error, data) {
        nbNotifications = data.length;
        $('#nbNotifications').html(nbNotifications);
        
-       console.log(nbNotifications);
-       
 });
 
 function type_alert(d) {
