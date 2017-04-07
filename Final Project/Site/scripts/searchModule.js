@@ -32,13 +32,14 @@ $('input[type=search]').on('search', function () {
 
 // Initialization of node number
 var node = -1;
-document.getElementById('node').innerHTML = node;
+//Roy:   document.getElementById('node').innerHTML = node;
 
 
 // Aggregating all the things which need to happen when the current node is updated
 
-function updateNode(node, fromTree = false){
-    
+//Roy: can't initialize variables in JS.  function updateNode(node, fromTree = false){
+function updateNode(node, fromTree){
+
     // Updating the name in the search bar
     function node_structure(d) {
         d.id = +d.id;
