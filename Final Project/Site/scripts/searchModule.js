@@ -37,7 +37,7 @@ document.getElementById('node').innerHTML = node;
 
 // Aggregating all the things which need to happen when the current node is updated
 
-function updateNode(node){
+function updateNode(node, fromTree = false){
     
     // Updating the name in the search bar
     function node_structure(d) {
@@ -62,9 +62,6 @@ function updateNode(node){
     $('#node').html(node);
     
     // Updating the tree
-    // not working and it's not because the click is inside the init function:
-    // the visual effect is the same when we create a separate function
-    // The key is to modify AgItree such that if I write AgITree.init(-1); at the end twice in a row, it works
-    // AgITree.init(node);
+    if (!fromTree){AgITree.init(node);}
 
 }

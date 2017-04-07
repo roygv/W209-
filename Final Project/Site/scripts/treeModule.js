@@ -1,4 +1,8 @@
 var AgITree = (function () {
+               
+               return {
+               init: function(selectedNode){
+               
                var modelNodes, modelLinks=[], nodes, links=[], simulation, context, width, height, canvas, context, width, height;
                
                function node_structure(d) {
@@ -72,7 +76,7 @@ var AgITree = (function () {
                
                function selectTarget(id) {
                modelNodes.forEach(function (d){
-                             d.selected = (d.id == id)? 1:0;
+                                  d.selected = (d.id == id)? 1:0;
                                   });
                }
                
@@ -113,7 +117,7 @@ var AgITree = (function () {
                context.fill();
                if (d.selected == 1){
                context.strokeStyle = "red";
-               context.strokeWidth = 3;
+               context.strokeWidth = 4;
                } else {
                context.strokeStyle = "#3182bd";
                context.strokeWidth = 2;
@@ -123,7 +127,11 @@ var AgITree = (function () {
                
                // Write number in circle
                context.beginPath();
-               context.fillStyle = "black"; // font color to write the text with
+               if (d.selected == 1){
+               context.fillStyle = "red";
+               } else {
+               context.fillStyle = "black";
+               }
                var font = radius * 1.3 + "1px Arial";
                context.font = font;
                context.textAlign = 'center';
@@ -138,39 +146,39 @@ var AgITree = (function () {
                // show tooltip when mouse hovers over dot
                
                function handleMouseMove(e){
-
-                   function getXPixel(val) {
-                   return val+10; // the coeffs used in tick
-                   }
-                   function getYPixel(val) {
-                   return  val+ (height / 2); // the coeffs used in tick
-                   }
                
-                   var canvasOffset = $("#tree").offset();
-                   var offsetX = canvasOffset.left;
-                   var offsetY = canvasOffset.top;
-                   var tipCanvas = document.getElementById("treetooltip");
-                   var tipCtx = tipCanvas.getContext("2d");
-                   
-                   mouseX=parseInt(e.clientX-offsetX);
-                   mouseY=parseInt(e.clientY-offsetY);
-                   
-                   // Put your mousemove stuff here
-                   var hit = false;
-                   for (var i = 0; i < nodes.length; i++) {
-                   var dot = nodes[i];
-                   var dx = mouseX - getXPixel(dot.x);
-                   var dy = mouseY - getYPixel(dot.y);
-                   if ((dx * dx + dy * dy) < (dot.r*dot.r)) {
-                   tipCanvas.style.left = getXPixel(dot.x+440) + "px";
-                   tipCanvas.style.top = (getYPixel(dot.y)+40) + "px";
-                   tipCtx.clearRect(0, 0, tipCanvas.width, tipCanvas.height);
-                   var al = (dot.collapsed == 1)? dot.alarm_col : dot.alarm;
-                   tipCtx.fillText(dot.name + " (" + al + ")", 5, 15);
-                   hit = true;
-                   }
-                   }
-                   if (!hit) { tipCanvas.style.left = "-200px"; }
+               function getXPixel(val) {
+               return val+10; // the coeffs used in tick
+               }
+               function getYPixel(val) {
+               return  val+ (height / 2); // the coeffs used in tick
+               }
+               
+               var canvasOffset = $("#tree").offset();
+               var offsetX = canvasOffset.left;
+               var offsetY = canvasOffset.top;
+               var tipCanvas = document.getElementById("treetooltip");
+               var tipCtx = tipCanvas.getContext("2d");
+               
+               mouseX=parseInt(e.clientX-offsetX);
+               mouseY=parseInt(e.clientY-offsetY);
+               
+               // Put your mousemove stuff here
+               var hit = false;
+               for (var i = 0; i < nodes.length; i++) {
+               var dot = nodes[i];
+               var dx = mouseX - getXPixel(dot.x);
+               var dy = mouseY - getYPixel(dot.y);
+               if ((dx * dx + dy * dy) < (dot.r*dot.r)) {
+               tipCanvas.style.left = getXPixel(dot.x+440) + "px";
+               tipCanvas.style.top = (getYPixel(dot.y)+40) + "px";
+               tipCtx.clearRect(0, 0, tipCanvas.width, tipCanvas.height);
+               var al = (dot.collapsed == 1)? dot.alarm_col : dot.alarm;
+               tipCtx.fillText(dot.name + " (" + al + ")", 5, 15);
+               hit = true;
+               }
+               }
+               if (!hit) { tipCanvas.style.left = "-200px"; }
                }
                
                
@@ -188,8 +196,6 @@ var AgITree = (function () {
                }
                
                
-               return {
-               init: function(selectedNode){
                d3.csv("data/tree_structure.csv",node_structure,function(error, data){
                       if (error) throw error;
                       modelNodes = data;
@@ -217,6 +223,7 @@ var AgITree = (function () {
                       n[1].children[4].fx = n[1].fx+x_depth;
                       return n
                       }
+                      
                       
                       function sim(n,l){
                           simulation = d3.forceSimulation(init_pos(n))
@@ -286,14 +293,14 @@ var AgITree = (function () {
                                            
                                            if (node) {
                                            console.log("click" + node.id);
-                                           updateNode(node.id);
+                                           updateNode(node.id, fromTree = true);
                                            selectTarget(node.id);
                                            nodes = visibleNodes(modelNodes);
                                            simulation = sim(nodes, links);
                                            }
                                            
                                            if (!node) {
-                                           updateNode(-1);
+                                           updateNode(-1, fromTree = true);
                                            selectTarget(-1);
                                            nodes = visibleNodes(modelNodes);
                                            simulation = sim(nodes, links);
@@ -316,4 +323,4 @@ var AgITree = (function () {
                })();
 
 AgITree.init(-1);
-//AgITree.init(-1);
+AgITree.init(-1);
