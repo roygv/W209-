@@ -606,7 +606,6 @@ a {
     -webkit-transition:all 0.4s;}
 
 .toggle{
-    display:inline-block;
     text-align: right;
     cursor:pointer;
 }

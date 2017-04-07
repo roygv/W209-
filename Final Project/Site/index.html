@@ -20,16 +20,18 @@
             <div class="topbar container" style="text-align: center;">
                 
                 <!-- Logo -->
-                <img id="logo" src="images/cloud-bolt.png" class="left inline" style="margin-top:8px;margin-bottom:3px;width:35px;height:35px;" title = "Live mode"/>
+                <img id="logo" src="images/cloud-bolt.png" class="left" style="margin-top:5px;margin-bottom:2px;width:35px;height:35px;display: inline-block;vertical-align: middle;" title = "Live mode"/>
                 
                 <!-- Search bar -->
-                <p class="s" style="margin-top:8px;margin-bottom:10px;"><input name="search" id="search" type="search" value="" onkeyup="this.setAttribute('value', this.value);"></p>
+                <p class="s" style="margin-top:5px;margin-bottom:8px;"><input name="search" id="search" type="search" value="" onkeyup="this.setAttribute('value', this.value);"></p>
                     
                 <!-- Date-->
-                <p id = "datetop" class="right inline" style="margin-top:12px;font-size:16px;position: absolute;right: 60px;"></p>
+                <p id = "datetop" class="right" style="margin-top:8px;margin-bottom:0px;font-size:16px;position: absolute;right: 60px;display: inline-block;vertical-align: middle;"></p>
                 
                 <!-- Notification button -->
-                <div class="right inline toggle" style="margin-top:0px;font-size:28px;">&#9776;</div>
+                <div class="right toggle" style="margin-top:2px;margin-bottom:0px;display: inline-block;vertical-align: middle;">
+                    <img src="images/menu.png" style="width:35px;height:35px;" title = "Menu"/>
+                </div>
                 <span class="right notifcount" id="nbNotifications"></span>
             </div>
             
@@ -72,7 +74,7 @@
                         </svg>
                     </div>
                     <div style="width: 100%; display: table-cell; padding:0px;" >
-                        <svg width="100%" height="20"  style="display: table-cell;" class="inline">
+                        <svg height="20"  style="width: calc(100% - 30px); display: table-cell;" class="inline">
                             <text x="0" y="13" fill="silver" font-size="14px">Alarm Overview: Battery Park, NY</text>
                             <line x1="0" y1="100%" x2="100%" y2="100%" style="stroke:#DEDEDE;stroke-width:2" />
                         </svg>
@@ -96,8 +98,8 @@
                     </svg>
                     </div>
                     <div style="width: 100%; display: table-cell; padding:0px;" >
-                    <svg width="100%" height="20"  style="display: table-cell;">
-                        <text id="graphTitle" x="0" y="13" fill="silver" font-size="14px" transform="translate(50,0)"></text>
+                    <svg height="20"  style="width: calc(100% - 30px); display: table-cell;">
+                        <text id="graphTitle" x="0" y="13" fill="silver" font-size="14px"></text>
                         <line x1="0" y1="100%" x2="100%" y2="100%" style="stroke:#DEDEDE;stroke-width:2" />
                     </svg>
                     </div>
