@@ -46,6 +46,8 @@ var AgIGraph = (function () {
                 focus.select("path")
                     .datum(myData);
                 updateYaxis();
+                focus.select(".zoomArea").attr("d", area);
+                focus.select(".axis--x").call(xAxis.ticks(5));
             }
         });
     }
@@ -230,8 +232,6 @@ var AgIGraph = (function () {
             AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),myUntil,updateOverview);
             x.domain([myFrom, myUntil]);
             updateFocus(mySeries, myFrom, myUntil);
-            focus.select(".zoomArea").attr("d", area);
-            focus.select(".axis--x").call(xAxis.ticks(5).tickFormat(d3.utcFormat("%m/%d")));
             context.select(".brush").call(brush.move, [myFrom, myUntil]);
 
         } //updateSeries

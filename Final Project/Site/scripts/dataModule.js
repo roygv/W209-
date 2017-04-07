@@ -60,6 +60,21 @@ var AgIData = (function () {
             d3.json(url)
                 .header("Authorization", "Basic " + btoa(p_user + ":" + p_password))
                 .get(callback);
+        }, // getData
+
+        getLast: function (point, from, until, callback) {
+            var interval;
+            if((until-from)/(1000*60*5) < 3000)
+                interval="5m";
+            else if ((until-from)/(1000*60*60) < 3000)
+                interval="1h";
+            else
+                interval="1d";
+
+            var url = getURL(point, from, until, interval, "last");
+            d3.json(url)
+                .header("Authorization", "Basic " + btoa(p_user + ":" + p_password))
+                .get(callback);
         } // getData
     };
 
