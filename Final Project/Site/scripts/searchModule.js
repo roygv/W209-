@@ -56,7 +56,10 @@ function updateNode(node, fromTree){
            $('input[name=search]').val(name);
            
            //Updating top left
-           sparkLine.init(name);
+           //sparkLine.init(name); uncomment and comment the 2 lines below,
+           //once the graphs in the top left have been fixed
+           txt = d3.select("#summaryMetrics");
+           txt.text("Summary Metrics: "+name);
            
            // Updating table
            AgITable.init(type);
