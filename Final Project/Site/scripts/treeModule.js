@@ -187,8 +187,6 @@ var AgITree = (function () {
                       
                       nodes = visibleNodes(modelNodes);
                       
-                      console.log(nodes);
-                      
                       var x_depth = 100;
                       
                       function init_pos(n){
@@ -214,6 +212,8 @@ var AgITree = (function () {
                       
                       simulation = sim(nodes, links);
                       
+                      console.log(nodes);
+                      
                       
                       // .force("x", d3.forceX(function(d) {if(d.children[0]){return d.children[0].x-100;}else{return d.depth*100};}))
                       
@@ -222,8 +222,6 @@ var AgITree = (function () {
                       
                       width = canvas.width;
                       height = canvas.height;
-                      
-                      context.clearRect(0, 0, width, height);
                       
                       d3.select(canvas)
                       .call(d3.drag()
@@ -305,4 +303,3 @@ var AgITree = (function () {
                })();
 
 AgITree.init(-1);
-//AgITree.init(-1);
