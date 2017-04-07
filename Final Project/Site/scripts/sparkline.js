@@ -15,6 +15,41 @@ var sparkLine = (function () {
         .y1(function(d) { return y(d.value); });
 
     return {
+        init: function(node) {
+            var now=new Date();
+            txt = d3.select("#summaryMetrics");
+            txt.text("Summary Metrics: "+node);
+
+            var svg = d3.selectAll('#powerSummary svg').remove();
+
+            AgIData.getData("2 Base Point",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'),function(error, json) {
+                if (error) throw error;
+                if (json.results[0].series) {
+                    var data = json.results[0].series[0].values;
+                    sparkLine.draw(0,'Battery charge(%)','#powerSummary', data);
+                    // sparkLine.draw(0,'Battery SoC(%)','#powerSummary', data);
+                }
+            });
+
+            AgIData.getData("A Gross GN MV",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'),function(error, json) {
+                if (error) throw error;
+                if (json.results[0].series) {
+                    var data = json.results[0].series[0].values;
+                    sparkLine.draw(0,'Power output(kW)','#powerSummary', data);
+                    // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
+                }
+            });
+
+            AgIData.getData("2 LMP",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'),function(error, json) {
+                if (error) throw error;
+                if (json.results[0].series) {
+                    var data = json.results[0].series[0].values;
+                    sparkLine.draw(0,'Market price($)','#powerSummary', data);
+                    // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
+                }
+            });
+        },
+
 
         draw: function(position, title, elemId, data) {
                     len = data.length;
@@ -71,29 +106,4 @@ var sparkLine = (function () {
     }}
 )();
 
-AgIData.getData("2 Base Point",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'),function(error, json) {
-    if (error) throw error;
-    if (json.results[0].series) {
-        var data = json.results[0].series[0].values;
-        sparkLine.draw(0,'Battery charge(%)','#powerSummary', data);
-        // sparkLine.draw(0,'Battery SoC(%)','#powerSummary', data);
-    }
-});
-
-AgIData.getData("A Gross GN MV",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'),function(error, json) {
-    if (error) throw error;
-    if (json.results[0].series) {
-        var data = json.results[0].series[0].values;
-        sparkLine.draw(0,'Power output(kW)','#powerSummary', data);
-        // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
-    }
-});
-
-AgIData.getData("2 LMP",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'),function(error, json) {
-    if (error) throw error;
-    if (json.results[0].series) {
-        var data = json.results[0].series[0].values;
-        sparkLine.draw(0,'Market price($)','#powerSummary', data);
-        // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
-    }
-});
+sparkLine.init("site level");

@@ -305,8 +305,14 @@ var AgITree = (function () {
                                            nodes = visibleNodes(modelNodes);
                                            simulation = sim(nodes, links);
                                            }
-                                           
-                                           
+                                           var node_desc='';
+                                           if (modelNodes[node.id].core > 0)
+                                               node_desc='Core #'+modelNodes[node.id].core;
+                                            else if (modelNodes[node.id].node > 0)
+                                               node_desc+='Node #'+modelNodes[node.id].node;
+                                            else
+                                               node_desc='Site level'
+                                           sparkLine.init(node_desc);
                                            });
                       
                       /// Tooltips
