@@ -53,6 +53,12 @@ var AgITree = (function () {
                d3.event.subject.fy = d3.event.y;
                }
                
+               function selectTarget(id) {
+               modelNodes.forEach(function (d){
+                             d.selected = (d.id == id)? 1:0;
+                                  });
+               }
+               
                function hide(id) {
                modelNodes.forEach(function(d){
                                   if (d.parent == id){
@@ -89,8 +95,13 @@ var AgITree = (function () {
                context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
                context.fillStyle = (d.alarm > 0)? "orange" :((d.alarm_col > 0 && d.collapsed==1)? "orange" :(d.collapsed == 1) ? "#9ecae1" : "#FFFFFF");
                context.fill();
+               if (d.selected == 1){
+               context.strokeStyle = "red";
+               context.strokeWidth = 3;
+               } else {
                context.strokeStyle = "#3182bd";
                context.strokeWidth = 2;
+               }
                context.stroke();
                
                // Write number in circle
@@ -160,7 +171,7 @@ var AgITree = (function () {
                
                
                return {
-               init: function(){
+               init: function(selectedNode){
                d3.csv("data/tree_structure.csv",node_structure,function(error, data){
                       if (error) throw error;
                       modelNodes = data;
@@ -171,6 +182,8 @@ var AgITree = (function () {
                                    modelNodes[d.parent].children.push(d);
                                    }
                                    })
+                      
+                      selectTarget(selectedNode)
                       
                       nodes = visibleNodes(modelNodes);
                       
@@ -204,11 +217,13 @@ var AgITree = (function () {
                       
                       // .force("x", d3.forceX(function(d) {if(d.children[0]){return d.children[0].x-100;}else{return d.depth*100};}))
                       
-                      var canvas = document.querySelector("canvas");
+                      var canvas = document.querySelector("#tree");
                       context = canvas.getContext("2d");
                       
                       width = canvas.width;
                       height = canvas.height;
+                      
+                      context.clearRect(0, 0, width, height);
                       
                       d3.select(canvas)
                       .call(d3.drag()
@@ -224,7 +239,8 @@ var AgITree = (function () {
                                            node = simulation.find(m[0] - 10, m[1] - height / 2, 10);
                                            
                                            if (node) {
-                                               console.log("dblclick" + node.id);}
+                                               console.log("dblclick" + node.id);
+                                           
                                            if (node.collapsed == 0) {
                                                parent=node.id;
                                                if (node.children.length != 0){
@@ -248,6 +264,8 @@ var AgITree = (function () {
                                            
                                            ticked();
                                            
+                                           }
+                                           
                                            });
                       
                       d3.select(canvas).on("click", function(){
@@ -257,10 +275,19 @@ var AgITree = (function () {
                                            
                                            if (node) {
                                            console.log("click" + node.id);
-                                           }
-                                           
+                                           updateNode(node.id);
+                                           selectTarget(node.id);
                                            nodes = visibleNodes(modelNodes);
                                            simulation = sim(nodes, links);
+                                           }
+                                           
+                                           if (!node) {
+                                           updateNode(-1);
+                                           selectTarget(-1);
+                                           nodes = visibleNodes(modelNodes);
+                                           simulation = sim(nodes, links);
+                                           }
+                                           
                                            
                                            });
                       
@@ -272,8 +299,10 @@ var AgITree = (function () {
                       });
                
                
-               }
+               },
+               
                };
                })();
 
-AgITree.init();
+AgITree.init(-1);
+//AgITree.init(-1);

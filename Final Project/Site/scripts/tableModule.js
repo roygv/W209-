@@ -131,7 +131,7 @@ var AgITable = (function () {
         init: function(nodeType) {
                 d3.selectAll(".button").remove();
 //            tabulate(initialData, ['name']); // 2 column table
-                if ((nodeType == 'Site') || (nodeType == 'Array'))
+                if ((nodeType == 'Site') || (nodeType == 'Array') || (nodeType == ''))
                     buttonArray(AgITable.arrayData);
                 else if (nodeType == 'Core')
                     buttonArray(AgITable.coreData);

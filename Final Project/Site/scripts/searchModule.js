@@ -60,5 +60,11 @@ function updateNode(node){
     
     // Updating the text indicator
     $('#node').html(node);
+    
+    // Updating the tree
+    // not working and it's not because the click is inside the init function:
+    // the visual effect is the same when we create a separate function
+    // The key is to modify AgItree such that if I write AgITree.init(-1); at the end twice in a row, it works
+    // AgITree.init(node);
 
 }
