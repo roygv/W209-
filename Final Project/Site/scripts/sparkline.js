@@ -1,8 +1,8 @@
 var sparkLine = (function () {
-    var width = 230;
+    var width = 300;
     var height = 120, titleHeight = 20, axisHeight = 20;
 
-    var x = d3.scaleUtc().range([0, width - 2]);
+    var x = d3.scaleUtc().range([0, width - 50]);
     var y = d3.scaleLinear().range([height - axisHeight - 4, titleHeight]);
     var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
     var xAxis = d3.axisBottom(x);
@@ -26,7 +26,7 @@ var sparkLine = (function () {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values;
-                    sparkLine.draw(0,'Battery charge(%)','#powerSummary', data);
+                    sparkLine.draw(0,'Battery charge (%)','#powerSummary', data);
                     // sparkLine.draw(0,'Battery SoC(%)','#powerSummary', data);
                 }
             });
@@ -35,7 +35,7 @@ var sparkLine = (function () {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values;
-                    sparkLine.draw(0,'Power output(kW)','#powerSummary', data);
+                    sparkLine.draw(0,'Power output (kW)','#powerSummary', data);
                     // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
                 }
             });
@@ -44,7 +44,7 @@ var sparkLine = (function () {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values;
-                    sparkLine.draw(0,'Market price($)','#powerSummary', data);
+                    sparkLine.draw(0,'Market price ($)','#powerSummary', data);
                     // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
                 }
             });
@@ -65,7 +65,7 @@ var sparkLine = (function () {
                         .attr('width', width)
                         .attr('height', height)
                         .append('g')
-                        .attr('transform', 'translate(20,'+position * height+')');
+                        .attr('transform', 'translate(40,'+ (position * height) +')'); // position is always 0... curious
                         // .attr('transform', 'translate('+position * height+',50)');
 
                     svg.append('rect')
@@ -85,7 +85,7 @@ var sparkLine = (function () {
                         .attr('class', 'sparktitle')
                         .text(title+': '+d3.format("2.3")(data[len-2].value))
                         .attr('text-anchor','top')
-                        .attr('transform', 'translate(5,5)');
+                        .attr('transform', 'translate(20,5)');
                     svg.append("g")
                         .attr("class", "axis axis--x")
                         .attr("transform", "translate(0," + (height - axisHeight) + ")")
@@ -106,4 +106,4 @@ var sparkLine = (function () {
     }}
 )();
 
-sparkLine.init("site level");
+sparkLine.init("Site");

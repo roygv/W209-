@@ -811,17 +811,15 @@ a {
 }
 
 .sparktitle {
-  fill: #4346EB;
-  font-size: 14px;
+  fill: grey;
+  font-size: 12px;
   /*stroke: #4346EB;*/
-  stroke: #aaaaaa;
+  stroke: #aaaaa;
+  font-weight: normal;
   opacity: 1;
   dominant-baseline: hanging;
 }
 
-#powerSummary {
-  margin-left: 50px;
-}
 /************************** Seach bar **************************/
 
 

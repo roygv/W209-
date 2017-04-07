@@ -54,6 +54,7 @@ function updateNode(node, fromTree){
                         });
            $('#search').attr("value",name);
            $('input[name=search]').val(name);
+           sparkLine.init(name)
            
            // Updating table
            AgITable.init(type);
