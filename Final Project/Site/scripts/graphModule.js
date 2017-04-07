@@ -76,7 +76,10 @@ var AgIGraph = (function () {
 
     function startClean(title) {
 
+                
         svg = d3.select("#telemetryGraph");
+        svg.selectAll("*").remove();
+                
         brush = d3.brushX()
             .extent([[0, 0], [width, height2]])
             .on("brush end", brushed);
