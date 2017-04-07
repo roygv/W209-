@@ -1,5 +1,5 @@
 var AgITree = (function () {
-               var modelNodes, modelLinks=[], nodes, links=[], simulation, context, width, height;
+               var modelNodes, modelLinks=[], nodes, links=[], simulation, context, width, height, canvas, context, width, height;
                
                function node_structure(d) {
                d.id = +d.id;
@@ -17,18 +17,35 @@ var AgITree = (function () {
                return d;
                }
                
-               function ticked() {
+               var canvas = document.querySelector("#tree");
+               context = canvas.getContext("2d");
+               
+               width = canvas.width;
+               height = canvas.height;
+               
                context.clearRect(0, 0, width, height);
+               context.beginPath();
+               
+               function ticked() {
+               // Store the current transformation matrix
                context.save();
+               
+               // Use the identity matrix while clearing the canvas
+               context.setTransform(1, 0, 0, 1, 0, 0);
+               context.clearRect(0, 0, width, height);
                context.translate(10, height / 2);
                
+               // Draw
                context.beginPath();
                links.forEach(drawLink);
-               context.strokeStyle = "#9ecae1";
                context.stroke();
+               context.closePath();
                
                context.beginPath();
                nodes.forEach(drawNode);
+               context.closePath();
+               
+               // Restore the transform
                context.restore();
                }
                
@@ -78,20 +95,19 @@ var AgITree = (function () {
                if ((d.source.hidden == 0) && (d.target.hidden == 0)){
                context.moveTo(d.source.x, d.source.y);
                context.lineTo(d.target.x, d.target.y);
+               context.strokeStyle = "#9ecae1";
                }
                }
                
                function drawNode(d) {
                if (d.hidden == 0) {
+               
                // Draw circle
-               //var radius = d.type == 'Site' ? 0 : (d.type == 'Array' ? 18 : (d.type == 'Core' ? 12 : (d.type == 'Alert'? 4: 8)));
-               //var radius = 2 + ((d.alarm - 1) * 1);
-               //var radius = (d.alarm == 1) ? 2 : 4;
                var al = (d.collapsed == 0)? d.alarm : d.alarm_col;
                var radius = 7 + Math.sqrt(al)*2;
                d.r = radius;
-               context.moveTo(d.x + radius, d.y);
                context.beginPath();
+               context.moveTo(d.x + radius, d.y);
                context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
                context.fillStyle = (d.alarm > 0)? "orange" :((d.alarm_col > 0 && d.collapsed==1)? "orange" :(d.collapsed == 1) ? "#9ecae1" : "#FFFFFF");
                context.fill();
@@ -103,17 +119,19 @@ var AgITree = (function () {
                context.strokeWidth = 2;
                }
                context.stroke();
+               context.closePath();
                
                // Write number in circle
+               context.beginPath();
                context.fillStyle = "black"; // font color to write the text with
                var font = radius * 1.3 + "1px Arial";
                context.font = font;
                context.textAlign = 'center';
                context.textBaseline = "middle";
                var text = (d.type == 'Core' ? d.core.toString() : (d.type == 'Node' ? d.node.toString() : ""));
-               context.beginPath();
                context.fillText(text, d.x, d.y);
                context.stroke();
+               context.closePath();
                }
                }
                
@@ -122,10 +140,10 @@ var AgITree = (function () {
                function handleMouseMove(e){
 
                    function getXPixel(val) {
-                   return val+10;
+                   return val+10; // the coeffs used in tick
                    }
                    function getYPixel(val) {
-                   return  val+200;
+                   return  val+ (height / 2); // the coeffs used in tick
                    }
                
                    var canvasOffset = $("#tree").offset();
@@ -217,11 +235,6 @@ var AgITree = (function () {
                       
                       // .force("x", d3.forceX(function(d) {if(d.children[0]){return d.children[0].x-100;}else{return d.depth*100};}))
                       
-                      var canvas = document.querySelector("#tree");
-                      context = canvas.getContext("2d");
-                      
-                      width = canvas.width;
-                      height = canvas.height;
                       
                       d3.select(canvas)
                       .call(d3.drag()
@@ -260,7 +273,7 @@ var AgITree = (function () {
                                            
                                            simulation = sim(nodes, links);
                                            
-                                           ticked();
+                                           //ticked(); // not useful
                                            
                                            }
                                            
@@ -303,3 +316,4 @@ var AgITree = (function () {
                })();
 
 AgITree.init(-1);
+//AgITree.init(-1);
