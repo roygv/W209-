@@ -54,7 +54,7 @@
                 <!-- Notifications -->
                 <div class='sidetoggle'>Notifications</div>
                 <div id = "notificationCenter"></div>
-                <svg id="context" width="270" height="100" style="float: center; margin: 15px;"></svg>
+                <svg id="context" width="270" height="100" style="float: bottom; margin: 15px;"></svg>
                 <div id = "histCenter"></div>
                 
             </div>
@@ -79,10 +79,10 @@
                     </div>
                 </div>
                 <div style="display: table-row">
-                    <div style="width: 400px; display: table-cell; padding:0px;" >
-                        Node: <span id="node"></span>
+                    <div id="powerSummary" style="width: 400px; display: table-cell; padding:0px;" >
+                        <!--Node: <span id="node"></span>-->
                     </div>
-                    <div id="canvaswrapper" class="inline" style="margin-top:10px;table-cell;">
+                    <div id="canvaswrapper" class="inline" style="margin-top:10px; display: table-cell;">
                         <canvas id="tree" width="600" height="400"></canvas>
                         <canvas id="treetooltip" width="75" height="20"></canvas>
                     </div>
@@ -127,6 +127,7 @@
             <script type="text/javascript" src="scripts/notificationModule.js"></script>
             <script type="text/javascript" src="scripts/searchModule.js"></script>
             <script type="text/javascript" src="scripts/topbarModule.js"></script>
+            <script type="text/javascript" src="scripts/sparkline.js"></script>
 
         </body>
 </html>

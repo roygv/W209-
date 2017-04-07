@@ -5,10 +5,10 @@ var AgIData = (function () {
     // A private counter variable
     myPrivateVar = 0;
 
-    var formatDate = d3.timeFormat("%Y-%m-%dT%H:%M:%SZ");
+//    var formatDate = d3.timeFormat("%Y-%m-%dT%H:%M:%SZ");
+    var formatDate = d3.utcFormat("%Y-%m-%dT%H:%M:%SZ");
 
-    // A private function which logs any arguments
-    getURL = function (point, from, until, interval) {
+    getURL = function (point, from, until, interval, agg) {
         var where='';
         if (from == NaN)
             where = '';
@@ -20,7 +20,7 @@ var AgIData = (function () {
             where += 'time <= \''+formatDate(until)+'\'';
 
         var query =
-            "select mean(value) as value " +
+            "select "+agg+"(value) as value " +
             "  from \"" + point +
             "\" where " + where +
             //       " where time > now() - 40w " +
@@ -56,7 +56,7 @@ var AgIData = (function () {
             else
                 interval="1d";
 
-            var url = getURL(point, from, until,interval);
+            var url = getURL(point, from, until, interval, "mean");
             d3.json(url)
                 .header("Authorization", "Basic " + btoa(p_user + ":" + p_password))
                 .get(callback);

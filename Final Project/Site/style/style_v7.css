@@ -796,21 +796,32 @@ a {
   -ms-user-select: none;
 }
 
-/** This is already done in javascript
- 
-.node canvas{
-  cursor: pointer;
-  stroke: #3182bd;
-  stroke-width: 1px;
+.sparkline {
+  fill: url(#mainGradient);
+  stroke: #34addb; /* #4346EB; */
+  stroke-width: 0.5px;
 }
-
-.link canvas{
+.sparkcircle {
+  fill: #f00;
+  stroke: none;
+}
+.sparkback {
   fill: none;
-  stroke: #9ecae1;
-  stroke-width: 1px;
+  stroke: none;
 }
- **/
 
+.sparktitle {
+  fill: #4346EB;
+  font-size: 14px;
+  /*stroke: #4346EB;*/
+  stroke: #aaaaaa;
+  opacity: 1;
+  dominant-baseline: hanging;
+}
+
+#powerSummary {
+  margin-left: 50px;
+}
 /************************** Seach bar **************************/
 
 

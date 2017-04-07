@@ -2,7 +2,7 @@ var AgIGraph = (function () {
 
     var myData, myOverviewData, mySeries, myFrom, myUntil, brush, zoom, area, area2, focus,context, x;
 
-    var formatDate = d3.timeFormat("%Y-%m-%dT%H:%M:%SZ");
+    var formatDate = d3.utcFormat("%Y-%m-%dT%H:%M:%SZ");
     var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
 
     var svg = d3.select("#telemetryGraph svg"),
@@ -12,11 +12,8 @@ var AgIGraph = (function () {
         height = +svg.attr("height") - margin.top - margin.bottom,
         height2 = +svg.attr("height") - margin2.top - margin2.bottom;
 
-
-//    x = function() {d3.scaleTime().range([0, width])};
-
-    var x = d3.scaleTime().range([0, width]);
-    var x2 = d3.scaleTime().range([0, width]),
+    var x = d3.scaleUtc().range([0, width]);
+    var x2 = d3.scaleUtc().range([0, width]),
         y = d3.scaleLinear().range([height, 0]),
         y2 = d3.scaleLinear().range([height2, 0]);
 
@@ -158,7 +155,7 @@ var AgIGraph = (function () {
             context.append("g")
                 .attr("class", "axis axis--x")
                 .attr("transform", "translate(0," + height2 + ")")
-                .call(xAxis2.tickFormat(d3.timeFormat("%b")));
+                .call(xAxis2.tickFormat(d3.utcFormat("%b")));
 
             context.append("g")
                 .attr("class", "brush")
@@ -217,7 +214,7 @@ var AgIGraph = (function () {
             if (mySeries !== NaN)
                 AgIData.getData(mySeries,from,until,function(){
                 focus.select(".zoomArea").attr("d", area);
-                focus.select(".axis--x").call(xAxis.ticks(5).tickFormat(d3.timeFormat("%m/%d")));
+                focus.select(".axis--x").call(xAxis.ticks(5).tickFormat(d3.utcFormat("%m/%d")));
                 var s = x2.range();
                 svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
                    .scale(width / (s[1] - s[0]))
@@ -234,7 +231,7 @@ var AgIGraph = (function () {
             x.domain([myFrom, myUntil]);
             updateFocus(mySeries, myFrom, myUntil);
             focus.select(".zoomArea").attr("d", area);
-            focus.select(".axis--x").call(xAxis.ticks(5).tickFormat(d3.timeFormat("%m/%d")));
+            focus.select(".axis--x").call(xAxis.ticks(5).tickFormat(d3.utcFormat("%m/%d")));
             context.select(".brush").call(brush.move, [myFrom, myUntil]);
 
         } //updateSeries
