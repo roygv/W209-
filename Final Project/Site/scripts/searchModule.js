@@ -54,14 +54,17 @@ function updateNode(node, fromTree){
                         });
            $('#search').attr("value",name);
            $('input[name=search]').val(name);
-           sparkLine.init(name)
+           
+           //Updating top left
+           sparkLine.init(name);
            
            // Updating table
            AgITable.init(type);
+           
            });
     
-    // Updating the text indicator
-    $('#node').html(node);
+    // Updating the summary
+    AgITree.summary(node);
     
     // Updating the tree
     if (!fromTree){AgITree.init(node);}

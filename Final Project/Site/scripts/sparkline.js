@@ -85,7 +85,7 @@ var sparkLine = (function () {
                         .attr('class', 'sparktitle')
                         .text(title+': '+d3.format("2.3")(data[len-2].value))
                         .attr('text-anchor','top')
-                        .attr('transform', 'translate(20,5)');
+                        .attr('transform', 'translate(50,5)');
                     svg.append("g")
                         .attr("class", "axis axis--x")
                         .attr("transform", "translate(0," + (height - axisHeight) + ")")

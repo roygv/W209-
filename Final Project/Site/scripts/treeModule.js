@@ -1,6 +1,57 @@
 var AgITree = (function () {
                
                return {
+               summary: function(selectedNode){
+               
+               function structure(d) {
+               d.date = new Date(d.date);
+               d.alertID = +d.alertID;
+               d.nodeID = +d.nodeID;
+               return d;
+               }
+               
+               function writeAlert(type, nb, pos) {
+               
+               var svg = d3.select("#treesummary");
+               
+               svg.append('text')
+               .attr('class', "alarmstats")
+               .text(type+": "+nb)
+               .attr('transform', 'translate(10,'+ pos*20 +')')
+               .attr('font-size', "12px");
+               
+               }
+               
+               d3.csv("data/alert_data.csv",structure,function(error, data){
+                      if (error) throw error;
+                      
+                      summary_dict = {};
+                      
+                      data.forEach(function(d){
+                                   if (d.nodeID == selectedNode || selectedNode == -1) {
+                                   if (!summary_dict[d.nature]){
+                                   summary_dict[d.nature] = 1;
+                                   }else{
+                                   summary_dict[d.nature] = (summary_dict[d.nature] + 1);
+                                   }
+                                   }
+                                   });
+                      
+                      console.log(summary_dict);
+                      
+                      var pos = 1;
+                      d3.selectAll(".alarmstats").remove()
+                      
+                      for(key in summary_dict){
+                      writeAlert(key, summary_dict[key], pos);
+                      pos++;
+                      }
+                      
+                      });
+               
+               
+               },
+               
                init: function(selectedNode){
                
                var modelNodes, modelLinks=[], nodes, links=[], simulation, context, width, height, canvas, context, width, height;
@@ -237,8 +288,6 @@ var AgITree = (function () {
                       
                       simulation = sim(nodes, links);
                       
-                      console.log(nodes);
-                      
                       
                       // .force("x", d3.forceX(function(d) {if(d.children[0]){return d.children[0].x-100;}else{return d.depth*100};}))
                       
@@ -322,4 +371,4 @@ var AgITree = (function () {
                })();
 
 AgITree.init(-1);
-AgITree.init(-1);
+AgITree.summary(-1);

@@ -700,6 +700,15 @@ a {
     top:100px;
 }
 
+#treesummary{
+    background-color:white;
+    position:absolute;
+    left:440px;
+    top:75px;
+    border: none;
+    fill: grey;
+}
+
 #wrapper {
     position:relative;
     width:800px;
