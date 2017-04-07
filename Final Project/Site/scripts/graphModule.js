@@ -74,7 +74,7 @@ var AgIGraph = (function () {
         context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
     }
 
-    function startClean() {
+    function startClean(title) {
 
         svg.remove();
         d3.select("#telemetryGraph").append("svg").attr("width","600").attr("height","250");
@@ -129,6 +129,9 @@ var AgIGraph = (function () {
         context = svg.append("g")
             .attr("class", "context")
             .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+        txt = d3.select("#graphTitle");
+        txt.text(title);
 
         svg.append("rect")
             .attr("class", "zoom")
@@ -201,11 +204,11 @@ var AgIGraph = (function () {
     }
 
     return {
-        init: function(series, from, until) {
+        init: function(series, label, from, until) {
             mySeries = series;
             myFrom = from;
             myUntil = until;
-            startClean();
+            startClean(label);
             AgIData.getData(series,from,until,updateOverview);
         }, //init
 
@@ -225,9 +228,9 @@ var AgIGraph = (function () {
                 );
         }, //updateInterval
 
-        updateSeries: function(series) {
+        updateSeries: function(series, label) {
             mySeries=series;
-            startClean();
+            startClean(label);
 //            AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),AgIData.parseDate('2017-03-01T00:00:00Z'),updateOverview);
             AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),myUntil,updateOverview);
             x.domain([myFrom, myUntil]);
@@ -240,5 +243,5 @@ var AgIGraph = (function () {
 })();
 now=new Date();
 //AgIData.init("http://test1.gvirtsman.com:8086/query?db=w251&q=","roy","Kaftor");
-AgIGraph.init('A Gross GN MW',AgIData.parseDate('2016-08-01T00:00:00Z'),now);
+AgIGraph.init('A Gross GN MW','Real charge capability:',AgIData.parseDate('2016-08-01T00:00:00Z'),now);
 

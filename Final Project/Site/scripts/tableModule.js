@@ -44,7 +44,7 @@ var AgITable = (function () {
         var button = d3.button()
             .on('press', function(d, i) {
                     console.log("Pressed", d, i, this.parentNode);
-                    AgIGraph.updateSeries(d.series);
+                    AgIGraph.updateSeries(d.series, d.label);
                     clearAll();
             })
             .on('release', function(d, i) { console.log("Released", d, i, this.parentNode)});
