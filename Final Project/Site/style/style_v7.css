@@ -720,6 +720,7 @@ a {
   cursor: move;
   fill: black;
   pointer-events: all;
+  width: calc(100% - 30px);
 }
 
 #telemetryGraph .axis text{
