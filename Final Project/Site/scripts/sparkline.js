@@ -1,6 +1,6 @@
 var sparkLine = (function () {
-    var width = 300;
-    var height = 180, titleHeight = 20, axisHeight = 20;
+    var width = 250;
+    var height = 150, titleHeight = 20, axisHeight = 20;
 
     var x = d3.scaleUtc().range([0, width - 2]);
     var y = d3.scaleLinear().range([height - axisHeight - 4, titleHeight]);
@@ -48,7 +48,7 @@ var sparkLine = (function () {
                         .attr('r', 1.5);
                     svg.append('text')
                         .attr('class', 'sparktitle')
-                        .text(title+': '+d3.format(".5")(data[len-2].value))
+                        .text(title+': '+d3.format("2.3")(data[len-2].value))
                         .attr('text-anchor','top')
                         .attr('transform', 'translate(5,5)');
                     svg.append("g")

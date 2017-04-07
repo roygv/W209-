@@ -41,7 +41,7 @@ var AgIGraph = (function () {
         myUntil = until;
         AgIData.getData(point, from, until, function(error, json) {
             if (error) throw error;
-            if (json.results[0].series) {
+            if ((json.results[0].series) && (myFrom == from) && (myUntil == until)) {
                 myData = json.results[0].series[0].values;
                 focus.select("path")
                     .datum(myData);
