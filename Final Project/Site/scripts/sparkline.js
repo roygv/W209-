@@ -1,6 +1,6 @@
 var sparkLine = (function () {
-    var width = 250;
-    var height = 150, titleHeight = 20, axisHeight = 20;
+    var width = 230;
+    var height = 120, titleHeight = 20, axisHeight = 20;
 
     var x = d3.scaleUtc().range([0, width - 2]);
     var y = d3.scaleLinear().range([height - axisHeight - 4, titleHeight]);
@@ -75,7 +75,8 @@ AgIData.getData("2 Base Point",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIData
     if (error) throw error;
     if (json.results[0].series) {
         var data = json.results[0].series[0].values;
-        sparkLine.draw(0,'Battery SoC(%)','#powerSummary', data);
+        sparkLine.draw(0,'Battery charge(%)','#powerSummary', data);
+        // sparkLine.draw(0,'Battery SoC(%)','#powerSummary', data);
     }
 });
 
@@ -83,6 +84,16 @@ AgIData.getData("A Gross GN MV",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIDat
     if (error) throw error;
     if (json.results[0].series) {
         var data = json.results[0].series[0].values;
-        sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
+        sparkLine.draw(0,'Power output(kW)','#powerSummary', data);
+        // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
+    }
+});
+
+AgIData.getData("2 LMP",AgIData.parseDate('2017-03-31T00:00:00Z'),AgIData.parseDate('2017-04-01T00:00:00Z'),function(error, json) {
+    if (error) throw error;
+    if (json.results[0].series) {
+        var data = json.results[0].series[0].values;
+        sparkLine.draw(0,'Market price($)','#powerSummary', data);
+        // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
     }
 });
