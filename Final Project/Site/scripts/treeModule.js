@@ -171,7 +171,7 @@ var AgITree = (function () {
                var dy = mouseY - getYPixel(dot.y);
                if ((dx * dx + dy * dy) < (dot.r*dot.r)) {
                tipCanvas.style.left = getXPixel(dot.x+440) + "px";
-               tipCanvas.style.top = (getYPixel(dot.y)+40) + "px";
+               tipCanvas.style.top = (getYPixel(dot.y)+60) + "px";
                tipCtx.clearRect(0, 0, tipCanvas.width, tipCanvas.height);
                var al = (dot.collapsed == 1)? dot.alarm_col : dot.alarm;
                tipCtx.fillText(dot.name + " (" + al + ")", 5, 15);
