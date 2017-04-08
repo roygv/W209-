@@ -222,7 +222,7 @@ var AgITree = (function () {
                var dy = mouseY - getYPixel(dot.y);
                if ((dx * dx + dy * dy) < (dot.r*dot.r)) {
                tipCanvas.style.left = getXPixel(dot.x+440) + "px";
-               tipCanvas.style.top = (getYPixel(dot.y)+60) + "px";
+               tipCanvas.style.top = (getYPixel(dot.y)+50) + "px";
                tipCtx.clearRect(0, 0, tipCanvas.width, tipCanvas.height);
                var al = (dot.collapsed == 1)? dot.alarm_col : dot.alarm;
                tipCtx.fillText(dot.name + " (" + al + ")", 5, 15);
@@ -292,13 +292,14 @@ var AgITree = (function () {
                       // .force("x", d3.forceX(function(d) {if(d.children[0]){return d.children[0].x-100;}else{return d.depth*100};}))
                       
                       
-                      d3.select(canvas)
-                      .call(d3.drag()
-                            .container(canvas)
-                            .subject(dragsubject)
-                            .on("start", dragstarted)
-                            .on("drag", dragged)
-                            .on("end", dragended));
+                      // Draggin disabled
+                      //d3.select(canvas)
+                      //.call(d3.drag()
+                      //      .container(canvas)
+                      //      .subject(dragsubject)
+                      //      .on("start", dragstarted)
+                      //      .on("drag", dragged)
+                      //      .on("end", dragended));
                       
                       d3.select(canvas).on("dblclick", function(){
                                            

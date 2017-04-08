@@ -12,6 +12,7 @@ $(function(){
 
          $('#search').autocomplete({
                                    lookup: data,
+                                   autoSelectFirst: true,
                                    onSelect: function (suggestion) {
                                    var found = suggestion.id;
                                    console.log("search"+found);
