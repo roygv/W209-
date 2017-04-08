@@ -3,7 +3,7 @@
 var nbNotifications = 0;
 
 function render_notification(v, d) {
-    return v + "<div class='delay notibox'><span onclick='notifClick(this);' id='"+ d.nodeID +"'><b>"+ (d.date.toTimeString().split(' ')[0]) +"</b> (Notification #"+ d.alertID +") <br />\
+    return v + "<div class='delay notibox'><span onclick='notifClick(this);' style='cursor:pointer;' id='"+ d.nodeID +"'><b>"+ (d.date.toTimeString().split(' ')[0]) +"</b> (Notification #"+ d.alertID +") <br />\
     "+ d.nature + " at "+ d.name +" </span><br /> <br /> \
     <div class='delay cancel'>Dismiss</div> \
     <div class='delay solved'>Resolved</div> \
