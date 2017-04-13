@@ -11,29 +11,37 @@ d3.button = function() {
     function my(selection) {
         selection.each(function(d, i) {
             var g = d3.select(this)
-                .attr('id', 'd3-button' + i)
+                .attr('id', 'd3-button' + i);
+            var now=new Date();
+            AgIData.getLast(d.series, d3.timeDay.offset(now, -10), now, function(error,json) {
+                if (error) throw error;
+                if (json.results[0].series) {
+                    var data = +json.results[0].series[0].values[0][1];
 
-            var text = g.append('text').text(d.label);
-            var defs = g.append('defs');
-            var bbox = text.node().getBBox();
-            var bheight = bbox.height + 2 * padding;
-//            var bwidth = bbox.width + 2 * padding;
-            var bwidth = bheight * 6;
-            g.attr('transform', 'translate(' + ((d.col-1) * (bwidth+2*radius) + padding) + ','
-                    + ((bheight+2*radius)*(d.row - 0.5) + padding) + ')');
-            var rect = g.insert('rect', 'text')
-                .attr("x",-padding)
-                .attr("y", bbox.y - padding)
-                .attr("width", bwidth)
-                .attr("height", bheight)
-                .attr('rx', radius)
-                .attr('ry', radius)
-                .on('mouseover', activate)
-                .on('mouseout', deactivate)
-                .on('click', toggle)
+                    d.label += ': '+d3.format("2.3")(data);
+                }
+                var text = g.append('text').text(d.label);
+                var defs = g.append('defs');
+                var bbox = text.node().getBBox();
+                var bheight = bbox.height + 2 * padding;
+    //            var bwidth = bbox.width + 2 * padding;
+                var bwidth = bheight * 6;
+                g.attr('transform', 'translate(' + ((d.col-1) * (bwidth+2*radius) + padding) + ','
+                        + ((bheight+2*radius)*(d.row - 0.5) + padding) + ')');
+                var rect = g.insert('rect', 'text')
+                    .attr("x",-padding)
+                    .attr("y", bbox.y - padding)
+                    .attr("width", bwidth)
+                    .attr("height", bheight)
+                    .attr('rx', radius)
+                    .attr('ry', radius)
+                    .on('mouseover', activate)
+                    .on('mouseout', deactivate)
+                    .on('click', toggle)
 
-            //addShadow.call(g.node(), d, i); Not very pretty
-            addGradient.call(g.node(), d, i);
+                //addShadow.call(g.node(), d, i); Not very pretty
+                addGradient.call(g.node(), d, i);
+            });
         });
     }
 
