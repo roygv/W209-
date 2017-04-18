@@ -62,7 +62,7 @@ var AgIData = (function () {
         }, // getData
 
         getLast: function (point, from, until, callback) {
-            var url = getURL(point, from, until, '1M', "last");
+            var url = getURL(point, from, until, '30d', "last");
             d3.json(url)
                 .header("Authorization", "Basic " + btoa(p_user + ":" + p_password))
                 .get(callback);

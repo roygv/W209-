@@ -44,7 +44,7 @@ var AgITable = (function () {
         var button = d3.button()
             .on('press', function(d, i) {
                     console.log("Pressed", d, i, this.parentNode);
-                    AgIGraph.updateSeries(d.series, d.label);
+                    AgIGraph.updateSeries(d.series, d.label.replace(/:.*/,''));
                     clearAll();
             })
             .on('release', function(d, i) { console.log("Released", d, i, this.parentNode)});
@@ -70,10 +70,10 @@ var AgITable = (function () {
                 
                 
         arrayData: [
-            {label: "Battery SoC", row: 1, col: 1,  series:"% share MW"},
+            {label: "Battery charge", row: 1, col: 1,  series:"Wind speed (MPH)"},
             {label: "Breaker status", row: 1, col: 2,  series:"resource status"},
             {label: "Current state", row: 1, col: 3,  series:"- INVERTER 1B Mw"},
-            {label: "Event state", row: 2, col: 1,  series:"- INVERTER 1C Mw"},
+            {label: "Event state", row: 2, col: 1,  series:"U2 Net MW"},
             {label: "Heartbeat", row: 2, col: 2,  series:"LMP"},
             {label: "Auto. dispatch", row: 2, col: 3, series:"2 LMP"},
             {label: "Charge cap.", row: 3, col: 1, series:"A Gross GN MW" },
@@ -82,13 +82,13 @@ var AgITable = (function () {
             {label: "ISO dispatch", row: 4, col: 1, series:"- White Baker (Net) MVA" },
             {label: "Manual dispatch", row: 4, col: 2, series:"- White Baker (Net) MW" },
             {label: "Capacity", row: 4, col: 3, series:"MARIAH T2 Base Point " },
-            {label: "Power", row: 5, col: 1, series:"2 Net MW" },
+            {label: "Power", row: 5, col: 1, series:"Unit 5 Net MW (STm)" },
             {label: "Stored energy", row: 5, col: 2, series:"LAAR, IEM Train A MW" }
 //            {label: "LAAR, IEM/B", row: 3, col: 1, series:"LAAR, IEM Train B MW" }
         ],
 
         coreData: [
-            {label: "Battery SoC", row: 1, col: 1,  series:"% share MW"},
+            {label: "Battery charge", row: 1, col: 1,  series:"Wind speed (MPH)"},
             {label: "Array Meters", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
             {label: "Charge capability", row: 1, col: 3, series:"A Gross GN MW" },
             {label: "Discharge capability", row: 2, col: 1, series:"A Gross GN MV" },
@@ -101,12 +101,12 @@ var AgITable = (function () {
         ],
 
         nodeData: [
-            {label: "Advancion Cmd.", row: 1, col: 1,  series:"% share MW"},
+            {label: "Battery charge", row: 1, col: 1,  series:"Wind speed (MPH)"},
             {label: "AvgCellTemp", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
             {label: "BMSDCChgCurrent", row: 1, col: 3,  series:"- INVERTER 1B Mw"},
             {label: "BMSDCDisCurrent", row: 2, col: 1,  series:"- INVERTER 1C Mw"},
             {label: "BMSDCV", row: 2, col: 2,  series:"LMP"},
-            {label: "Battery SoC", row: 2, col: 3, series:"2 LMP"},
+            {label: "Advancion Cmd.", row: 2, col: 3, series:"2 LMP"},
             {label: "Charge Capability", row: 3, col: 1, series:"A Gross GN MW" },
             {label: "CodeHeartBeat", row: 3, col: 2, series:"A Gross GN MV" },
             {label: "Current state", row: 3, col: 3, series:"2 Base Point" },
