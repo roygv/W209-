@@ -37,7 +37,6 @@ var AgIData = (function () {
     return {
 
         // A public variable
-        myPublicVar: "foo",
         parseDate: d3.utcParse("%Y-%m-%dT%H:%M:%SZ"),
 
         init: function(url, user, password) {
@@ -63,15 +62,7 @@ var AgIData = (function () {
         }, // getData
 
         getLast: function (point, from, until, callback) {
-            var interval;
-            if((until-from)/(1000*60*5) < 3000)
-                interval="5m";
-            else if ((until-from)/(1000*60*60) < 3000)
-                interval="1h";
-            else
-                interval="1d";
-
-            var url = getURL(point, from, until, interval, "last");
+            var url = getURL(point, from, until, '1M', "last");
             d3.json(url)
                 .header("Authorization", "Basic " + btoa(p_user + ":" + p_password))
                 .get(callback);
@@ -80,4 +71,4 @@ var AgIData = (function () {
 
 })();
 
-AgIData.init("http://50.23.122.133:8086/query?db=w251&q=","roy","Kaftor");
+AgIData.init("http://50.23.122.134:8086/query?db=w251&q=","roy","Kaftor");
