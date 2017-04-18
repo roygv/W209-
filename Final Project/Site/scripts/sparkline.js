@@ -23,6 +23,7 @@ var sparkLine = (function () {
             var svg = d3.selectAll('#powerSummary svg').remove();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             //AgIData.getData("MARIAH T2 Base Point ", d3.timeHour.offset(now, -6), AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
             // AgIData.getData("Unit 2 net MW", AgIData.parseDate('2017-04-14T00:00:00Z'),now,function(error, json) {
             AgIData.getLast("Wind speed (MPH)", d3.timeDay.offset(now, -10), now, function(error,json) {
@@ -70,10 +71,15 @@ var sparkLine = (function () {
             AgIData.getData("2 Base Point", AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
             // AgIData.getData("2 Base Point", d3.timeDay.offset(now, -1),now,function(error, json) {
 >>>>>>> origin/master
+=======
+            AgIData.getData("2 Base Point", AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
+            // AgIData.getData("2 Base Point", d3.timeDay.offset(now, -1),now,function(error, json) {
+>>>>>>> ac64445e3dc7a38d2922a25aeef238ad0f7bc6e8
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values;
                     sparkLine.draw(0,'Battery charge (%)','#powerSummary1', data);
+<<<<<<< HEAD
 <<<<<<< HEAD
                     // sparkLine.redraw(0,'Battery SoC(%)','#powerSummary', data);
                 }
@@ -95,6 +101,8 @@ var sparkLine = (function () {
                         }
                     });
 =======
+=======
+>>>>>>> ac64445e3dc7a38d2922a25aeef238ad0f7bc6e8
                     // sparkLine.draw(0,'Battery SoC(%)','#powerSummary', data);
                 }
 
@@ -119,7 +127,10 @@ var sparkLine = (function () {
         },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> ac64445e3dc7a38d2922a25aeef238ad0f7bc6e8
         update: function(node) {
             var now=new Date();
             var fromDate=d3.timeDay.offset(now, -1); // One day back
@@ -154,7 +165,10 @@ var sparkLine = (function () {
             });
         },
 
+<<<<<<< HEAD
 >>>>>>> origin/master
+=======
+>>>>>>> ac64445e3dc7a38d2922a25aeef238ad0f7bc6e8
         draw: function(position, title, elemId, data) {
             len = data.length;
             data.forEach(function(d) {

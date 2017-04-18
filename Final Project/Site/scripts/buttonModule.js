@@ -17,6 +17,7 @@ d3.button = function() {
                 if (error) throw error;
                 if (json.results[0].series) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     var data = json.results[0].series[0].values[0][1];
                     d.label = d.label.replace(/:.*/,'')
                     d.label += ': '+data;
@@ -25,6 +26,11 @@ d3.button = function() {
 
                     d.label += ': '+d3.format("2.3")(data);
 >>>>>>> origin/master
+=======
+                    var data = +json.results[0].series[0].values[0][1];
+
+                    d.label += ': '+d3.format("2.3")(data);
+>>>>>>> ac64445e3dc7a38d2922a25aeef238ad0f7bc6e8
                 }
                 var text = g.append('text').text(d.label);
                 var defs = g.append('defs');
