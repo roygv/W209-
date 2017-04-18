@@ -16,9 +16,15 @@ d3.button = function() {
             AgIData.getLast(d.series, d3.timeDay.offset(now, -10), now, function(error,json) {
                 if (error) throw error;
                 if (json.results[0].series) {
+<<<<<<< HEAD
                     var data = json.results[0].series[0].values[0][1];
                     d.label = d.label.replace(/:.*/,'')
                     d.label += ': '+data;
+=======
+                    var data = +json.results[0].series[0].values[0][1];
+
+                    d.label += ': '+d3.format("2.3")(data);
+>>>>>>> origin/master
                 }
                 var text = g.append('text').text(d.label);
                 var defs = g.append('defs');

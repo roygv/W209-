@@ -71,10 +71,11 @@ var AgITable = (function () {
                 
         arrayData: [
             {label: "Battery SoC", row: 1, col: 1,  series:"% share MW"},
-            {label: "Breaker status", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
+            {label: "Breaker status", row: 1, col: 2,  series:"resource status"},
             {label: "Current state", row: 1, col: 3,  series:"- INVERTER 1B Mw"},
             {label: "Event state", row: 2, col: 1,  series:"- INVERTER 1C Mw"},
             {label: "Heartbeat", row: 2, col: 2,  series:"LMP"},
+<<<<<<< HEAD
             {label: "Auto. dispatch", row: 2, col: 3, series:"2 LMP"},
             {label: "Charge cap.", row: 3, col: 1, series:"A Gross GN MW" },
             {label: "Discharge cap.", row: 3, col: 2, series:"A Gross GN MV" },
@@ -82,6 +83,15 @@ var AgITable = (function () {
             {label: "ISO dispatch", row: 4, col: 1, series:"- White Baker (Net) MVA" },
             {label: "Manual dispatch", row: 4, col: 2, series:"- White Baker (Net) MW" },
             {label: "Capacity", row: 4, col: 3, series:"MARIAH T2 Base Point " },
+=======
+            {label: "Automated dispatch", row: 2, col: 3, series:"2 LMP"},
+            {label: "Charge capability", row: 3, col: 1, series:"A Gross GN MW" },
+            {label: "Discharge capability", row: 3, col: 2, series:"A Gross GN MV" },
+            {label: "Dispatch", row: 3, col: 3, series:"2 Base Point" },
+            {label: "ISO dispatch", row: 4, col: 1, series:"- White Baker (Net) MVA" },
+            {label: "Manual dispatch", row: 4, col: 2, series:"- White Baker (Net) MW" },
+            {label: "Nameplate capacity", row: 4, col: 3, series:"2 Base Point" },
+>>>>>>> origin/master
             {label: "Power", row: 5, col: 1, series:"2 Net MW" },
             {label: "Stored energy", row: 5, col: 2, series:"LAAR, IEM Train A MW" }
 //            {label: "LAAR, IEM/B", row: 3, col: 1, series:"LAAR, IEM Train B MW" }

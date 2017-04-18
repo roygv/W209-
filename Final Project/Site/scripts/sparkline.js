@@ -22,6 +22,7 @@ var sparkLine = (function () {
 
             var svg = d3.selectAll('#powerSummary svg').remove();
 
+<<<<<<< HEAD
             //AgIData.getData("MARIAH T2 Base Point ", d3.timeHour.offset(now, -6), AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
             // AgIData.getData("Unit 2 net MW", AgIData.parseDate('2017-04-14T00:00:00Z'),now,function(error, json) {
             AgIData.getLast("Wind speed (MPH)", d3.timeDay.offset(now, -10), now, function(error,json) {
@@ -65,6 +66,67 @@ var sparkLine = (function () {
             txt.text("Summary Metrics: "+node);
 
             AgIData.getData("2 Base Point", fromDate, now, function(error, json) {
+=======
+            AgIData.getData("2 Base Point", AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
+            // AgIData.getData("2 Base Point", d3.timeDay.offset(now, -1),now,function(error, json) {
+>>>>>>> origin/master
+                if (error) throw error;
+                if (json.results[0].series) {
+                    var data = json.results[0].series[0].values;
+                    sparkLine.draw(0,'Battery charge (%)','#powerSummary1', data);
+<<<<<<< HEAD
+                    // sparkLine.redraw(0,'Battery SoC(%)','#powerSummary', data);
+                }
+
+                AgIData.getData("A Gross GN MV", fromDate, now, function(error, json) {
+                    if (error) throw error;
+                    if (json.results[0].series) {
+                        var data = json.results[0].series[0].values;
+                        sparkLine.redraw(0,'Power output (kW)','#powerSummary2', data);
+                        // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
+                    }
+
+                    AgIData.getData("2 LMP",fromDate ,now, function(error, json) {
+                        if (error) throw error;
+                        if (json.results[0].series) {
+                            var data = json.results[0].series[0].values;
+                            sparkLine.redraw(0,'Market price ($)','#powerSummary3', data);
+                            // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
+                        }
+                    });
+=======
+                    // sparkLine.draw(0,'Battery SoC(%)','#powerSummary', data);
+                }
+
+                AgIData.getData("A Gross GN MV",AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
+                    if (error) throw error;
+                    if (json.results[0].series) {
+                        var data = json.results[0].series[0].values;
+                        sparkLine.draw(0,'Power output (kW)','#powerSummary2', data);
+                        // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
+                    }
+
+                AgIData.getData("2 LMP",AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
+                    if (error) throw error;
+                    if (json.results[0].series) {
+                        var data = json.results[0].series[0].values;
+                        sparkLine.draw(0,'Market price ($)','#powerSummary3', data);
+                        // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
+                    }
+>>>>>>> origin/master
+                });
+            });
+        },
+
+<<<<<<< HEAD
+=======
+        update: function(node) {
+            var now=new Date();
+            var fromDate=d3.timeDay.offset(now, -1); // One day back
+            txt = d3.select("#summaryMetrics");
+            txt.text("Summary Metrics: "+node);
+
+            AgIData.getData("2 Base Point", fromDate, now, function(error, json) {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values;
@@ -92,6 +154,7 @@ var sparkLine = (function () {
             });
         },
 
+>>>>>>> origin/master
         draw: function(position, title, elemId, data) {
             len = data.length;
             data.forEach(function(d) {
