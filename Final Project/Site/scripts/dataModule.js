@@ -22,7 +22,9 @@ var AgIData = (function () {
         var query =
             "select "+agg+"(value) as value " +
             "  from \"" + point +
-            "\" where " + where +
+            "\" where " + where
+        if (agg != 'last')
+            query = query +
             //       " where time > now() - 40w " +
             " group by time(" + interval +")"; // fill(0)";
 

@@ -24,12 +24,12 @@ var sparkLine = (function () {
 
             //AgIData.getData("MARIAH T2 Base Point ", d3.timeHour.offset(now, -6), AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
             // AgIData.getData("Unit 2 net MW", AgIData.parseDate('2017-04-14T00:00:00Z'),now,function(error, json) {
-            AgIData.getLast("Wind speed (MPH)", d3.timeDay.offset(now, -10), now, function(error,json) {
+            AgIData.getLast("unit 4 net (OC)", d3.timeDay.offset(now, -10), now, function(error,json) {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values[0][0];
                     var last = AgIData.parseDate(data);
-                    AgIData.getData("Wind speed (MPH)", d3.timeHour.offset(last, -6), last, function (error, json) {
+                    AgIData.getData("unit 4 net (OC)", d3.timeHour.offset(last, -6), last, function (error, json) {
 
                         if (error) throw error;
                         if (json.results[0].series) {
@@ -68,7 +68,7 @@ var sparkLine = (function () {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values;
-                    sparkLine.draw(0,'Battery charge (%)','#powerSummary1', data);
+                    sparkLine.redraw(0,'Battery charge (%)','#powerSummary1', data);
                     // sparkLine.redraw(0,'Battery SoC(%)','#powerSummary', data);
                 }
 
