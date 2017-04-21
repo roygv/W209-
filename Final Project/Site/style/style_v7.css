@@ -836,6 +836,9 @@ a {
   dominant-baseline: hanging;
 }
 
+.tooltip {
+  font-size: 10px;
+}
 /************************** Search bar **************************/
 
 
