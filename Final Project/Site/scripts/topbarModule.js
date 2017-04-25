@@ -170,13 +170,13 @@ function aboutPopup() {
 
 document.getElementById('aboutPopup').innerHTML = "<b>Project:</b>  Building a dashboard to remotely monitor Battery Storage Power Stations, which are usually deployed as small, distributed and unmanned facilities <br /> \
 <b>Audience:</b> Remote Operators <br /> <br />\
-The visual has 3 main panels, a top bar and a side bar. Below are a description of the content and the main functions of each:\
+The visual has 3 main panels, a top bar and a side bar. Below are a description of the content and main functions of each:\
 <ul> \
 <li><b>Top bar:</b> Navigation bar; Enter name of node to select that element (site shown if none selected); Click on the menu icon to make the side bar appear </li>\
 <li><b>Top left panel:</b> Key high level metrics for the selected node; Hover over graph to see precise value</li>\
 <li><b>Top right panel:</b> Tree representation of the storage plant; Nodes with alarms show in orange with size depending on the number of alarms; Double-click a node to collapse it; Click a node to select it (appears in black); Alarms for the selected node are summarized left of the tree</li>\
 <li><b>Bottom panel:</b> List of detailed metrics for the selected node, and a graph of the selected metric; Last value by metric shown next to metric; Click on metric to change the graph on the right; Zoom by scrolling on top graph or modifying size of grey box in bottom. Pan by dragging the graph or the gray box below it</li>\
 <li><b>Side bar:</b> Tools allowing the operator to act, and backlog of notifications to treat; Tool buttons inactive except `Live` switch (revealing WIP historical statistics); Notifications box for each alarm, with buttons allowing to Dismiss/Resolve/Escalate; Click on notification to select the affected tree node </li>\
-</ul> Due to limited time, some elements may not fully work as expected. Notably some functions are not linked (e.g. dismissed notifications are still present in tree), and data is a sample (e.g. all nodes of same level have the same metrics/data)<br /><br />\
+</ul> Due to limited time, some elements may not fully work as expected. Notably some functions are not linked (e.g. dismissed notifications are still present in tree), and data is a sample (e.g. all nodes of same level have same metrics/data)<br /><br />\
 <b>Design:</b>  Guillaume De Roo, Roy Gvirtsman, Shih Yu Chang <br /> "
 
