@@ -165,7 +165,7 @@ var AgITree = (function () {
                context.moveTo(d.x + radius, d.y);
                context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
                if (d.selected == 1){
-               context.fillStyle = "red";
+               context.fillStyle = "black";
                }else{
                context.fillStyle = (d.alarm > 0)? "orange" :((d.alarm_col > 0 && d.collapsed==1)? "orange" :(d.collapsed == 1) ? "#9ecae1" : "#FFFFFF");
                }

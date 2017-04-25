@@ -174,7 +174,7 @@ The visual has 3 main panels, a top bar and a side bar. Below are a description 
 <ul> \
 <li><b>Top bar:</b> Navigation bar; Enter name of node to select that element (site shown if none selected); Click on menu icon to make side bar appear </li>\
 <li><b>Top left panel:</b> Key high level metrics for the selected node; Hover over graph to see precise value</li>\
-<li><b>Top right panel:</b> Tree representation of storage plant; Nodes with alarm in orange / size depending on number of alarms; Double-click node to collapsable; Click to select node (appears in red); Alarms for selected node summarized in top left</li>\
+<li><b>Top right panel:</b> Tree representation of storage plant; Nodes with alarm in orange / size depending on number of alarms; Double-click node to collapsable; Click to select node (appears in black); Alarms for selected node summarized in top left</li>\
 <li><b>Bottom panel:</b> List of detailed metrics for selected node, and graph of selected metric; Last value by metric shown next to metric; Click on metric to change graph on the right; Zoom by scrolling on top graph or modifying size of grey box in bottom</li>\
 <li><b>Side bar:</b> Tools allowing operator to act, and backlog of notifications to treat; Tool buttons inactive except `Live` switch (revealing WIP historical statistics); Notifications box for each alarm, with buttons allowing to Dismiss/Resolve/Escalate; Click on notification to select node </li>\
 </ul> Due to limited time, some elements may not fully work as expected. Notably some functions are not linked (e.g. dismissed notifications are still present in tree), and data is a sample (e.g. all nodes of same level have the same metrics/data)<br /><br />\
