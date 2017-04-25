@@ -60,9 +60,9 @@ function updateNode(node, fromTree){
            //sparkLine.init(name); uncomment and comment the 2 lines below,
            //once the graphs in the top left have been fixed
            txt = d3.select("#summaryMetrics");
-           txt.text("Summary Metrics ("+name+")");
+           txt.text("Summary Metrics: "+name);
            txt = d3.select("#detailedMetrics");
-           txt.text("Detailed Metrics ("+name+")");
+           txt.text("Detailed Metrics: "+name);
            
            // Updating table
            AgITable.init(type);
