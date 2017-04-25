@@ -164,22 +164,21 @@ var AgITree = (function () {
                context.beginPath();
                context.moveTo(d.x + radius, d.y);
                context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
-               context.fillStyle = (d.alarm > 0)? "orange" :((d.alarm_col > 0 && d.collapsed==1)? "orange" :(d.collapsed == 1) ? "#9ecae1" : "#FFFFFF");
-               context.fill();
                if (d.selected == 1){
-               context.strokeStyle = "red";
-               context.strokeWidth = 4;
-               } else {
+               context.fillStyle = "red";
+               }else{
+               context.fillStyle = (d.alarm > 0)? "orange" :((d.alarm_col > 0 && d.collapsed==1)? "orange" :(d.collapsed == 1) ? "#9ecae1" : "#FFFFFF");
+               }
+               context.fill();
                context.strokeStyle = "#3182bd";
                context.strokeWidth = 2;
-               }
                context.stroke();
                context.closePath();
                
                // Write number in circle
                context.beginPath();
                if (d.selected == 1){
-               context.fillStyle = "red";
+               context.fillStyle = "white";
                } else {
                context.fillStyle = "black";
                }
