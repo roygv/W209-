@@ -260,8 +260,6 @@ var sparkLine = (function () {
 )();
 
 var now=new Date();
-txt = d3.select("#summaryMetrics");
-txt.text("Summary Metrics: Site");
 
 var svg = d3.selectAll('#powerSummary svg #powerSummary1').remove();
 var svg = d3.selectAll('#powerSummary svg #powerSummary2').remove();

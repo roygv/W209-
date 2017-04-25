@@ -292,7 +292,7 @@ var AgITree = (function () {
                       // .force("x", d3.forceX(function(d) {if(d.children[0]){return d.children[0].x-100;}else{return d.depth*100};}))
                       
                       
-                      // Draggin disabled
+                      // Dragging disabled
                       //d3.select(canvas)
                       //.call(d3.drag()
                       //      .container(canvas)

@@ -22,6 +22,11 @@
                 <!-- Logo -->
                 <img id="logo" src="images/cloud-bolt.png" class="left" style="margin-top:5px;margin-bottom:2px;width:35px;height:35px;display: inline-block;vertical-align: middle;" title = "Live mode"/>
                 
+                <!-- About -->
+                <div class="popup" onclick="aboutPopup()">About
+                    <span class="popuptext" id="aboutPopup">A Simple Popup! Let's see how much text we can put in this</span>
+                </div>
+                
                 <!-- Search bar -->
                 <p class="s" style="margin-top:5px;margin-bottom:8px;"><input name="search" id="search" type="search" value="" onkeyup="this.setAttribute('value', this.value);"></p>
                     
@@ -71,7 +76,7 @@
                 <div style="display: table-row">
                     <div style="width: 400px; display: table-cell; padding:0px;">
                         <svg width="400" height="20"  style="display: table-cell;" class="inline">
-                            <text id="summaryMetrics" x="0" y="13" class="subTitles">Summary Metrics</text>
+                            <text id="summaryMetrics" x="0" y="13" class="subTitles">Summary Metrics (Site)</text>
                             <line x1="0" y1="100%" x2="100%" y2="100%" style="stroke:#DEDEDE;stroke-width:2" />
                         </svg>
                     </div>
@@ -98,7 +103,7 @@
                 <div style="display: table-row">
                     <div style="width: 400px; display: table-cell; padding:0px;">
                     <svg width="100%" height="20"  style="display: table-cell;">
-                        <text id="detailedMetrics" x="0" y="13"  class="subTitles">Detailed Metrics</text>
+                        <text id="detailedMetrics" x="0" y="13"  class="subTitles">Detailed Metrics (Site)</text>
                         <line x1="0" y1="100%" x2="100%" y2="100%" style="stroke:#DEDEDE;stroke-width:2" />
                     </svg>
                     </div>
