@@ -28,22 +28,23 @@ var sparkLine = (function () {
     };
     var tooltip = {
         width: $('.tooltip').width(),
-        height: $('.tooltip').height(),
-    }
+        height: $('.tooltip').height()
+    };
     var scene = {
         x: margin.x + padding.x,
         y: margin.y + padding.y,
         width: w - (margin.x * 2) - (padding.x * 2),
         height: h - (margin.y * 2) - (padding.y * 2)
-    }
+    };
 
-    var div = d3.select("body")
-            .append("div")
-            .attr("class","tooltip")
-            .style("position", "absolute")
-            .style("z-index", "10")
-            // .style("visibility", "hidden")
-            .text("a simple tooltip");
+    var div = d3.select(".tooltip");
+    // var div = d3.select("body")
+    //         .append("div")
+    //         .attr("class","tooltip")
+    //         .style("position", "absolute")
+    //         .style("z-index", "10")
+    //         // .style("visibility", "hidden")
+    //         .text("a simple tooltip");
 
      function positionTooltip(mouse, scene, tooltip)
         {
@@ -230,7 +231,7 @@ var sparkLine = (function () {
                 x.domain(d3.extent(data, function(d) { return d.date; }));
                 y.domain(d3.extent(data, function(d) { return d.value; }));
 
-                var svg = d3.select(elemId)
+                var svg = d3.select(elemId);
 
                 svg.select('path')
                     .datum(data)
@@ -238,9 +239,9 @@ var sparkLine = (function () {
                     .attr('d', line);
                 svg.select('circle')
                     .attr('cx', x(data[len-1].date))
-                    .attr('cy', y(data[len-1].value))
+                    .attr('cy', y(data[len-1].value));
                 svg.select('text')
-                    .text(title+': '+d3.format("2.3")(data[len-1].value))
+                    .text(title+': '+d3.format("2.3")(data[len-1].value));
                 svg.select(".axis axis--x")
                     .call(xAxis.ticks(4));
                 svg.select(".axis axis--y")

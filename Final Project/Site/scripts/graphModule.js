@@ -21,6 +21,26 @@ var AgIGraph = (function () {
         xAxis2 = d3.axisBottom(x2),
         yAxis = d3.axisLeft(y);
 
+    var w = $(window).width();
+    var h = $(window).height();
+
+    var padding = {
+        x: 10,
+        y: 10
+    };
+    var tooltip = {
+        width: $('.tooltip').width(),
+        height: $('.tooltip').height()
+    };
+    var scene = {
+        x: margin.left + padding.x,
+        y: margin.top + padding.y,
+        width: w - (margin.left * 2) - (padding.x * 2),
+        height: h - (margin.top * 2) - (padding.y * 2)
+    };
+
+    var div = d3.select(".tooltip");
+
     function updateYaxis() {
         if (myData.length > 0) {
             fullRange = d3.extent(myData, function (d) {
@@ -131,7 +151,7 @@ var AgIGraph = (function () {
             .attr("class", "context")
             .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-        txt = d3.select("#graphTitle");
+        var txt = d3.select("#graphTitle");
         txt.text(title);
 
         svg.append("rect")
@@ -188,7 +208,61 @@ var AgIGraph = (function () {
             focus.append("path")
                 .datum(myData)
                 .attr("class", "zoomArea")
-                .attr("d", area);
+                .attr("d", area)
+                .on("mouseover", function(d)
+                    {
+                        div.transition().duration(200).style("opacity", 1);
+                        var coords = d3.mouse(this);
+                        var date = formatDate(x.invert(coords[0]));
+                        var time = formatTime(x.invert(coords[0]));
+                        div.html(date+'<br/>'+time+'<br/>'+d3.format("2.3")(y.invert(coords[1])))
+                            .style("left", function()
+                            {
+                                var pos = positionTooltip(
+                                    {
+                                        x: d3.event.pageX,
+                                        y: d3.event.pageY
+                                    }, scene, tooltip);
+                                return (pos.left + 10) + 'px';
+                            }).style("top", function()
+                        {
+                            var pos = positionTooltip(
+                                {
+                                    x: d3.event.pageX,
+                                    y: d3.event.pageY
+                                }, scene, tooltip);
+                            return (pos.top - 10) + 'px';
+                        });
+                    })
+                .on("mousemove", function(d){
+                    var coords = d3.mouse(this);
+                    var date = formatDate(x.invert(coords[0]));
+                    var time = formatTime(x.invert(coords[0]));
+                    div.html(date+'<br/>'+time+'<br/>'+d3.format("2.3")(y.invert(coords[1])))
+                        .style("left", function()
+                        {
+                            var pos = positionTooltip(
+                                {
+                                    x: d3.event.pageX,
+                                    y: d3.event.pageY
+                                }, scene, tooltip);
+                            return (pos.left + 10) + 'px';
+                        })
+                        .style("top", function()
+                        {
+                            var pos = positionTooltip(
+                                {
+                                    x: d3.event.pageX,
+                                    y: d3.event.pageY
+                                }, scene, tooltip);
+                            return (pos.top - 10) + 'px';
+                            // svg.select('circle')
+                            //     .attr('cx', x.invert(coords[0]));
+                            // .attr('cy', y(data[len-1].value))
+                        });})
+                .on("mouseout", function(d){
+                    div.transition().duration(500).style("opacity", 0);
+                });
 
             focus.append("g")
                 .attr("class", "axis axis--x")
