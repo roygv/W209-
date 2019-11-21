@@ -108,7 +108,7 @@ context.append("defs").append("clipPath")
 
 function top_graph(){
     
-    d3.csv("data/alert_timeseries.csv", type_timeseries, function(error, data) {
+    d3.csv("https://raw.githubusercontent.com/shihyuch/W209-/master/Final%20Project/Site/data/alert_timeseries.csv", type_timeseries, function(error, data) {
            if (error) throw error;
            
            x.domain(d3.extent(data, function(d) { return d.date; }));

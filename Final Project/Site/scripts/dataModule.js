@@ -20,9 +20,11 @@ var AgIData = (function () {
             where += 'time <= \''+formatDate(until)+'\'';
 
         var query =
-            "select "+agg+"(value) as value " +
-            "  from \"" + point +
-            "\" where " + where
+        //"select "+agg+"(value) as value " +
+        //"  from \"" + point +
+         "select "+agg+"(usage_system) as value " +
+            "  from \"cpu\" " + 
+            " where " + where
         if (agg != 'last')
             query = query +
             //       " where time > now() - 40w " +
@@ -73,4 +75,4 @@ var AgIData = (function () {
 
 })();
 
-AgIData.init("http://198.11.219.238:8086/query?db=w251&q=","roy","Kaftor");
+AgIData.init("http://ec2-54-244-197-222.us-west-2.compute.amazonaws.com:8086/query?db=telegraf&q=","roy","Kaftor");

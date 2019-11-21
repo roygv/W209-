@@ -22,7 +22,7 @@ var AgITree = (function () {
                
                }
                
-               d3.csv("data/alert_data.csv",structure,function(error, data){
+               d3.csv("https://raw.githubusercontent.com/shihyuch/W209-/master/Final%20Project/Site/data/alert_data.csv",structure,function(error, data){
                       if (error) throw error;
                       
                       summary_dict = {};
@@ -245,8 +245,8 @@ var AgITree = (function () {
                return visibleNodes;
                }
                
-               
-               d3.csv("data/tree_structure.csv",node_structure,function(error, data){
+               d3.csv("https://raw.githubusercontent.com/shihyuch/W209-/master/Final%20Project/Site/data/tree_structure.csv",node_structure,function(error, data){
+               // d3.csv("data/tree_structure.csv",node_structure,function(error, data){
                       if (error) throw error;
                       modelNodes = data;
                       data.forEach(function(d){
