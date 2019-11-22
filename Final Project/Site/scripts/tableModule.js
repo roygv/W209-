@@ -44,7 +44,7 @@ var AgITable = (function () {
         var button = d3.button()
             .on('press', function(d, i) {
                     console.log("Pressed", d, i, this.parentNode);
-                    AgIGraph.updateSeries(d.series, d.label.replace(/:.*/,''));
+                    AgIGraph.updateSeries(d.series, d.measurement, d.label.replace(/:.*/,''));
                     clearAll();
             })
             .on('release', function(d, i) { console.log("Released", d, i, this.parentNode)});
@@ -70,62 +70,48 @@ var AgITable = (function () {
                 
                 
         arrayData: [
-            {label: "Battery charge", row: 1, col: 1,  series:"Wind speed (MPH)"},
-            {label: "Breaker status", row: 1, col: 2,  series:"resource status"},
-            {label: "Current state", row: 1, col: 3,  series:"- INVERTER 1B Mw"},
-            {label: "Event state", row: 2, col: 1,  series:"U2 Net MW"},
-            {label: "Heartbeat", row: 2, col: 2,  series:"LMP"},
-            {label: "Auto. dispatch", row: 2, col: 3, series:"2 LMP"},
-            {label: "Charge cap.", row: 3, col: 1, series:"A Gross GN MW" },
-            {label: "Discharge cap.", row: 3, col: 2, series:"A Gross GN MV" },
-            {label: "Dispatch", row: 3, col: 3, series:"2 Base Point" },
-            {label: "ISO dispatch", row: 4, col: 1, series:"- White Baker (Net) MVA" },
-            {label: "Manual dispatch", row: 4, col: 2, series:"- White Baker (Net) MW" },
-            {label: "Capacity", row: 4, col: 3, series:"MARIAH T2 Base Point " },
-            {label: "Power", row: 5, col: 1, series:"Unit 5 Net MW (STm)" },
-            {label: "Stored energy", row: 5, col: 2, series:"LAAR, IEM Train A MW" }
+            {label: "CPU User", row: 1, col: 1, series:"usage_user", measurement:"cpu" },
+            {label: "CPU System", row: 1, col: 2, series:"usage_system", measurement:"cpu" },
+            {label: "CPU Idle", row: 1, col: 3, series:"usage_idle", measurement:"cpu" },
+            {label: "CPU I/O wait", row: 2, col: 1,  series:"usage_iowait", measurement:"cpu"},
+            {label: "CPU soft IRQ", row: 2, col: 2, series:"usage_softirq", measurement:"cpu" },
+            {label: "Dispatch", row: 2, col: 3, series:"2 Base Point", measurement:"cpu" },
+            {label: "ISO dispatch", row: 3, col: 1, series:"- White Baker (Net) MVA", measurement:"cpu" },
+            {label: "Manual dispatch", row: 3, col: 2, series:"- White Baker (Net) MW", measurement:"cpu" },
+            {label: "Capacity", row: 3, col: 3, series:"MARIAH T2 Base Point ", measurement:"cpu" },
+            {label: "Power", row: 4, col: 1, series:"Unit 5 Net MW (STm)", measurement:"cpu" },
+            {label: "Stored energy", row: 4, col: 2, series:"LAAR, IEM Train A MW", measurement:"cpu" }
 //            {label: "LAAR, IEM/B", row: 3, col: 1, series:"LAAR, IEM Train B MW" }
         ],
 
         coreData: [
-            {label: "Battery charge", row: 1, col: 1,  series:"Wind speed (MPH)"},
-            {label: "Array Meters", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
-            {label: "Charge capability", row: 1, col: 3, series:"A Gross GN MW" },
-            {label: "Discharge capability", row: 2, col: 1, series:"A Gross GN MV" },
-            {label: "Dispatch", row: 2, col: 2, series:"2 Base Point" },
-            {label: "ISO dispatch", row: 2, col: 3, series:"- White Baker (Net) MVA" },
-            {label: "Manual dispatch", row: 3, col: 1, series:"- White Baker (Net) MW" },
-            {label: "Capacity", row: 3, col: 2, series:"2 Base Point" },
-            {label: "Power", row: 3, col: 3, series:"2 Net MW" },
-            {label: "Stored energy", row: 4, col: 1, series:"LAAR, IEM Train A MW" }
+            {label: "CPU User", row: 1, col: 1, series:"usage_user", measurement:"cpu" },
+            {label: "CPU System", row: 1, col: 2, series:"usage_system", measurement:"cpu" },
+            {label: "CPU Idle", row: 1, col: 3, series:"usage_idle", measurement:"cpu" },
+            {label: "CPU I/O wait", row: 2, col: 1,  series:"usage_iowait", measurement:"cpu" },
+            {label: "CPU soft IRQ", row: 2, col: 2, series:"usage_softirq", measurement:"cpu" },
+            {label: "Stored energy", row: 2, col: 3, series:"LAAR, IEM Train A MW", measurement:"cpu" }
         ],
 
         nodeData: [
-            {label: "Battery charge", row: 1, col: 1,  series:"Wind speed (MPH)"},
-            {label: "AvgCellTemp", row: 1, col: 2,  series:"- INVERTER 1A Mw"},
-            {label: "BMSDCChgCurrent", row: 1, col: 3,  series:"- INVERTER 1B Mw"},
-            {label: "BMSDCDisCurrent", row: 2, col: 1,  series:"- INVERTER 1C Mw"},
-            {label: "BMSDCV", row: 2, col: 2,  series:"LMP"},
-            {label: "Advancion Cmd.", row: 2, col: 3, series:"2 LMP"},
-            {label: "Charge Capability", row: 3, col: 1, series:"A Gross GN MW" },
-            {label: "CodeHeartBeat", row: 3, col: 2, series:"A Gross GN MV" },
-            {label: "Current state", row: 3, col: 3, series:"2 Base Point" },
-            {label: "Discharge cap.", row: 4, col: 1, series:"- White Baker (Net) MVA" },
-            {label: "Dispatch", row: 4, col: 2, series:"- White Baker (Net) MW" },
-            {label: "Energy capacity", row: 4, col: 3, series:"2 Base Point" },
-            {label: "Event state", row: 5, col: 1, series:"2 Net MW" },
-            {label: "GUID", row: 5, col: 2, series:"LAAR, IEM Train A MW" },
-            {label: "Heartbeat", row: 5, col: 3, series:"LAAR, IEM Train A MW" },
-            {label: "HiCellTemp", row: 6, col: 1, series:"LAAR, IEM Train A MW" },
-            {label: "HiCellV", row: 6, col: 2, series:"LAAR, IEM Train A MW" },
-            {label: "HiPCVTemp", row: 6 , col: 3, series:"LAAR, IEM Train A MW" },
-            {label: "Inv.DCBus Voltage", row: 7, col: 1, series:"LAAR, IEM Train A MW" },
-            {label: "LOTOLock", row: 7, col: 2, series:"LAAR, IEM Train B MW" },
-            {label: "LoCellTemp", row: 7, col: 3, series:"LAAR, IEM Train B MW" },
-            {label: "LoCellV", row: 8, col: 1, series:"LAAR, IEM Train B MW" },
-            {label: "LoPCTemp", row: 8, col: 2, series:"LAAR, IEM Train B MW" },
-            {label: "Manual Dispatch", row: 8, col: 3, series:"LAAR, IEM Train B MW" },
-            {label: "Capacity", row: 9, col: 1, series:"2 Net MW (to ERCOT)" }
+            {label: "Battery charge", row: 1, col: 1,  series:"Wind speed (MPH)", measurement:"cpu"},
+            {label: "AvgCellTemp", row: 1, col: 2,  series:"- INVERTER 1A Mw", measurement:"cpu"},
+            {label: "BMSDCChgCurrent", row: 1, col: 3,  series:"- INVERTER 1B Mw", measurement:"cpu"},
+            {label: "BMSDCDisCurrent", row: 2, col: 1,  series:"- INVERTER 1C Mw", measurement:"cpu"},
+            {label: "BMSDCV", row: 2, col: 2,  series:"LMP", measurement:"cpu"},
+            {label: "Advancion Cmd.", row: 2, col: 3, series:"2 LMP", measurement:"cpu"},
+            {label: "Charge Capability", row: 3, col: 1, series:"A Gross GN MW", measurement:"cpu" },
+            {label: "CodeHeartBeat", row: 3, col: 2, series:"A Gross GN MV", measurement:"cpu" },
+            {label: "Current state", row: 3, col: 3, series:"2 Base Point", measurement:"cpu" },
+            {label: "Discharge cap.", row: 4, col: 1, series:"- White Baker (Net) MVA", measurement:"cpu" },
+            {label: "CPU soft IRQ", row: 4, col: 2, series:"usage_softirq", measurement:"cpu" },
+            {label: "CPU User", row: 1, col: 2,  series:"usage_iowait", measurement:"cpu" },
+            {label: "CPU I/O wait", row: 1, col: 2,  series:"usage_iowait", measurement:"cpu" },
+            {label: "CPU idle", row: 5, col: 1, series:"usage_idle", measurement:"cpu" },
+            {label: "GUID", row: 5, col: 2, series:"LAAR, IEM Train A MW", measurement:"cpu" },
+            {label: "Heartbeat", row: 5, col: 3, series:"LAAR, IEM Train A MW", measurement:"cpu" },
+            {label: "HiCellTemp", row: 6, col: 1, series:"LAAR, IEM Train A MW", measurement:"cpu" },
+            {label: "Capacity", row: 9, col: 1, series:"2 Net MW (to ERCOT)", measurement:"cpu" }
         ],
 
         init: function(nodeType) {

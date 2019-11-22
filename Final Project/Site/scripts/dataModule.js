@@ -8,7 +8,7 @@ var AgIData = (function () {
 //    var formatDate = d3.timeFormat("%Y-%m-%dT%H:%M:%SZ");
     var formatDate = d3.utcFormat("%Y-%m-%dT%H:%M:%SZ");
 
-    getURL = function (point, from, until, interval, agg) {
+    getURL = function (field, measurement, from, until, interval, agg) {
         var where='';
         if (from == NaN)
             where = '';
@@ -21,9 +21,9 @@ var AgIData = (function () {
 
         var query =
         //"select "+agg+"(value) as value " +
-        //"  from \"" + point +
-         "select "+agg+"(usage_system) as value " +
-            "  from \"cpu\" " + 
+        //"  from \"" + field +
+         "select "+agg+"("+field+") as value " +
+            "  from \"" + measurement + "\" " + 
             " where " + where
         if (agg != 'last')
             query = query +
@@ -50,23 +50,23 @@ var AgIData = (function () {
         }, //init
 
         // A public function
-        getData: function (point, from, until, callback) {
+        getData: function (field, measurement, from, until, callback) {
             var interval;
-            if((until-from)/(1000*60*5) < 3000)
-                interval="5m";
+            if((until-from)/(1000*60) < 3000)
+                interval="1m";
             else if ((until-from)/(1000*60*60) < 3000)
                 interval="1h";
             else
                 interval="1d";
 
-            var url = getURL(point, from, until, interval, "mean");
+            var url = getURL(field, measurement, from, until, interval, "mean");
             d3.json(url)
                 .header("Authorization", "Basic " + btoa(p_user + ":" + p_password))
                 .get(callback);
         }, // getData
 
-        getLast: function (point, from, until, callback) {
-            var url = getURL(point, from, until, '30d', "last");
+        getLast: function (field, measurement, from, until, callback) {
+            var url = getURL(field, measurement, from, until, '30d', "last");
             d3.json(url)
                 .header("Authorization", "Basic " + btoa(p_user + ":" + p_password))
                 .get(callback);

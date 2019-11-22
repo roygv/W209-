@@ -65,15 +65,15 @@ var sparkLine = (function () {
         }
 
     return {
-        init: function(metric, title, id) {
+        init: function(field, measurement, title, id) {
             //AgIData.getData("MARIAH T2 Base Point ", d3.timeHour.offset(now, -6), AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
             // AgIData.getData("Unit 2 net MW", AgIData.parseDate('2017-04-14T00:00:00Z'),now,function(error, json) {
-            AgIData.getLast(metric, d3.timeDay.offset(now, -10), now, function(error,json) {
+            AgIData.getLast(field, measurement, d3.timeDay.offset(now, -10), now, function(error,json) {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values[0][0];
                     var last = AgIData.parseDate(data);
-                    AgIData.getData(metric, d3.timeHour.offset(last, -6), last, function (error, json) {
+                    AgIData.getData(field, measurement, d3.timeHour.offset(last, -6), last, function (error, json) {
 
                         if (error) throw error;
                         if (json.results[0].series) {
@@ -91,27 +91,27 @@ var sparkLine = (function () {
             d3.select("#summaryMetrics")
               .text("Summary Metrics: "+node);
 
-            AgIData.getData("2 Base Point", fromDate, now, function(error, json) {
+            AgIData.getData("usage_user", "cpu", fromDate, now, function(error, json) {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values;
-                    sparkLine.redraw(0,'Battery charge (%)','#powerSummary1', data);
+                    sparkLine.redraw(0,'CPU User','#powerSummary1', data);
                     // sparkLine.redraw(0,'Battery SoC(%)','#powerSummary', data);
                 }
 
-                AgIData.getData("A Gross GN MW", fromDate, now, function(error, json) {
+                AgIData.getData("usage_system", "cpu", fromDate, now, function(error, json) {
                     if (error) throw error;
                     if (json.results[0].series) {
                         var data = json.results[0].series[0].values;
-                        sparkLine.redraw(0,'Power output (kW)','#powerSummary2', data);
+                        sparkLine.redraw(0,'CPU System','#powerSummary2', data);
                         // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
                     }
 
-                    AgIData.getData("2 LMP",fromDate ,now, function(error, json) {
+                    AgIData.getData("usage_idle", "cpu", fromDate ,now, function(error, json) {
                         if (error) throw error;
                         if (json.results[0].series) {
                             var data = json.results[0].series[0].values;
-                            sparkLine.redraw(0,'Market price ($)','#powerSummary3', data);
+                            sparkLine.redraw(0,'CPU Idle','#powerSummary3', data);
                             // sparkLine.draw(0,'Real Power(kW)','#powerSummary', data);
                         }
                     });
@@ -265,6 +265,6 @@ var svg = d3.selectAll('#powerSummary svg #powerSummary1').remove();
 var svg = d3.selectAll('#powerSummary svg #powerSummary2').remove();
 var svg = d3.selectAll('#powerSummary svg #powerSummary3').remove();
 
-sparkLine.init("unit 4 net (OC)",'Battery charge (%)','#powerSummary1');
-sparkLine.init("A Gross GN MW", 'Power output (kW)','#powerSummary2');
-sparkLine.init("2 LMP", 'Market price ($)','#powerSummary3');
+sparkLine.init("usage_user", "cpu", 'CPU User','#powerSummary1');
+sparkLine.init("usage_system", "cpu", 'CPU System','#powerSummary2');
+sparkLine.init("usage_idle", "cpu", 'CPU Idle','#powerSummary3');

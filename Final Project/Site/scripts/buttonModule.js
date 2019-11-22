@@ -13,7 +13,7 @@ d3.button = function() {
             var g = d3.select(this)
                 .attr('id', 'd3-button' + i);
             var now=new Date();
-            AgIData.getLast(d.series, d3.timeDay.offset(now, -10), now, function(error,json) {
+            AgIData.getLast(d.series, d.measurement, d3.timeDay.offset(now, -10), now, function(error,json) {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values[0][1];

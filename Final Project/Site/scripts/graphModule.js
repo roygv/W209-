@@ -1,6 +1,6 @@
 var AgIGraph = (function () {
 
-    var myData, myOverviewData, mySeries, myFrom, myUntil, brush, zoom, area, area2, focus,context, x;
+    var myData, myOverviewData, myField, myFrom, myUntil, brush, zoom, area, area2, focus,context, x;
 
     var formatDate = d3.utcFormat("%Y-%m-%dT%H:%M:%SZ");
     var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
@@ -56,10 +56,10 @@ var AgIGraph = (function () {
         }
     }
 
-    function updateFocus(point, from, until) {
+    function updateFocus(field, measurement, from, until) {
         myFrom = from;
         myUntil = until;
-        AgIData.getData(point, from, until, function(error, json) {
+        AgIData.getData(field, measurement, from, until, function(error, json) {
             if (error) throw error;
             if ((json.results[0].series) && (myFrom == from) && (myUntil == until)) {
                 myData = json.results[0].series[0].values;
@@ -76,7 +76,7 @@ var AgIGraph = (function () {
         if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
         var s = d3.event.selection || x2.range();
         x.domain(s.map(x2.invert, x2));
-        updateFocus(mySeries, x.domain()[0], x.domain()[1]);
+        updateFocus(myField, myMeasurement, x.domain()[0], x.domain()[1]);
         focus.select(".zoomArea").attr("d", area);
         focus.select(".axis--x").call(xAxis.ticks(5));
         svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
@@ -88,7 +88,7 @@ var AgIGraph = (function () {
         if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
         var t = d3.event.transform;
         x.domain(t.rescaleX(x2).domain());
-        updateFocus(mySeries, x.domain()[0], x.domain()[1]);
+        updateFocus(myField, myMeasurement, x.domain()[0], x.domain()[1]);
         focus.select(".zoomArea").attr("d", area);
         focus.select(".axis--x").call(xAxis.ticks(5));
         context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
@@ -279,20 +279,21 @@ var AgIGraph = (function () {
     }
 
     return {
-        init: function(series, label, from, until) {
-            mySeries = series;
+        init: function(field, measurement, label, from, until) {
+            myField = field;
+            myMeasurement = measurement;
             myFrom = from;
             myUntil = until;
             startClean(label);
-            AgIData.getData(series,from,until,updateOverview);
+            AgIData.getData(field, measurement, from, until, updateOverview);
         }, //init
 
         updateInterval: function(from, until) {
             myFrom = from;
             myUntil = until;
             x.domain(from, until);
-            if (mySeries !== NaN)
-                AgIData.getData(mySeries,from,until,function(){
+            if (myField !== NaN)
+                AgIData.getData(myField,myMeasurement, from,until,function(){
                 focus.select(".zoomArea").attr("d", area);
                 focus.select(".axis--x").call(xAxis.ticks(5).tickFormat(d3.utcFormat("%m/%d")));
                 var s = x2.range();
@@ -303,13 +304,15 @@ var AgIGraph = (function () {
                 );
         }, //updateInterval
 
-        updateSeries: function(series, label) {
-            mySeries=series;
+        updateSeries: function(field, measurement, label) {
+            myField=field;
+            myMeasurement=measurement;
             startClean(label);
-//            AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),AgIData.parseDate('2017-03-01T00:00:00Z'),updateOverview);
-            AgIData.getData(series,AgIData.parseDate('2016-08-01T00:00:00Z'),myUntil,updateOverview);
+//            AgIData.getData(field,AgIData.parseDate('2016-08-01T00:00:00Z'),AgIData.parseDate('2017-03-01T00:00:00Z'),updateOverview);
+//          AgIData.getData(field,d3.timeDay.offset(now, -1),myUntil,updateOverview);
+            AgIData.getData(field, measurement, AgIData.parseDate('2019-01-01T00:00:00Z'),myUntil,updateOverview);
             x.domain([myFrom, myUntil]);
-            updateFocus(mySeries, myFrom, myUntil);
+            updateFocus(myField, myMeasurement, myFrom, myUntil);
             context.select(".brush").call(brush.move, [myFrom, myUntil]);
 
         } //updateSeries
@@ -318,5 +321,5 @@ var AgIGraph = (function () {
 })();
 now=new Date();
 //AgIData.init("http://test1.gvirtsman.com:8086/query?db=w251&q=","roy","Kaftor");
-AgIGraph.init('A Gross GN MW','Charge cap.',AgIData.parseDate('2016-08-01T00:00:00Z'),now);
+AgIGraph.init('usage_system', 'cpu', 'CPU system',AgIData.parseDate('2019-01-01T00:00:00Z'),now);
 

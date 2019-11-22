@@ -78,7 +78,7 @@
         .attr("class", "context")
         .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-    getData('LMP',parseDate('2016-08-01T00:00:00Z'),parseDate('2017-03-01T00:00:00Z'),function(error, json) {
+    getData('usage_system',parseDate('2016-08-01T00:00:00Z'),parseDate('2017-03-01T00:00:00Z'),function(error, json) {
         if (error) throw error;
         data = json.results[0].series[0].values;
         x.domain(d3.extent(data, function(d) { return parseDate(d[0]); }));
@@ -109,7 +109,7 @@
             .call(zoom);
     });
 
-    getData('LMP',parseDate('2016-08-01T00:00:00Z'),parseDate('2017-03-01T00:00:00Z'),function(error, json) {
+    getData('usage_system',parseDate('2016-08-01T00:00:00Z'),parseDate('2017-03-01T00:00:00Z'),function(error, json) {
         if (error) throw error;
 
         data = json.results[0].series[0].values;
@@ -129,8 +129,8 @@
 
     });
 
-    function updateFocus(point, from, until) {
-        getData(point, from, until, function(error, json) {
+    function updateFocus(field, mesurement, from, until) {
+        getData(field, measurement, from, until, function(error, json) {
             if (error) throw error;
             data = json.results[0].series[0].values;
             focus.select("path")
