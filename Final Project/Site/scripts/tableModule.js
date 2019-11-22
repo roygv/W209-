@@ -75,13 +75,10 @@ var AgITable = (function () {
             {label: "CPU Idle", row: 1, col: 3, series:"usage_idle", measurement:"cpu" },
             {label: "CPU I/O wait", row: 2, col: 1,  series:"usage_iowait", measurement:"cpu"},
             {label: "CPU soft IRQ", row: 2, col: 2, series:"usage_softirq", measurement:"cpu" },
-            {label: "Dispatch", row: 2, col: 3, series:"2 Base Point", measurement:"cpu" },
-            {label: "ISO dispatch", row: 3, col: 1, series:"- White Baker (Net) MVA", measurement:"cpu" },
-            {label: "Manual dispatch", row: 3, col: 2, series:"- White Baker (Net) MW", measurement:"cpu" },
-            {label: "Capacity", row: 3, col: 3, series:"MARIAH T2 Base Point ", measurement:"cpu" },
-            {label: "Power", row: 4, col: 1, series:"Unit 5 Net MW (STm)", measurement:"cpu" },
-            {label: "Stored energy", row: 4, col: 2, series:"LAAR, IEM Train A MW", measurement:"cpu" }
-//            {label: "LAAR, IEM/B", row: 3, col: 1, series:"LAAR, IEM Train B MW" }
+            {label: "Query Requests", row: 2, col: 3, series:"queryReq", measurement:"influxdb_httpd" },
+            {label: "Query Duration", row: 3, col: 1, series:"queryReqDurationNs", measurement:"influxdb_httpd" },
+            {label: "Points Written", row: 3, col: 2, series:"pointsWrittenOK", measurement:"influxdb_httpd" }
+ //            {label: "LAAR, IEM/B", row: 3, col: 1, series:"LAAR, IEM Train B MW" }
         ],
 
         coreData: [
@@ -90,7 +87,7 @@ var AgITable = (function () {
             {label: "CPU Idle", row: 1, col: 3, series:"usage_idle", measurement:"cpu" },
             {label: "CPU I/O wait", row: 2, col: 1,  series:"usage_iowait", measurement:"cpu" },
             {label: "CPU soft IRQ", row: 2, col: 2, series:"usage_softirq", measurement:"cpu" },
-            {label: "Stored energy", row: 2, col: 3, series:"LAAR, IEM Train A MW", measurement:"cpu" }
+            {label: "Query Requests", row: 2, col: 3, series:"queryReq", measurement:"influxdb_httpd" }
         ],
 
         nodeData: [

@@ -12,7 +12,7 @@ function render_notification(v, d) {
 }
 
 
-function notififCenter(){d3.csv("data/alert_data.csv", type_alert, function(error, data) {
+function notififCenter(){d3.csv("https://raw.githubusercontent.com/shihyuch/W209-/master/Final%20Project/Site/data/alert_data.csv", type_alert, function(error, data) {
        if (error) throw error;
        
        var n = data.length;

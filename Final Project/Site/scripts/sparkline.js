@@ -68,12 +68,12 @@ var sparkLine = (function () {
         init: function(field, measurement, title, id) {
             //AgIData.getData("MARIAH T2 Base Point ", d3.timeHour.offset(now, -6), AgIData.parseDate('2017-04-07T00:00:00Z'),now,function(error, json) {
             // AgIData.getData("Unit 2 net MW", AgIData.parseDate('2017-04-14T00:00:00Z'),now,function(error, json) {
-            AgIData.getLast(field, measurement, d3.timeDay.offset(now, -10), now, function(error,json) {
+            AgIData.getLast(field, measurement, d3.timeHour.offset(now, -1), now, function(error,json) {
                 if (error) throw error;
                 if (json.results[0].series) {
                     var data = json.results[0].series[0].values[0][0];
                     var last = AgIData.parseDate(data);
-                    AgIData.getData(field, measurement, d3.timeHour.offset(last, -6), last, function (error, json) {
+                    AgIData.getData(field, measurement, d3.timeHour.offset(last, -1), now, function (error, json) {
 
                         if (error) throw error;
                         if (json.results[0].series) {
@@ -268,3 +268,7 @@ var svg = d3.selectAll('#powerSummary svg #powerSummary3').remove();
 sparkLine.init("usage_user", "cpu", 'CPU User','#powerSummary1');
 sparkLine.init("usage_system", "cpu", 'CPU System','#powerSummary2');
 sparkLine.init("usage_idle", "cpu", 'CPU Idle','#powerSummary3');
+
+var inter = setInterval(function() {
+    sparkLine.update('Site');
+}, 5000); 

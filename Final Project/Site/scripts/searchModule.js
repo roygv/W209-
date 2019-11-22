@@ -8,7 +8,7 @@ $(function(){
   return d;
   }
   
-  d3.csv("data/tree_structure.csv",node_structure,function(error, data){
+  d3.csv("https://raw.githubusercontent.com/shihyuch/W209-/master/Final%20Project/Site/data/tree_structure.csv",node_structure,function(error, data){
 
          $('#search').autocomplete({
                                    lookup: data,
@@ -47,7 +47,7 @@ function updateNode(node, fromTree){
         d.name = d.name;
         return d;
     }
-    d3.csv("data/tree_structure.csv",node_structure,function(error, data){
+    d3.csv("https://raw.githubusercontent.com/shihyuch/W209-/master/Final%20Project/Site/data/tree_structure.csv",node_structure,function(error, data){
            var name = "";
            var type = "";
            data.forEach(function(d){
